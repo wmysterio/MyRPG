@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public abstract partial class Entity {
+    public partial class Entity {
 
         public class EntityList : MonoBehaviour {
 
@@ -18,49 +18,28 @@ namespace MyRPG {
                 DontDestroyOnLoad( this ); //Contrainer
             }
 
-            void Start() { }
+            void Start() {
 
-            void Update() {
-                StartCoroutine( update() );
             }
 
+            void Update() {
+                updator.Update();
+            }
+            
             void FixedUpdate() {
-                StartCoroutine( physics() );
+                updator.FixedUpdate();
             }
 
             void OnGUI() {
-                
-                StartCoroutine( draw() );
+                //for( int i = 0; i < all.Count; i++ ) {
+                //    all[ i ].draw();
+                //}
             }
-
-
-
-
-
-            IEnumerator update() {
-                for( int i = 0; i < all.Count; i++ ) {
-                    all[ i ].update();
-                    yield return all[ i ];
-                }
-            }
-
-            IEnumerator physics() {
-                for( int i = 0; i < all.Count; i++ ) {
-                    yield return all[ i ];
-                    all[ i ].physics();
-                }
-            }
-
-            IEnumerator draw() {
-                for( int i = 0; i < all.Count; i++ ) {
-                    yield return all[ i ];
-                    all[ i ].draw();
-                }
-            }
-
 
         }
 
 
+
     }
+
 }

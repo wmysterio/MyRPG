@@ -7,11 +7,9 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public class EntityTest : Entity { }
-
 	public abstract partial class Entity : IDescription {
 
-        private static List<Entity> all = new List<Entity>();
+        private static EntityUpdator updator = new EntityUpdator();
 
         private Texture2D icon;
         protected string description;
@@ -38,8 +36,7 @@ namespace MyRPG {
             gameObject = new GameObject( "Entity" );
             gameObject.transform.parent = EntityList.Contrainer.transform;
 
-
-            all.Add( this );
+            updator.Add( this );
         }
 
 
@@ -52,15 +49,11 @@ namespace MyRPG {
         protected GameObject gameObject;
 
 
-        protected virtual void update() { Debug.Log( "update" ); }
+        protected virtual void update() { }
 
-        protected virtual void physics() { Debug.Log( "physics" ); }
+        protected virtual void physics() { }
 
-        protected virtual void draw() { Debug.Log( "draw" );
-
-            GUI.Label( new Rect( 50, 50, 100, 32 ), "Text" );
-
-        }
+        protected virtual void draw() { }
 		
 
 

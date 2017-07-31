@@ -13,12 +13,8 @@ namespace MyRPG {
             var go = GameObject.Find( "EntityList" );
             go.AddComponent<Entity.EntityList>();
 		}
-		
-		void Start() {
 
-            for( int i = 0; i < 1000; i++ ) {
-                new EntityTest();
-            }
+		void Start() {
 
         }
 		
