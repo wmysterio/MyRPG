@@ -7,6 +7,16 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
+    public class EntityText : Entity {
+
+        public EntityText() : base( 0 ) { }
+
+
+
+    }
+
+
+
 	public abstract partial class Entity : IDescription {
 
         private static EntityUpdator updator = new EntityUpdator();
@@ -31,17 +41,27 @@ namespace MyRPG {
             set { description = value; }
         }
 
+        public int ModelID { get; private set; }
 
-        public Entity() {
+
+        public Entity( int modelID  ) {
             gameObject = new GameObject( "Entity" );
             gameObject.transform.parent = EntityList.Contrainer.transform;
 
+            ModelID = modelID;
+            var model = Model.Find( modelID );
+            var obj = GameObject.Instantiate<GameObject>( model.Prefab );
+            obj.name = "Model";
+            obj.transform.parent = gameObject.transform;
+
+            obj.transform.localPosition = Vector3.zero;
+            obj.transform.localRotation = Quaternion.identity;
+            obj.transform.localScale = Vector3.one;
+
+
+
             updator.Add( this );
         }
-
-
-
-
 
 
 

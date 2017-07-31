@@ -16,6 +16,21 @@ namespace MyRPG {
 
 		void Start() {
 
+            Model.Request( 0 );
+            Model.LoadRequestedNow();
+
+            new EntityText();
+            new EntityText();
+            new EntityText();
+            new EntityText();
+
+
+
+            Model.Unload();
+
+
+
+
         }
 		
 		void Update() {

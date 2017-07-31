@@ -56,7 +56,7 @@ namespace MyRPG {
             public void Update() {
                 for( updateIterator = updateStartIndex; updateIterator < updateStopIndex; updateIterator++ ) {
                     if( entitys[ updateIterator ] != null )
-                        entitys[ updateIterator ].update();
+                        entitys[ updateIterator ].update();  
                 }
                 updateStartIndex = updateStopIndex;
                 updateStopIndex += LOOP_SIZE;

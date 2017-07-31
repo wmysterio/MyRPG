@@ -31,6 +31,7 @@ namespace MyRPG {
             for( int i = 0; i < loadModels.Count; i++ ) {
                 allModels.Add( loadModels[ i ], new Model( loadModels[ i ] ) );
             }
+            loadModels.Clear();
         }
 
 
@@ -40,9 +41,9 @@ namespace MyRPG {
         public int ID { get; private set; }
         public GameObject Prefab { get; private set; }
 
-        public Model( int id ) {
+        private Model( int id ) {
             ID = id;
-            Prefab = Resources.Load<GameObject>( string.Format( "Moldes/{0}", id ) );
+            Prefab = Resources.Load<GameObject>( string.Format( "Models/{0}", id ) );
         }
 
 
