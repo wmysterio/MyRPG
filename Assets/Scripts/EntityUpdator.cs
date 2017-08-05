@@ -12,7 +12,7 @@ namespace MyRPG {
         public class EntityUpdator {
 
             private const int MAX_SIZE = 192;
-            private const int LOOP_SIZE = 4;
+            private const int LOOP_SIZE = 192;
 
             private Entity[] entitys;
             private int startFindIndex, findIndexIterator, updateStartIndex, updateStopIndex, updateIterator, fixedUpdateStartIndex, fixedUpdateStopIndex, fixedUpdateIterator;
@@ -55,8 +55,17 @@ namespace MyRPG {
 
             public void Update() {
                 for( updateIterator = updateStartIndex; updateIterator < updateStopIndex; updateIterator++ ) {
-                    if( entitys[ updateIterator ] != null )
-                        entitys[ updateIterator ].update();  
+                    if( entitys[ updateIterator ] != null ) {
+                        if( entitys[ updateIterator ].NoLongerNeeded ) {
+                            GameObject.Destroy( entitys[ updateIterator ].gameObject );
+                            entitys[ updateIterator ] = null;
+                            if( startFindIndex > updateIterator )
+                                startFindIndex = updateIterator;
+                            Lenght -= 1;
+                        } else {
+                            entitys[ updateIterator ].update();
+                        }
+                    }
                 }
                 updateStartIndex = updateStopIndex;
                 updateStopIndex += LOOP_SIZE;

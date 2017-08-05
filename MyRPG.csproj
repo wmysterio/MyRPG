@@ -84,6 +84,8 @@
     <Compile Include="Assets\Scripts\EntityUpdator.cs" />
     <Compile Include="Assets\Scripts\IDescription.cs" />
     <Compile Include="Assets\Scripts\Model.cs" />
+    <Compile Include="Assets\Scripts\Object.cs" />
+    <Compile Include="Assets\Scripts\PickUp.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

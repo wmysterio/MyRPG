@@ -11,11 +11,11 @@ namespace MyRPG {
 
         public class EntityList : MonoBehaviour {
 
-            public static GameObject Contrainer { get; private set; }
+            public static GameObject Container { get; private set; }
 
             void Awake() {
-                Contrainer = gameObject; // new GameObject( "EntityList" )
-                DontDestroyOnLoad( this ); //Contrainer
+                Container = gameObject;
+                DontDestroyOnLoad( this );
             }
 
             void Start() {
