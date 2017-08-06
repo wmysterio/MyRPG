@@ -18,21 +18,22 @@ namespace MyRPG {
             //Model.Request( 0 );
             //Model.LoadRequestedNow();
 
-            ////new Object( 0, new Vector3( -2f, 1f, 2f ) );
-            ////new Object( 0, new Vector3( 2f, 1f, 2f ) );
-            ////new Object( 0, new Vector3( -2f, 1f, -2f ) );
-            ////new Object( 0, new Vector3( 2f, 1f, -2f ) );
+            //var obj1 = new Object( 0, new Vector3( -3f, 1f, 3f ) );
+            //obj1.EnableCollision( true );
+            //var obj2 = new Object( 0, new Vector3( 3f, 1f, 3f ) );
 
 
-            ////new PickUp( TypeOfPickUp.Disposable, 0, new Vector3( 0f, 1f, 0f ) );
-            ////var p = new PickUp( TypeOfPickUp.Disposable, 0, new Vector3( 0f, 3.5f, 0f ) );
-            ////p.EnableRotation = false;
+            //var pick1 = new PickUp( TypeOfPickUp.Disposable, 0, new Vector3( -3f, 1f, -3f ) );
+            //var pick2 = new PickUp( TypeOfPickUp.Disposable, 0, new Vector3( 3f, 1f, -3f ) );
+            //var pick3 = new PickUp( TypeOfPickUp.Disposable, 0, new Vector3( 0f, 1f, -0f ) );
+            //pick2.EnableRotation = false;
+            //pick3.Destroy();
 
             //Model.Unload();
         }
 		
 		void Update() {
-
+            
 		}
 		
 		void FixedUpdate() {

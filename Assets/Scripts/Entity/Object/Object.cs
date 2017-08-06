@@ -12,10 +12,7 @@ namespace MyRPG {
         public Object( int modelId, Vector3 position ) : base( modelId, position ) {
             Name = "Object";
         }
-
-
-
-		
+	
 	}
 
 }

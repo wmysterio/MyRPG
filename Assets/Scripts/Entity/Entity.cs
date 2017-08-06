@@ -12,6 +12,7 @@ namespace MyRPG {
         private static EntityUpdator updator = new EntityUpdator();
 
         private Texture2D icon;
+        private RaycastHit hit;
 
         protected string description;
         protected GameObject gameObject;
@@ -42,8 +43,9 @@ namespace MyRPG {
 
         protected Collider collider;
 
-
         public Entity( int modelID, Vector3 position ) {
+            Icon = null;
+            Description = string.Empty;
             NoLongerNeeded = false;
             gameObject = new GameObject( "Entity" );
             gameObject.transform.parent = EntityList.Container.transform;
@@ -56,8 +58,10 @@ namespace MyRPG {
             obj.transform.localRotation = Quaternion.identity;
             obj.transform.localScale = Vector3.one;
             Position = position;
-
             collider = gameObject.GetComponentInChildren<Collider>();
+
+
+
 
             updator.Add( this );
         }
@@ -73,24 +77,14 @@ namespace MyRPG {
                 return false;
             return collider.enabled;
         }
-
-
-        RaycastHit hit;
-
         public void Destroy() { NoLongerNeeded = true; }
-
         public float DistanceTo( float x, float y, float z ) { return Vector3.Distance( Position, new Vector3( x, y, z ) ); }
         public float DistanceTo( Vector3 position ) { return Vector3.Distance( Position, position ); }
         public float DistanceTo( Entity entity ) { return Vector3.Distance( Position, entity.Position ); }
-
         public bool Near( float x, float y, float z, float radius ) { return radius >= Vector3.Distance( Position, new Vector3( x, y, z ) ); }
         public bool Near( Vector3 position, float radius ) { return radius >= Vector3.Distance( Position, position ); }
         public bool Near( Entity entity, float radius ) { return radius >= Vector3.Distance( Position, entity.Position ); }
-
-        public float DistanceToGround() {
-            return Physics.Raycast( Position, Vector3.down, out hit, 100f ) ? hit.distance - ( gameObject.transform.localScale.y / 2.01f ) : 9999f;
-
-        }
+        public float DistanceToGround() { return Physics.Raycast( Position, Vector3.down, out hit, 100f ) ? hit.distance - ( gameObject.transform.localScale.y / 2.01f ) : 9999f; }
 
 
         protected virtual void update() { }
@@ -100,7 +94,6 @@ namespace MyRPG {
         protected virtual void draw() { }
 
         public override string ToString() { return gameObject.name; }
-
 
     }
 

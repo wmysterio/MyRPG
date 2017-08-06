@@ -14,8 +14,6 @@ namespace MyRPG {
 
         public static bool Exist( int id ) { return allModels.ContainsKey( id ); }
         public static Model Find( int id ) { return Exist( id ) ? allModels[ id ] : null; }
-
-
         public static void Request( int id ) {
             if( !Exist( id ) )
                 loadModels.Add( id );
@@ -33,10 +31,9 @@ namespace MyRPG {
             }
             loadModels.Clear();
         }
-
-
         public static void Unload() { allModels.Clear(); }
         public static void Unload( int id ) { if( Exist( id ) ) allModels.Remove( id ); }
+
 
         public int ID { get; private set; }
         public GameObject Prefab { get; private set; }
@@ -45,8 +42,6 @@ namespace MyRPG {
             ID = id;
             Prefab = Resources.Load<GameObject>( string.Format( "Models/{0}", id ) );
         }
-
-
 
 	}
 

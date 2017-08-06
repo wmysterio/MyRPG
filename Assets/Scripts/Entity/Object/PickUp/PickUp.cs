@@ -10,7 +10,6 @@ namespace MyRPG {
     public enum TypeOfPickUp {
         Disposable, // одноразовий
         Reusable    // багаторазовий
-
     }
 
 	public class PickUp : Object {

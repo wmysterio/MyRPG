@@ -79,13 +79,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scenes\Init.cs" />
-    <Compile Include="Assets\Scripts\Entity.cs" />
-    <Compile Include="Assets\Scripts\EntityList.cs" />
-    <Compile Include="Assets\Scripts\EntityUpdator.cs" />
-    <Compile Include="Assets\Scripts\IDescription.cs" />
-    <Compile Include="Assets\Scripts\Model.cs" />
-    <Compile Include="Assets\Scripts\Object.cs" />
-    <Compile Include="Assets\Scripts\PickUp.cs" />
+    <Compile Include="Assets\Scripts\Entity\Entity.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityList.cs" />
+    <Compile Include="Assets\Scripts\Entity\EntityUpdator.cs" />
+    <Compile Include="Assets\Scripts\Entity\Object\Object.cs" />
+    <Compile Include="Assets\Scripts\Entity\Object\PickUp\PickUp.cs" />
+    <Compile Include="Assets\Scripts\Entity\Personage\Humanoid.cs" />
+    <Compile Include="Assets\Scripts\Entity\Personage\Personage.cs" />
+    <Compile Include="Assets\Scripts\Entity\Personage\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Generic\Model.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IDescription.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
