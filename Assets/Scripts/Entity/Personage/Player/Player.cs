@@ -12,7 +12,7 @@ namespace MyRPG {
         public static Player Current { get; private set; }
         public static bool Exist() { return Current != null;  }
 
-        public Player( int modelId, Vector3 position ) : base( modelId, position ) {
+        public Player( int level, int modelId, Vector3 position ) : base( level, RankOfPersonage.Normal, modelId, position ) {
             Name = "Player";
             Current = this;
         }

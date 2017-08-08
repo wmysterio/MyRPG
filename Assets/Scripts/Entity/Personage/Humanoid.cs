@@ -9,7 +9,7 @@ namespace MyRPG {
 
 	public class Humanoid : Personage {
 
-        public Humanoid( int modelId, Vector3 position ) : base( TypeOfPersonage.Humanoid, modelId, position ) {
+        public Humanoid( int level, RankOfPersonage rank, int modelId, Vector3 position ) : base( level, rank, TypeOfPersonage.Humanoid, modelId, position ) {
             Name = "Humanoid";
         }
 

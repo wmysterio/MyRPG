@@ -16,6 +16,7 @@ namespace MyRPG {
 
         protected string description;
         protected GameObject gameObject;
+        protected Collider collider;
 
         public Texture2D Icon {
             get {
@@ -41,7 +42,6 @@ namespace MyRPG {
             set { gameObject.transform.localPosition = value; }
         }
 
-        protected Collider collider;
 
         public Entity( int modelID, Vector3 position ) {
             Icon = null;
@@ -86,12 +86,9 @@ namespace MyRPG {
         public bool Near( Entity entity, float radius ) { return radius >= Vector3.Distance( Position, entity.Position ); }
         public float DistanceToGround() { return Physics.Raycast( Position, Vector3.down, out hit, 100f ) ? hit.distance - ( gameObject.transform.localScale.y / 2.01f ) : 9999f; }
 
-
         protected virtual void update() { }
 
         protected virtual void physics() { }
-
-        protected virtual void draw() { }
 
         public override string ToString() { return gameObject.name; }
 
