@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+	Ліцензія: CC-BY
+	Автор: Василь ( wmysterio )
+	Сайт: http://www.unity3d.tk/
+*/
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +11,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace MyRPG {
-
 
     public class Personage : Entity {
 
@@ -38,6 +42,20 @@ namespace MyRPG {
             LevelUp( level );
         }
 
+        private void calculateCharacteristic() {
+            baseCharacteristic = Characteristic.CreateBase( Level, Rank );
+            CurrentCharacteristic = Characteristic.CreateEmpty();
+            updateCharacteristic();
+        }
+
+        private void updateCharacteristic() {
+            CurrentCharacteristic = ( CurrentCharacteristic.Clear() + baseCharacteristic );
+        }
+
+
+
+
+
         protected override void update() {
             base.update();
             updateCharacteristic();
@@ -60,42 +78,27 @@ namespace MyRPG {
 
         }
 
-
-
-
         public void Restore() {
-            if( IsDead )    // <--- додати у відео
-                return;     // <--- додати у відео
+            if( IsDead )
+                return;
             CurrentHealth = CurrentCharacteristic.MaxHealth;
             CurrentMana = CurrentCharacteristic.MaxMana;
             CurrentEnergy = CurrentCharacteristic.MaxEnergy;
         }
 
         public void LevelUp( int amount = 1 ) {
-            if( IsDead )    // <--- додати у відео
-                return;     // <--- додати у відео
             Level += amount;
             if( MIN_LEVEL > Level )
                 Level = MIN_LEVEL;
             if( Level > MAX_LEVEL )
                 Level = MAX_LEVEL;
             calculateCharacteristic();
-            Restore(); // <--- додати у відео
+            Restore();
         }
-
-        private void calculateCharacteristic() {
-            baseCharacteristic = Characteristic.CreateBase( Level, Rank );
-            CurrentCharacteristic = Characteristic.CreateEmpty();
-            updateCharacteristic();
-        }
-
-
-        private void updateCharacteristic() {
-            CurrentCharacteristic = ( CurrentCharacteristic.Clear() ) + baseCharacteristic;
-        }
-
 
         public void Die() {
+            if( IsDead )
+                return;
             IsDead = true;
             CurrentHealth = 0f;
             CurrentMana = 0f;
@@ -103,6 +106,8 @@ namespace MyRPG {
         }
 
         public void Reanimate() {
+            if( !IsDead )
+                return;
             IsDead = false;
             Restore();
         }
