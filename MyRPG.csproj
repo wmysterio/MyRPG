@@ -88,6 +88,7 @@
     <Compile Include="Assets\Scripts\Entity\Personage\Personage.cs" />
     <Compile Include="Assets\Scripts\Entity\Personage\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Generic\Characteristic.cs" />
+    <Compile Include="Assets\Scripts\Generic\Console.cs" />
     <Compile Include="Assets\Scripts\Generic\Model.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDescription.cs" />
   </ItemGroup>

@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public class Player : Humanoid {
+    public partial class Player : Humanoid {
 
         public static Player Current { get; private set; }
         public static bool Exist() { return Current != null; }
@@ -22,7 +22,6 @@ namespace MyRPG {
         public int ExperienceToLevel {
             get { return TotalExperience - CurrentExperience; }
         }
-
 
         public Player( int level, int modelId, Vector3 position ) : base( level, RankOfPersonage.Normal, modelId, position ) {
             Name = "Player";
@@ -51,7 +50,6 @@ namespace MyRPG {
 
         }
 
-
         public void AddExperience( int amount ) {
             if( MAX_LEVEL == Level )
                 return;
@@ -59,6 +57,11 @@ namespace MyRPG {
         }
 
         private int calculateMaxExperience() { return ( int ) ( 795 + 250 * Mathf.Pow( 1.08f, Level ) ); }
+        
+
+        public void Draw() {
+            Console.Draw();
+        }
 
 
     }

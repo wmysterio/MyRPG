@@ -26,16 +26,15 @@ namespace MyRPG {
             Model.LoadRequestedNow();
 
             player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
-            player.AddExperience( 500 );
-
-
-
+            Player.Console.Enable = true;
 
             Model.Unload();
+
+            StartCoroutine( loadConsole() );
+
         }
 
         void Update() {
-
 
         }
 
@@ -43,8 +42,20 @@ namespace MyRPG {
 
         }
 
-        void OnGUI() {
+        private IEnumerator loadConsole() {
+            yield return Player.Console.Init();
+        }
 
+
+        bool chg = false;
+
+        void OnGUI() {
+            if( !chg ) {
+                GUI.skin.settings.cursorColor = new Color( 0.44f, 0.48f, 0.58f, 1f );
+                GUI.skin.settings.selectionColor = new Color( 0.44f, 0.48f, 0.58f, 1f );
+                GUI.skin.settings.cursorFlashSpeed = 1f;
+                chg = true;
+            }
         }
 
     }

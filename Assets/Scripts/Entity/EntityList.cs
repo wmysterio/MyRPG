@@ -36,9 +36,14 @@ namespace MyRPG {
             }
 
             void OnGUI() {
-                //for( int i = 0; i < all.Count; i++ ) {
-                //    all[ i ].draw();
-                //}
+                
+                if( Player.Exist() && Player.Console.IsInit ) {
+                    Player.Current.Draw();
+                }
+
+
+
+
             }
 
         }
