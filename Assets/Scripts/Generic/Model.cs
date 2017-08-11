@@ -45,7 +45,7 @@ namespace MyRPG {
 
         private Model( int id ) {
             ID = id;
-            Prefab = Resources.Load<GameObject>( string.Format( "Models/{0}", id ) );
+            Prefab = Resources.Load<GameObject>( string.Format( "Models/{0}", ID ) );
         }
 
 	}

@@ -18,6 +18,7 @@ namespace MyRPG {
         public const int MAX_LEVEL = 100;
 
         private Characteristic baseCharacteristic;
+        private RelationshipOfPersonage relationship = RelationshipOfPersonage.Friendly;
 
         public TypeOfPersonage Type { get; private set; }
         public RankOfPersonage Rank { get; private set; }
@@ -29,8 +30,17 @@ namespace MyRPG {
 
         public int Level { get; protected set; }
         public Characteristic CurrentCharacteristic { get; protected set; }
-
         public bool CanMove { get; set; }
+        public RelationshipOfPersonage Relationship {
+            get { return relationship; }
+            set {
+                if( this is Player )
+                    return;
+                relationship = value;
+            }
+        }
+
+
 
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
             Name = "Personage";
@@ -40,6 +50,8 @@ namespace MyRPG {
             Level = 0;
             Rank = rank;
             LevelUp( level );
+            Relationship = RelationshipOfPersonage.Neutral;
+            rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         }
 
         private void calculateCharacteristic() {
@@ -51,8 +63,6 @@ namespace MyRPG {
         private void updateCharacteristic() {
             CurrentCharacteristic = ( CurrentCharacteristic.Clear() + baseCharacteristic );
         }
-
-
 
 
 
@@ -77,6 +87,8 @@ namespace MyRPG {
             }
 
         }
+
+
 
         public void Restore() {
             if( IsDead )
@@ -130,4 +142,9 @@ namespace MyRPG {
         Humanoid    // людиноподібна істота
     }
 
+    public enum RelationshipOfPersonage {
+        Friendly,   // Привітний
+        Neutral,    // Нейтральний
+        Enemy       // Ворог
+    }
 }

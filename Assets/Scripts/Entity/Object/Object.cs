@@ -12,11 +12,14 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-	public class Object : Entity {
-        
+    public class Object : Entity {
+
         public Object( int modelId, Vector3 position ) : base( modelId, position ) {
             Name = "Object";
         }
+
+        public void Freeze( bool state ) { rigidbody.constraints = state ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None; }
+
 	
 	}
 

@@ -22,6 +22,7 @@ namespace MyRPG {
         protected string description;
         protected GameObject gameObject;
         protected Collider collider;
+        protected Rigidbody rigidbody;
 
         public Texture2D Icon {
             get {
@@ -48,6 +49,7 @@ namespace MyRPG {
         }
 
 
+
         public Entity( int modelID, Vector3 position ) {
             Icon = null;
             Description = string.Empty;
@@ -64,7 +66,7 @@ namespace MyRPG {
             obj.transform.localScale = Vector3.one;
             Position = position;
             collider = gameObject.GetComponentInChildren<Collider>();
-
+            rigidbody = gameObject.AddComponent<Rigidbody>();
 
 
 

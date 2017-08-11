@@ -17,7 +17,14 @@ namespace MyRPG {
         public static class Console {
 
             private const int MAX_COMMAND_LENGTH = 40;
+			
             private delegate void Command( string[] args );
+
+            private static Dictionary<string, Command> listCommands = new Dictionary<string, Command>() {
+                { "CLOSE", close }, // сам метод буде написано нижче
+                { "PLAYER_PLACE", player_place } // сам метод буде написано нижче
+            };
+
 
             private static AudioClip soundSuccess = null, soundError = null;
             private static Texture2D boxBackground = null, areaBackground = null;
@@ -33,20 +40,12 @@ namespace MyRPG {
             private static bool isInit = false, enable = false;
 
             public static bool IsInit {
-                get {
-                    return isInit;
-                }
-                private set {
-                    isInit = value;
-                }
+                get { return isInit; }
+                private set { isInit = value; }
             }
             public static bool Enable {
-                get {
-                    return enable;
-                }
-                set {
-                    enable = value;
-                }
+                get { return enable; }
+                set { enable = value; }
             }
 
 
@@ -149,12 +148,6 @@ namespace MyRPG {
             private static void playSound( AudioClip clip ) { AudioSource.PlayClipAtPoint( clip, Camera.main.transform.position ); }
 
             /* СПИСОК КОМАНД: */
-
-            private static Dictionary<string, Command> listCommands = new Dictionary<string, Command>() {
-                { "CLOSE", close },
-                { "PLAYER_PLACE", player_place }
-            };
-
 
             private static void close( string[] args ) { Enable = false; }
 

@@ -12,11 +12,6 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public enum TypeOfPickUp {
-        Disposable, // одноразовий
-        Reusable    // багаторазовий
-    }
-
     public class PickUp : Object {
 
         protected const float MIN_RANGE = 1f;
@@ -33,8 +28,8 @@ namespace MyRPG {
             EnableRotation = true;
             IsVisible = true;
             Type = type;
+            rigidbody.useGravity = false;
             EnableCollision( false );
-
             restoreTimer = 0f;
         }
 
@@ -79,6 +74,11 @@ namespace MyRPG {
             gameObject.SetActive( false );
         }
 
+    }
+
+    public enum TypeOfPickUp {
+        Disposable, // одноразовий
+        Reusable    // багаторазовий
     }
 
 }
