@@ -79,6 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scenes\Init.cs" />
+    <Compile Include="Assets\Scripts\Ability\Effect\Effect.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Item.cs" />
+    <Compile Include="Assets\Scripts\Ability\Spell\Spell.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityList.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityUpdator.cs" />
@@ -90,6 +93,7 @@
     <Compile Include="Assets\Scripts\Generic\Characteristic.cs" />
     <Compile Include="Assets\Scripts\Generic\Console.cs" />
     <Compile Include="Assets\Scripts\Generic\Model.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IAbility.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDescription.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
