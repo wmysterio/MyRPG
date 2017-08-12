@@ -53,23 +53,23 @@ namespace MyRPG {
                 if( IsInit )
                     yield return null;
 
-                request = Resources.LoadAsync<Texture2D>( "UI/images/areaBackground" );
+                request = Resources.LoadAsync<Texture2D>( "UI/Console/images/areaBackground" );
                 yield return request;
                 areaBackground = request.asset as Texture2D;
 
-                request = Resources.LoadAsync<Texture2D>( "UI/images/boxBackground" );
+                request = Resources.LoadAsync<Texture2D>( "UI/Console/images/boxBackground" );
                 yield return request;
                 boxBackground = request.asset as Texture2D;
 
-                request = Resources.LoadAsync<AudioClip>( "UI/sounds/consoleSuccess" );
+                request = Resources.LoadAsync<AudioClip>( "UI/Console/sounds/consoleSuccess" );
                 yield return request;
                 soundSuccess = request.asset as AudioClip;
 
-                request = Resources.LoadAsync<AudioClip>( "UI/sounds/consoleError" );
+                request = Resources.LoadAsync<AudioClip>( "UI/Console/sounds/consoleError" );
                 yield return request;
                 soundError = request.asset as AudioClip;
 
-                request = Resources.LoadAsync<Font>( "UI/fonts/WHITRABT" );
+                request = Resources.LoadAsync<Font>( "UI/Console/fonts/WHITRABT" );
                 yield return request;
                 consoleFont = request.asset as Font;
 

@@ -16,30 +16,23 @@ namespace MyRPG {
 
         private static EntityUpdator updator = new EntityUpdator();
 
-        private Texture2D icon;
+        private int iconID;
         private RaycastHit hit;
-
-        protected string description;
+        
         protected GameObject gameObject;
         protected Collider collider;
         protected Rigidbody rigidbody;
 
         public Texture2D Icon {
             get {
-                return icon;
-            }
-            set {
-                icon = value;
+                return Player.Interface.Icons[ iconID ];
             }
         }
         public string Name {
             get { return gameObject.name; }
-            set { gameObject.name = value; }
+            protected set { gameObject.name = value; }
         }
-        public string Description {
-            get { return description; }
-            set { description = value; }
-        }
+        public string Description { get; protected set; }
 
         public int ModelID { get; private set; }
         public bool NoLongerNeeded { get; private set; }
@@ -51,7 +44,7 @@ namespace MyRPG {
 
 
         public Entity( int modelID, Vector3 position ) {
-            Icon = null;
+            iconID = 0;
             Description = string.Empty;
             NoLongerNeeded = false;
             gameObject = new GameObject( "Entity" );

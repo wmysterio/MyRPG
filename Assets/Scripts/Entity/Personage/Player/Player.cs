@@ -32,19 +32,9 @@ namespace MyRPG {
 
         protected override void update() {
             base.update();
+            Interface.Update();
 
-            if( MAX_LEVEL > Level && CurrentExperience > TotalExperience ) {
-                var newExp = Mathf.Abs( ExperienceToLevel );
-                LevelUp();
-                if( Level == MAX_LEVEL ) {
-                    CurrentExperience = 0;
-                    TotalExperience = 0;
-                } else {
-                    CurrentExperience = newExp;
-                    TotalExperience = calculateMaxExperience();
-                }
 
-            }
 
 
 
@@ -54,13 +44,27 @@ namespace MyRPG {
             if( MAX_LEVEL == Level )
                 return;
             CurrentExperience += amount;
+            if( CurrentExperience > TotalExperience ) {
+                var newExp = Mathf.Abs( ExperienceToLevel );
+                LevelUp();
+                if( Level == MAX_LEVEL ) {
+                    CurrentExperience = 0;
+                    TotalExperience = 0;
+                } else {
+                    CurrentExperience = newExp;
+                    TotalExperience = calculateMaxExperience();
+                }
+            }
         }
 
         private int calculateMaxExperience() { return ( int ) ( 795 + 250 * Mathf.Pow( 1.08f, Level ) ); }
         
 
         public void Draw() {
-            Console.Draw();
+
+
+
+            Interface.Draw();
         }
 
 

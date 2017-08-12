@@ -16,10 +16,10 @@ namespace MyRPG {
 
     public interface IAbility : IDescription {
         
-        TypeOfAbility Type { get; }
+        TypeOfAbility AlilityType { get; }
         float TimeToRestore { get; }
         int Count { get; }
-        void Use( Personage traget = null );
+        void Use( Personage target = null );
 
 	}
 

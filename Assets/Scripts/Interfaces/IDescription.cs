@@ -14,9 +14,9 @@ namespace MyRPG {
 
 	public interface IDescription {
         
-        Texture2D Icon { get; set; }
-        string Name { get; set; }
-        string Description { get; set; }
+        Texture2D Icon { get; }
+        string Name { get; }
+        string Description { get; }
 
     }
 

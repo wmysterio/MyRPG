@@ -14,35 +14,40 @@ namespace MyRPG {
 
 	public abstract class Item : IAbility {
 
-        private Texture2D icon;
+        private int iconID;
 
-        public TypeOfAbility Type {
+        public TypeOfAbility AlilityType {
             get { return TypeOfAbility.Item; }
         }
-
-        protected string description;
-        protected string name;
 
         public float TimeToRestore { get; protected set; }
         public int Count { get; protected set; }
 
         public Texture2D Icon {
-            get { return icon; }
-            set { icon = value; }
+            get { return Player.Interface.Icons[ iconID ]; }
         }
-        public string Name {
-            get { return name; }
-            set { name = value; }
-        }
-        public string Description {
-            get { return description; }
-            set { description = value; }
+        public string Name { get; protected set; }
+        public string Description { get; protected set; }
+
+
+        public Item( int iconID ) {
+            Name = "Item";
+            Description = string.Empty;
+            this.iconID = iconID;
+            TimeToRestore = 0f;
+            Count = 0;
+
+
         }
 
-        public Item() { }
 
-        public void Use( Personage traget = null ) { }
 
+
+
+
+        public void Use( Personage target = null ) { }
+
+        public override string ToString() { return Name; }
     }
 
 }

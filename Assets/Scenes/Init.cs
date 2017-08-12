@@ -25,10 +25,8 @@ namespace MyRPG {
 
 
 
-
-
         void Start() {
-            StartCoroutine( loadConsole() );
+            StartCoroutine( loadUI() );
 
 
             Model.Request( 0, 1, 2, 3, 4, 5, 6, 7 );
@@ -49,11 +47,13 @@ namespace MyRPG {
 
 
 
-        void Update() { }
+        void Update() {
+
+        }
 
         void FixedUpdate() { }
 
-        private IEnumerator loadConsole() { yield return Player.Console.Init(); }
+        private IEnumerator loadUI() { yield return Player.Interface.Init(); }
 
         void OnGUI() {
             if( !chg ) {
@@ -62,6 +62,7 @@ namespace MyRPG {
                 GUI.skin.settings.cursorFlashSpeed = 1f;
                 chg = true;
             }
+
         }
 
     }
