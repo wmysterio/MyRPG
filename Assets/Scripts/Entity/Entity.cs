@@ -16,9 +16,9 @@ namespace MyRPG {
 
         private static EntityUpdator updator = new EntityUpdator();
 
-        private int iconID;
         private RaycastHit hit;
-        
+
+        protected int iconID;
         protected GameObject gameObject;
         protected Collider collider;
         protected Rigidbody rigidbody;
@@ -28,20 +28,20 @@ namespace MyRPG {
                 return Player.Interface.Icons[ iconID ];
             }
         }
+
+        public int ModelID { get; private set; }
+        public bool NoLongerNeeded { get; private set; }
+
         public string Name {
             get { return gameObject.name; }
             protected set { gameObject.name = value; }
         }
         public string Description { get; protected set; }
 
-        public int ModelID { get; private set; }
-        public bool NoLongerNeeded { get; private set; }
         public Vector3 Position {
             get { return gameObject.transform.localPosition; }
             set { gameObject.transform.localPosition = value; }
         }
-
-
 
         public Entity( int modelID, Vector3 position ) {
             iconID = 0;

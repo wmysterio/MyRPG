@@ -16,14 +16,12 @@ namespace MyRPG {
 
         bool chg = false;
 
-
-
         void Awake() {
             var go = GameObject.Find( "EntityList" );
             go.AddComponent<Entity.EntityList>();
         }
-
-
+        
+        Player player;
 
         void Start() {
             StartCoroutine( loadUI() );
@@ -32,7 +30,7 @@ namespace MyRPG {
             Model.Request( 0, 1, 2, 3, 4, 5, 6, 7 );
             Model.LoadRequestedNow();
 
-            var player = new Player( 1, 3, new Vector3( 0f, 1f, 0f ) );
+            player = new Player( 1, 3, new Vector3( 0f, 1f, 0f ) );
 
             var obj = new Object( 0, new Vector3( -1f, 0.5f, -1f ) );
             obj.Freeze( true );
@@ -62,7 +60,6 @@ namespace MyRPG {
                 GUI.skin.settings.cursorFlashSpeed = 1f;
                 chg = true;
             }
-
         }
 
     }

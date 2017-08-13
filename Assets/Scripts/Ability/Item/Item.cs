@@ -16,7 +16,7 @@ namespace MyRPG {
 
         private int iconID;
 
-        public TypeOfAbility AlilityType {
+        public TypeOfAbility AbilityType {
             get { return TypeOfAbility.Item; }
         }
 
