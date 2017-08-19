@@ -20,7 +20,7 @@ namespace MyRPG {
             get { return TypeOfAbility.Spell; }
         }
 
-        public float TimeToRestore { get; protected set; }
+        public float Timer { get; protected set; }
         public int Count { get; protected set; }
 
         public Texture2D Icon {
@@ -34,7 +34,7 @@ namespace MyRPG {
             Name = "Spell";
             Description = string.Empty;
             this.iconID = iconID;
-            TimeToRestore = 0f;
+            Timer = 0f;
             Count = 0;
 
 

@@ -27,10 +27,16 @@ namespace MyRPG {
             StartCoroutine( loadUI() );
 
 
+
             Model.Request( 0, 1, 2, 3, 4, 5, 6, 7 );
             Model.LoadRequestedNow();
 
             player = new Player( 1, 3, new Vector3( 0f, 1f, 0f ) );
+
+
+
+
+
 
             var obj = new Object( 0, new Vector3( -1f, 0.5f, -1f ) );
             obj.Freeze( true );
@@ -46,7 +52,9 @@ namespace MyRPG {
 
 
         void Update() {
+            if( Player.Exist() ) {
 
+            }
         }
 
         void FixedUpdate() { }

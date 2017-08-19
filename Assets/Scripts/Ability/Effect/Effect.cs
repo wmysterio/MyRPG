@@ -17,7 +17,7 @@ namespace MyRPG {
         protected int iconID;
 
         public TypeOfAbility AbilityType { get { return TypeOfAbility.Effect; } }
-        public float TimeToRestore { get; protected set; }
+        public float Timer { get; protected set; }
         public int Count { get; protected set; }
         public Texture2D Icon { get { return Player.Interface.Icons[ iconID ]; } }
         public string Name { get; protected set; }
@@ -35,7 +35,7 @@ namespace MyRPG {
             Name = "Effect";
             Description = string.Empty;
             iconID = 0;
-            TimeToRestore = 0f;
+            Timer = 0f;
             Count = 0;
             IsPassive = isPassive;
             Dispellable = true;
@@ -44,8 +44,7 @@ namespace MyRPG {
             Sender = sender;
             Target = target;
         }
-
-        protected virtual void tick() { }
+        
         protected virtual void end() { }
 
         public virtual bool Dispel( Personage helper ) {
@@ -75,7 +74,7 @@ namespace MyRPG {
 
         public virtual void Recreate() { }
 
-        public void Use( Personage target = null ) { tick(); }
+        public virtual void Use( Personage target = null ) { }
 
         public override string ToString() { return Name; }
 

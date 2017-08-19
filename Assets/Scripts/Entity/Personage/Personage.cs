@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public class Personage : Entity {
+    public abstract class Personage : Entity {
 
         public const int MIN_LEVEL = 1;
         public const int MAX_LEVEL = 100;
@@ -27,9 +27,11 @@ namespace MyRPG {
         public float CurrentHealth { get; private set; }
         public float CurrentMana { get; private set; }
         public float CurrentEnergy { get; private set; }
+        public EffectList Effects { get; private set; }
 
         public int Level { get; protected set; }
         public Characteristic CurrentCharacteristic { get; protected set; }
+        
         public bool CanMove { get; set; }
         public RelationshipOfPersonage Relationship {
             get { return relationship; }
@@ -40,8 +42,6 @@ namespace MyRPG {
             }
         }
 
-
-
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
             Name = "Personage";
             IsDead = false;
@@ -49,9 +49,12 @@ namespace MyRPG {
             IsStopped = false;
             Level = 0;
             Rank = rank;
-            LevelUp( level );
             Relationship = RelationshipOfPersonage.Neutral;
             rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            Effects = new EffectList();
+
+            // !!! Ініціалізацію об'єктів здійснювати до методу LevelUp
+            LevelUp( level );
         }
 
         private void calculateCharacteristic() {
@@ -61,7 +64,7 @@ namespace MyRPG {
         }
 
         private void updateCharacteristic() {
-            CurrentCharacteristic = ( CurrentCharacteristic.Clear() + baseCharacteristic );
+            CurrentCharacteristic = ( ( CurrentCharacteristic.Clear() + baseCharacteristic ) + Effects.Update() );
         }
 
 
@@ -147,4 +150,5 @@ namespace MyRPG {
         Neutral,    // Нейтральний
         Enemy       // Ворог
     }
+
 }

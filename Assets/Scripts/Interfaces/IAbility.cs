@@ -17,7 +17,7 @@ namespace MyRPG {
     public interface IAbility : IDescription {
         
         TypeOfAbility AbilityType { get; }
-        float TimeToRestore { get; }
+        float Timer { get; }
         int Count { get; }
         void Use( Personage target = null );
 

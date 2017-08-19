@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public class Humanoid : Personage {
+    public abstract class Humanoid : Personage {
 
         public GenderOfHumanoid Gender { get; private set; }
         public RaseOfHumanoid Rase { get; private set; }

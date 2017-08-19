@@ -19,10 +19,12 @@ namespace MyRPG {
         protected float tickTimerLimit = 2f;
 
         public int MaxCount { get; protected set; }
+        public bool HasTick { get; protected set; }
 
         public ActiveEffect( float duration, Personage sender, Personage target= null ) : base( false, sender, target ) {
             Name = "Active Effect";
             MaxCount = 0;
+            HasTick = false;
             this.duration = duration;
         }
 
@@ -30,18 +32,17 @@ namespace MyRPG {
             if( !base.Update() )
                 return false;
             timer += 1f * Time.deltaTime;
-            TimeToRestore = Mathf.Round( duration - timer );
+            Timer = Mathf.Round( duration - timer );
             if( timer > duration ) {
                 end();
                 Destroy();
                 return true;
             }
-            if( MaxCount > 0 ) {
+            if( HasTick ) {
                 tickTimer += Sender.CurrentCharacteristic.CastSpeed * Time.deltaTime;
                 if( tickTimer > tickTimerLimit ) {
-                    Count++;
-                    if( Count > MaxCount )
-                        Count = Count;
+                    if( MaxCount > 0 && MaxCount > Count )
+                        Count++;
                     Use();
                     tickTimer = 0f;
                 }

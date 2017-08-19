@@ -82,7 +82,12 @@
     <Compile Include="Assets\Scripts\Ability\Effect\ActiveEffect.cs" />
     <Compile Include="Assets\Scripts\Ability\Effect\Effect.cs" />
     <Compile Include="Assets\Scripts\Ability\Effect\PassiveEffect.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\EquipmentItem.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Item.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Normal\NormalItem.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Quest\QuestItem.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Reagent\ReagentItem.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Trash\TrashItem.cs" />
     <Compile Include="Assets\Scripts\Ability\Spell\Spell.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityList.cs" />
@@ -94,6 +99,7 @@
     <Compile Include="Assets\Scripts\Entity\Personage\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Generic\Characteristic.cs" />
     <Compile Include="Assets\Scripts\Generic\Console.cs" />
+    <Compile Include="Assets\Scripts\Generic\EffectList.cs" />
     <Compile Include="Assets\Scripts\Generic\Interface.cs" />
     <Compile Include="Assets\Scripts\Generic\Model.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IAbility.cs" />
