@@ -82,7 +82,17 @@
     <Compile Include="Assets\Scripts\Ability\Effect\ActiveEffect.cs" />
     <Compile Include="Assets\Scripts\Ability\Effect\Effect.cs" />
     <Compile Include="Assets\Scripts\Ability\Effect\PassiveEffect.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\BeltEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\EquipmentItem.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\FeetEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\FootwearEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\HandsEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\HeadEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\NeckEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\RingEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\ShouldersEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\TorsoEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\WeaponEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Item.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Normal\NormalItem.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Quest\QuestItem.cs" />

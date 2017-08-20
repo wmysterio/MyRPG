@@ -114,6 +114,7 @@ namespace MyRPG {
         public void Die() {
             if( IsDead )
                 return;
+            Effects.ClearAll();
             IsDead = true;
             CurrentHealth = 0f;
             CurrentMana = 0f;

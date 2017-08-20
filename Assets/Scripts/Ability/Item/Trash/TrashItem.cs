@@ -14,7 +14,10 @@ namespace MyRPG {
 
     public abstract class TrashItem : Item {
 
-        public TrashItem( int level, TypeOfItemRarity rarity ) : base( level, ClassOfItem.Trash, rarity ) { }
+        public TrashItem( int level, TypeOfItemRarity rarity ) : base( level, ClassOfItem.Trash, rarity ) {
+            Name = "Trash Item";
+        }
 
     }
+
 }

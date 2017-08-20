@@ -14,55 +14,51 @@ namespace MyRPG {
 
 	public abstract class Item : IAbility {
 
-        protected int iconID;
+        protected int iconID, price;
 
         public TypeOfAbility AbilityType {
             get { return TypeOfAbility.Item; }
         }
 
         public float Timer { get; protected set; }
-        public int Count { get; set; }
-
-        protected int price;
+        public string Name { get; protected set; }
+        public string Description { get; protected set; }
+        public bool ForSelling { get; protected set; }
 
         public int Price { get { return price; } }
         public int TotalPrice { get { return price * Count; } }
-
         public Texture2D Icon {
             get { return Player.Interface.Icons[ iconID ]; }
         }
-        public string Name { get; protected set; }
-        public string Description { get; protected set; }
 
         public ClassOfItem Class { get; private set; }
         public TypeOfItemRarity Rarity { get; private set; }
-
         public int Level { get; private set; }
-        public bool ForSelling { get; protected set; }
+
+        public int Count { get; set; }
 
         public Item( int level, ClassOfItem itemClass, TypeOfItemRarity rarity ) {
             Name = "Item";
             Description = string.Empty;
             iconID = 0;
             Timer = 0f;
-            Count = 0;
+            Count = 1;
             Class = itemClass;
             Rarity = rarity;
+            if( Personage.MIN_LEVEL > level )
+                level = Personage.MIN_LEVEL;
+            if( level > Personage.MAX_LEVEL )
+                level = Personage.MAX_LEVEL;
             Level = level;
             price = level * ( int ) itemClass * ( int ) rarity;
             ForSelling = itemClass != ClassOfItem.Quest;
         }
 
-
-
-
-
-
-        public void Use( Personage target = null ) { }
+        public virtual void Use( Personage target = null ) { }
 
         public override string ToString() { return Name; }
-    }
 
+    }
 
     public enum ClassOfItem : int {
         Quest = 0,      // Квестовий

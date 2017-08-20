@@ -14,7 +14,9 @@ namespace MyRPG {
 
     public abstract class NormalItem : Item {
 
-        public NormalItem( int level, TypeOfItemRarity rarity ) : base( level, ClassOfItem.Normal, rarity ) { }
+        public NormalItem( int level, TypeOfItemRarity rarity ) : base( level, ClassOfItem.Normal, rarity ) {
+            Name = "Normal Item";
+        }
 
     }
 

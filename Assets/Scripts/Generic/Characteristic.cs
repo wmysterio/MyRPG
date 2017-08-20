@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-	public sealed class Characteristic {
+    public sealed class Characteristic {
 
         public static Characteristic CreateEmpty() { return new Characteristic(); }
         public static Characteristic CreateBase( int level, RankOfPersonage rank ) {
@@ -91,6 +91,16 @@ namespace MyRPG {
             for( int i = 0; i < length; i++ ) {
                 var summ = ( float ) c1.properties[ i ].GetValue( c1, null ) + ( float ) c2.properties[ i ].GetValue( c2, null );
                 c1.properties[ i ].SetValue( c1, summ, null );
+            }
+            return c1;
+        }
+
+        public static Characteristic operator /( Characteristic c1, float percent ) {
+            if( percent == 0f )
+                return c1;
+            for( int i = 0; i < length; i++ ) {
+                var maxValue = ( float ) c1.properties[ i ].GetValue( c1, null );
+                c1.properties[ i ].SetValue( c1, GetValueOfPercentage( maxValue, percent ), null );
             }
             return c1;
         }
