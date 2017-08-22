@@ -12,6 +12,18 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
+    //public class DemoSword : SwordWeapon {
+
+    //    public DemoSword() : base( "Мега меч", 1, TypeOfItemRarity.Normal, -1 ) { }
+
+    //}
+
+    //public class DemoReagent : ReagentItem {
+
+    //    public DemoReagent() : base( 1, TypeOfItemRarity.Normal ) { }
+
+    //}
+
     public class Init : MonoBehaviour {
 
         bool chg = false;
@@ -32,6 +44,25 @@ namespace MyRPG {
             Model.LoadRequestedNow();
 
             player = new Player( 1, 3, new Vector3( 0f, 1f, 0f ) );
+
+            //for( int i = 0; i < 72; i++ ) {
+            //    player.Loot.Add( new DemoSword() );
+            //    player.Loot.Add( new DemoReagent() );
+            //}
+
+            //print( string.Format( "Total items: {0}", player.Loot.Count ) );
+
+            //// #, Name, Count, Total Price
+            //for( int i = 0; i < player.Loot.Count; i++ ) {
+            //    print( string.Format(
+            //        "{0}. Name: {1}. Count: {2}. Price: {3}",
+            //        i,
+            //        player.Loot[ i ].Name,
+            //        player.Loot[ i ].Count,
+            //        player.Loot[ i ].TotalPrice
+            //                         )
+            //    );
+            //}
 
 
 

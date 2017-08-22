@@ -31,6 +31,7 @@ namespace MyRPG {
 
         public int Level { get; protected set; }
         public Characteristic CurrentCharacteristic { get; protected set; }
+        public Bag Loot { get; private set; }
         
         public bool CanMove { get; set; }
         public RelationshipOfPersonage Relationship {
@@ -52,6 +53,8 @@ namespace MyRPG {
             Relationship = RelationshipOfPersonage.Neutral;
             rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             Effects = new EffectList();
+            Loot = new Bag();
+
 
             // !!! Ініціалізацію об'єктів здійснювати до методу LevelUp
             LevelUp( level );
@@ -71,6 +74,7 @@ namespace MyRPG {
 
         protected override void update() {
             base.update();
+            Loot.UpdateItems();
             updateCharacteristic();
 
             if( !IsDead ) {

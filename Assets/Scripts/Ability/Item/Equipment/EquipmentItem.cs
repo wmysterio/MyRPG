@@ -46,7 +46,10 @@ namespace MyRPG {
             price += 5 * ( 1 + ( int ) part ) + ( int ) material;
         }
 
-        public virtual Characteristic Update() { return ( CurrentCharacteristic.Clear() + baseCharacteristic ) / ( 100f - Strength ); }
+        public override void Update() {
+            base.Update();
+            CurrentCharacteristic = ( CurrentCharacteristic.Clear() + baseCharacteristic ) / ( 100f - Strength );
+        }
 
     }
 

@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.1.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -80,31 +78,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\BrassKnucklesWeapon.cs" />
     <Compile Include="Assets\Scenes\Init.cs" />
-    <Compile Include="Assets\Scripts\Ability\Effect\ActiveEffect.cs" />
+    <Compile Include="Assets\Scripts\Ability\Effect\ActiveEffect\ActiveEffect.cs" />
     <Compile Include="Assets\Scripts\Ability\Effect\Effect.cs" />
-    <Compile Include="Assets\Scripts\Ability\Effect\PassiveEffect.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\AccessoryEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\BeltEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Effect\PassiveEffect\PassiveEffect.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Accessory\AccessoryEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Belt\BeltEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\EquipmentItem.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\FeetEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\FootwearEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\HandsEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\HeadEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\NeckEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\RingEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\ShouldersEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\SpineEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\TorsoEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\AxWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\BowWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\DaggerWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\HammerWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\StaffWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\SwordWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\WandWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\WeaponEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Feet\FeetEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Footwear\FootwearEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Hands\HandsEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Head\HeadEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Neck\NeckEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Ring\RingEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Shoulders\ShouldersEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Spine\SpineEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Torso\TorsoEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Ax\AxWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Bow\BowWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Brass Knuckles\BrassKnucklesWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Dagger\DaggerWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Hammer\HammerWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Staff\StaffWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Sword\SwordWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Wand\WandWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\WeaponEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Item.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Normal\NormalItem.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Quest\QuestItem.cs" />
@@ -112,16 +110,17 @@
     <Compile Include="Assets\Scripts\Ability\Item\Trash\TrashItem.cs" />
     <Compile Include="Assets\Scripts\Ability\Spell\Spell.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityList.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityUpdator.cs" />
     <Compile Include="Assets\Scripts\Entity\Object\Object.cs" />
     <Compile Include="Assets\Scripts\Entity\Object\PickUp\PickUp.cs" />
-    <Compile Include="Assets\Scripts\Entity\Personage\Humanoid.cs" />
+    <Compile Include="Assets\Scripts\Entity\Personage\Humanoid\Humanoid.cs" />
+    <Compile Include="Assets\Scripts\Entity\Personage\Humanoid\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Entity\Personage\Personage.cs" />
-    <Compile Include="Assets\Scripts\Entity\Personage\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Generic\Bag.cs" />
     <Compile Include="Assets\Scripts\Generic\Characteristic.cs" />
     <Compile Include="Assets\Scripts\Generic\Console.cs" />
     <Compile Include="Assets\Scripts\Generic\EffectList.cs" />
+    <Compile Include="Assets\Scripts\Generic\EntityList.cs" />
+    <Compile Include="Assets\Scripts\Generic\EntityUpdator.cs" />
     <Compile Include="Assets\Scripts\Generic\Interface.cs" />
     <Compile Include="Assets\Scripts\Generic\Model.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IAbility.cs" />

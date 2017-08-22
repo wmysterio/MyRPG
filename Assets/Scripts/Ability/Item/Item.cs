@@ -56,6 +56,9 @@ namespace MyRPG {
 
         public virtual void Use( Personage target = null ) { }
 
+        public virtual void Update() { }
+
+
         public override string ToString() { return Name; }
 
     }
