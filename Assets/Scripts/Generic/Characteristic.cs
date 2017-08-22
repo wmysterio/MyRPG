@@ -77,6 +77,9 @@ namespace MyRPG {
         public float CriticalChance { get; set; }
         public float CriticalEffect { get; set; }
         public float CastSpeed { get; set; }
+        public float ChanceOfParrying { get; set; }
+        public float ChanceOfBlocking { get; set; }
+
 
         private Characteristic() { Clear(); }
 

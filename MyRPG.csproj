@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.1.0f3</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -78,10 +80,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\BrassKnucklesWeapon.cs" />
     <Compile Include="Assets\Scenes\Init.cs" />
     <Compile Include="Assets\Scripts\Ability\Effect\ActiveEffect.cs" />
     <Compile Include="Assets\Scripts\Ability\Effect\Effect.cs" />
     <Compile Include="Assets\Scripts\Ability\Effect\PassiveEffect.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\AccessoryEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\BeltEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\EquipmentItem.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\FeetEquipment.cs" />
@@ -91,7 +95,15 @@
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\NeckEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\RingEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\ShouldersEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\SpineEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\TorsoEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\AxWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\BowWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\DaggerWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\HammerWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\StaffWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\SwordWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\WandWeapon.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\WeaponEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Item.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Normal\NormalItem.cs" />
@@ -113,6 +125,7 @@
     <Compile Include="Assets\Scripts\Generic\Interface.cs" />
     <Compile Include="Assets\Scripts\Generic\Model.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IAbility.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IDamage.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDescription.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

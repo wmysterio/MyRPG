@@ -16,11 +16,12 @@ namespace MyRPG {
 
         private float strength;
 
+        protected Characteristic baseCharacteristic;
+
         public PartOfEquipment EquipmentPart { get; private set; }
         public MaterialOfEquipment Material { get; private set; }
         public int ModelID { get; private set; }
 
-        protected Characteristic baseCharacteristic;
         public Characteristic CurrentCharacteristic { get; private set; }
 
         public float Strength {
@@ -36,6 +37,8 @@ namespace MyRPG {
 
         public EquipmentItem( int level, TypeOfItemRarity rarity, MaterialOfEquipment material, PartOfEquipment part, int modelId ) : base( level, ClassOfItem.Equipment, rarity ) {
             Name = "Equipment Item";
+            baseCharacteristic = Characteristic.CreateEmpty();
+            CurrentCharacteristic = Characteristic.CreateEmpty();
             Strength = 100;
             EquipmentPart = part;
             Material = material;
@@ -43,7 +46,7 @@ namespace MyRPG {
             price += 5 * ( 1 + ( int ) part ) + ( int ) material;
         }
 
-        public Characteristic Update() { return ( CurrentCharacteristic.Clear() + baseCharacteristic ) / ( 100f - Strength ); }
+        public virtual Characteristic Update() { return ( CurrentCharacteristic.Clear() + baseCharacteristic ) / ( 100f - Strength ); }
 
     }
 
@@ -52,12 +55,14 @@ namespace MyRPG {
         Neck = 1,       // Шия
         Ring = 2,       // Палець
         Belt = 3,       // Пояс
-        Footwear = 4,   // Взуття
-        Shoulders = 5,  // Плечі
-        Feet = 6,       // Ноги
-        Torso = 7,      // Груди
-        Head = 8,       // Голова
-        Weapon = 9      // Зброя
+        Spine = 4,      // Спина
+        Accessory = 5,	// Аксесуар
+        Footwear = 6,   // Взуття
+        Shoulders = 7,  // Плечі
+        Feet = 8,       // Ноги
+        Torso = 9,      // Груди
+        Head = 10,      // Голова
+        Weapon = 11     // Зброя
     }
 
     public enum MaterialOfEquipment : int {
