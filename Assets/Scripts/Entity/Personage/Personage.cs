@@ -28,10 +28,11 @@ namespace MyRPG {
         public float CurrentMana { get; private set; }
         public float CurrentEnergy { get; private set; }
         public EffectList Effects { get; private set; }
+        public Bag Loot { get; private set; }
+        public EquipmentList Equipments { get; private set; }
 
         public int Level { get; protected set; }
         public Characteristic CurrentCharacteristic { get; protected set; }
-        public Bag Loot { get; private set; }
         
         public bool CanMove { get; set; }
         public RelationshipOfPersonage Relationship {
@@ -54,7 +55,7 @@ namespace MyRPG {
             rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             Effects = new EffectList();
             Loot = new Bag();
-
+            Equipments = new EquipmentList();
 
             // !!! Ініціалізацію об'єктів здійснювати до методу LevelUp
             LevelUp( level );
@@ -67,7 +68,7 @@ namespace MyRPG {
         }
 
         private void updateCharacteristic() {
-            CurrentCharacteristic = ( ( CurrentCharacteristic.Clear() + baseCharacteristic ) + Effects.Update() );
+            CurrentCharacteristic = ( ( ( CurrentCharacteristic.Clear() + baseCharacteristic ) + Equipments.CurrentCharacteristic ) + Effects.Update() );
         }
 
 

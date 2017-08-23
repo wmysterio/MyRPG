@@ -14,13 +14,9 @@ namespace MyRPG {
 
     //public class DemoSword : SwordWeapon {
 
-    //    public DemoSword() : base( "Мега меч", 1, TypeOfItemRarity.Normal, -1 ) { }
-
-    //}
-
-    //public class DemoReagent : ReagentItem {
-
-    //    public DemoReagent() : base( 1, TypeOfItemRarity.Normal ) { }
+    //    public DemoSword() : base( "Мега меч", 1, TypeOfItemRarity.Normal, -1 ) {
+    //        baseCharacteristic.PhysicalAttackPower = 100;
+    //    }
 
     //}
 
@@ -32,7 +28,7 @@ namespace MyRPG {
             var go = GameObject.Find( "EntityList" );
             go.AddComponent<Entity.EntityList>();
         }
-        
+
         Player player;
 
         void Start() {
@@ -40,40 +36,10 @@ namespace MyRPG {
 
 
 
-            Model.Request( 0, 1, 2, 3, 4, 5, 6, 7 );
+            Model.Request( 0 );
             Model.LoadRequestedNow();
 
-            player = new Player( 1, 3, new Vector3( 0f, 1f, 0f ) );
-
-            //for( int i = 0; i < 72; i++ ) {
-            //    player.Loot.Add( new DemoSword() );
-            //    player.Loot.Add( new DemoReagent() );
-            //}
-
-            //print( string.Format( "Total items: {0}", player.Loot.Count ) );
-
-            //// #, Name, Count, Total Price
-            //for( int i = 0; i < player.Loot.Count; i++ ) {
-            //    print( string.Format(
-            //        "{0}. Name: {1}. Count: {2}. Price: {3}",
-            //        i,
-            //        player.Loot[ i ].Name,
-            //        player.Loot[ i ].Count,
-            //        player.Loot[ i ].TotalPrice
-            //                         )
-            //    );
-            //}
-
-
-
-
-
-
-            var obj = new Object( 0, new Vector3( -1f, 0.5f, -1f ) );
-            obj.Freeze( true );
-
-            var pick = new PickUp( TypeOfPickUp.Reusable, 0, new Vector3( 1, 0.5f, 2 ) );
-
+            player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
 
             Model.Unload();
         }

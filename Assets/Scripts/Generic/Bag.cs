@@ -51,17 +51,11 @@ namespace MyRPG {
             return true;
         }
         public void Clear() { items.Clear(); }
-
-
-
-
         public void Remove<T>( T item = null ) where T : Item {
             if( items.ContainsKey( typeof( T ) ) ) {
                 items.Remove( typeof( T ) );
             }
         }
-
-
         public T Get<T>() where T : Item {
             if( !items.ContainsKey( typeof( T ) ) )
                 return null;
