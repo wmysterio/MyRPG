@@ -17,7 +17,7 @@ namespace MyRPG {
         public static class Console {
 
             private const int MAX_COMMAND_LENGTH = 40;
-			
+
             private delegate void Command( string[] args );
 
             private static Dictionary<string, Command> listCommands = new Dictionary<string, Command>() {
@@ -35,7 +35,7 @@ namespace MyRPG {
             private static ResourceRequest request = null;
             private static string command = string.Empty, commandName = string.Empty;
             private static char tmpChar = ' ';
-            private static char[] normalChar = new char[] { '.', ',', ':', '-', '>'  };
+            private static char[] normalChar = new char[] { '.', ',', ':', '-', '>' };
             private static string[] split = null, commandArgs = null;
             private static bool isInit = false, enable = false;
 
@@ -161,7 +161,7 @@ namespace MyRPG {
                     return;
                 }
                 float x = 0f, y = 0f, z = 0f;
-                if( !float.TryParse( args[0], out x ) ) {
+                if( !float.TryParse( args[ 0 ], out x ) ) {
                     playSound( soundError );
                     return;
                 }

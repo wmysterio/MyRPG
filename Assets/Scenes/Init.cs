@@ -12,14 +12,6 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    //public class DemoSword : SwordWeapon {
-
-    //    public DemoSword() : base( "Мега меч", 1, TypeOfItemRarity.Normal, -1 ) {
-    //        baseCharacteristic.PhysicalAttackPower = 100;
-    //    }
-
-    //}
-
     public class Init : MonoBehaviour {
 
         bool chg = false;
@@ -31,17 +23,29 @@ namespace MyRPG {
 
         Player player;
 
-        void Start() {
+        IEnumerator Start() {
             StartCoroutine( loadUI() );
-
-
 
             Model.Request( 0 );
             Model.LoadRequestedNow();
 
             player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
+            Player.Interface.Enable = true;
+
+
 
             Model.Unload();
+
+            yield return new WaitForSeconds( 4 );
+            
+            Player.Interface.ShowMessageBox( 10f, "Знайти {0} предметів і потім віднеси їх старцю на край печери! В тебе буде всього {1} секунд, щоб дістатись туди. Інакше він забуде про завдання!", 20, 5 );
+
+
+            yield return new WaitForSeconds( 11 );
+
+            Player.Interface.ShowMessageBox( 5f, "Привіт, світ!" );
+
+
         }
 
 
