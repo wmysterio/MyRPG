@@ -21,16 +21,17 @@ namespace MyRPG {
             public const int MAX_ICON_COUNT = 10;
             public const float DEFAULT_MESSAGE_BOX_WIDTH = 310f;
 
-            private static bool isInit = false, enable = false;
+            private static bool isInit = false, enable = false, enableСinematicView;
             private static ResourceRequest request;
-            private static float messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH;
-            private static Texture2D messageBoxBackground;
+            private static float messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH, subtitlesTimer, subtitlesDuration;
+            private static Texture2D messageBoxBackground, subtitlesBlackPixel;
             private static AudioClip messageBoxPlay;
-            private static Rect messageBoxRect;
-            private static GUIContent messageBoxContent;
-            private static GUIStyle messageBoxStyle, messageBoxLabelStyle;
+            private static Rect messageBoxRect, subtitlesUpRect, subtitlesBottomRect;
+            private static GUIContent messageBoxContent, subtitlesContent;
+            private static GUIStyle messageBoxStyle, messageBoxLabelStyle, subtitlesStyle;
 
             public static Texture2D[] Icons { get; private set; }
+            public static bool SubtitlesDisplayed { get; private set; }
             public static bool MessageBoxDisplayed { get; private set; }
             public static bool IsInit {
                 get { return isInit; }
@@ -40,8 +41,32 @@ namespace MyRPG {
                 get { return enable; }
                 set { enable = value; }
             }
+            public static bool EnableСinematicView {
+                get { return enableСinematicView; }
+                set {
+                    if( value ) {
+                        HideMessageBox();
+                    } else {
+                        ClearSubtitles();
+                    }
+                    enableСinematicView = value;
+                }
+            }
 
-            
+            public static void ClearSubtitles() {
+                subtitlesDuration = 0f;
+                subtitlesTimer = 0f;
+                subtitlesContent.text = string.Empty;
+                SubtitlesDisplayed = false;
+            }
+            public static void PrintSubtitles( float duration, string text ) {
+                subtitlesTimer = 0f;
+                subtitlesDuration = duration;
+                subtitlesContent.text = text;
+            }
+            public static void PrintSubtitles( float duration, string format, params object[] args ) {
+                PrintSubtitles( duration, string.Format( format, args ) );
+            }
             public static void SetMessageBoxWidth( float width ) { messageBoxWidth = width; }
             public static void HideMessageBox() {
                 messageBoxTimer = 0f;
@@ -50,6 +75,8 @@ namespace MyRPG {
                 MessageBoxDisplayed = false;
             }
             public static void ShowMessageBox( float duration, string text ) {
+                if( EnableСinematicView )
+                    return;
                 messageBoxTimer = 0f;
                 messageBoxDuration = duration;
                 messageBoxContent.text = text;
@@ -66,6 +93,15 @@ namespace MyRPG {
                 messageBoxRect = new Rect( 10f, 10f, 0f, 0f );
                 messageBoxContent = new GUIContent( string.Empty );
                 HideMessageBox();
+
+                subtitlesUpRect = new Rect( 0, 0, Screen.width, 76 );
+                subtitlesBottomRect = new Rect( 0, Screen.height - 76, Screen.width, 76 );
+                subtitlesContent = new GUIContent( string.Empty );
+                subtitlesBlackPixel = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+                subtitlesBlackPixel.alphaIsTransparency = true;
+                subtitlesBlackPixel.SetPixel( 0, 0, Color.black );
+                subtitlesBlackPixel.Apply();
+                EnableСinematicView = false;
 
                 yield return Console.Init();
 
@@ -90,6 +126,17 @@ namespace MyRPG {
             public static void Update() {
                 if( !IsInit || !Enable )
                     return;
+
+                if( EnableСinematicView ) {
+                    if( subtitlesDuration > subtitlesTimer ) {
+                        SubtitlesDisplayed = true;
+                        subtitlesTimer += 1 * Time.deltaTime;
+                        if( subtitlesTimer > subtitlesDuration )
+                            ClearSubtitles();
+                    }
+                    return;
+                }
+
                 if( messageBoxDuration > messageBoxTimer ) {
                     MessageBoxDisplayed = true;
                     messageBoxTimer += 1f * Time.deltaTime;
@@ -117,7 +164,27 @@ namespace MyRPG {
                         messageBoxLabelStyle.focused.textColor = Color.black;
                         messageBoxLabelStyle.hover.textColor = Color.black;
                     }
-                    if( MessageBoxDisplayed ) {
+
+                    if( subtitlesStyle == null ) {
+                        subtitlesStyle = new GUIStyle( messageBoxLabelStyle );
+                        subtitlesStyle.alignment = TextAnchor.MiddleCenter;
+                        subtitlesStyle.normal.textColor = Color.white;
+                        subtitlesStyle.active.textColor = Color.white;
+                        subtitlesStyle.focused.textColor = Color.white;
+                        subtitlesStyle.hover.textColor = Color.white;
+                    }
+
+                    if( EnableСinematicView ) {
+                        subtitlesUpRect.width = Screen.width;
+                        subtitlesBottomRect.width = Screen.width;
+                        subtitlesBottomRect.y = Screen.height - subtitlesBottomRect.height;
+                        GUI.DrawTexture( subtitlesUpRect, subtitlesBlackPixel, ScaleMode.StretchToFill );
+                        GUI.DrawTexture( subtitlesBottomRect, subtitlesBlackPixel, ScaleMode.StretchToFill );
+                        if( SubtitlesDisplayed )
+                            GUI.Label( subtitlesBottomRect, subtitlesContent, subtitlesStyle );
+                    }
+
+                    if( MessageBoxDisplayed && !EnableСinematicView ) {
                         messageBoxRect.width = messageBoxWidth;
                         messageBoxRect.height = messageBoxLabelStyle.CalcHeight( messageBoxContent, messageBoxWidth );
                         GUI.Box( messageBoxRect, string.Empty, messageBoxStyle );
