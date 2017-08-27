@@ -22,6 +22,7 @@ namespace MyRPG {
         protected GameObject gameObject;
         protected Collider collider;
         protected Rigidbody rigidbody;
+        protected Targeting targetingScript;
 
         public Texture2D Icon {
             get {
@@ -60,9 +61,7 @@ namespace MyRPG {
             Position = position;
             collider = gameObject.GetComponentInChildren<Collider>();
             rigidbody = gameObject.AddComponent<Rigidbody>();
-
-
-
+            targetingScript = gameObject.AddComponent<Targeting>();
             updator.Add( this );
         }
 

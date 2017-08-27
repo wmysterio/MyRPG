@@ -44,6 +44,9 @@ namespace MyRPG {
             }
         }
 
+        public Personage Target { get; set; }
+
+
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
             Name = "Personage";
             IsDead = false;
@@ -56,6 +59,7 @@ namespace MyRPG {
             Effects = new EffectList();
             Loot = new Bag();
             Equipments = new EquipmentList();
+            Target = null;
 
             // !!! Ініціалізацію об'єктів здійснювати до методу LevelUp
             LevelUp( level );
@@ -71,12 +75,19 @@ namespace MyRPG {
             CurrentCharacteristic = ( ( ( CurrentCharacteristic.Clear() + baseCharacteristic ) + Equipments.CurrentCharacteristic ) + Effects.Update() );
         }
 
-
+        public bool IsFriendlyOf( Personage personage ) { return relationship != personage.relationship; }
 
         protected override void update() {
             base.update();
             Loot.UpdateItems();
             updateCharacteristic();
+
+            if( targetingScript.MouseHover ) {
+                if( Player.Exist() && Input.GetMouseButtonDown( 0 ) ) {
+                    if( !Player.Current.NoLongerNeeded && !Player.Current.IsDead )
+                        Player.Current.Target = this;
+                }
+            }
 
             if( !IsDead ) {
                 if( 0 >= CurrentHealth ) {
@@ -116,7 +127,7 @@ namespace MyRPG {
             Restore();
         }
 
-        public void Die() {
+        public virtual void Die() {
             if( IsDead )
                 return;
             Effects.ClearAll();

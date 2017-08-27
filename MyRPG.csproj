@@ -124,6 +124,7 @@
     <Compile Include="Assets\Scripts\Generic\EquipmentList.cs" />
     <Compile Include="Assets\Scripts\Generic\Interface.cs" />
     <Compile Include="Assets\Scripts\Generic\Model.cs" />
+    <Compile Include="Assets\Scripts\Generic\Targeting.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IAbility.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamage.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDescription.cs" />

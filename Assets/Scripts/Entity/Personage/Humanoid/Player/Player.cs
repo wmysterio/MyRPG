@@ -33,11 +33,6 @@ namespace MyRPG {
         protected override void update() {
             base.update();
             Interface.Update();
-
-
-
-
-
         }
 
         public void AddExperience( int amount ) {
@@ -57,15 +52,15 @@ namespace MyRPG {
             }
         }
 
+        public override void Die() {
+            base.Die();
+            Target = null;
+        }
+
         private int calculateMaxExperience() { return ( int ) ( 795 + 250 * Mathf.Pow( 1.08f, Level ) ); }
         
 
-        public void Draw() {
-
-
-
-            Interface.Draw();
-        }
+        public void Draw() { Interface.Draw(); }
 
 
     }

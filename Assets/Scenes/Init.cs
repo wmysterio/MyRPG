@@ -12,6 +12,14 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
+    public class Jack : Humanoid {
+
+        public Jack() : base( 1, RankOfPersonage.Normal, 0, new Vector3( -2f, 0.5f, -4f ) ) {
+            Name = "Jack";
+        }
+
+    }
+
     public class Init : MonoBehaviour {
 
         bool chg = false;
@@ -22,27 +30,21 @@ namespace MyRPG {
         }
 
         Player player;
+        Jack jack;
 
         IEnumerator Start() {
-            StartCoroutine( loadUI() );
+            yield return Player.Interface.Init();
+            Player.Interface.Enable = true;
 
             Model.Request( 0 );
             Model.LoadRequestedNow();
 
             player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
-            Player.Interface.Enable = true;
-            Player.Console.Enable = true;
+            jack = new Jack();
 
             Model.Unload();
 
-            yield return new WaitForSeconds( 2 );
-
-
-            Player.Interface.Fade( FadeMode.In );
-
-            yield return new WaitForSeconds( 4 );
-
-            Player.Interface.Fade( FadeMode.Out );
+            Player.Interface.Fade( FadeMode.In, 0.007f );
 
         }
 
@@ -52,13 +54,11 @@ namespace MyRPG {
 
         void Update() {
             if( Player.Exist() ) {
-
+                //print( player.Target );
             }
         }
 
         void FixedUpdate() { }
-
-        private IEnumerator loadUI() { yield return Player.Interface.Init(); }
 
         void OnGUI() {
             if( !chg ) {
