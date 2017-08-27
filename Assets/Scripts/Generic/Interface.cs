@@ -21,14 +21,15 @@ namespace MyRPG {
             public const int MAX_ICON_COUNT = 10;
             public const float DEFAULT_MESSAGE_BOX_WIDTH = 310f;
 
-            private static bool isInit = false, enable = false, enableСinematicView;
+            private static bool isInit = false, enable = false, enableСinematicView, fadeOn;
             private static ResourceRequest request;
-            private static float messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH, subtitlesTimer, subtitlesDuration;
-            private static Texture2D messageBoxBackground, subtitlesBlackPixel;
+            private static float fadeStep, fadeAlpha, messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH, subtitlesTimer, subtitlesDuration;
+            private static Texture2D messageBoxBackground, subtitlesBlackPixel, fadeTexture;
             private static AudioClip messageBoxPlay;
-            private static Rect messageBoxRect, subtitlesUpRect, subtitlesBottomRect;
+            private static Rect messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect;
             private static GUIContent messageBoxContent, subtitlesContent;
             private static GUIStyle messageBoxStyle, messageBoxLabelStyle, subtitlesStyle;
+            private static Color fadeColor = Color.black;
 
             public static Texture2D[] Icons { get; private set; }
             public static bool SubtitlesDisplayed { get; private set; }
@@ -52,6 +53,7 @@ namespace MyRPG {
                     enableСinematicView = value;
                 }
             }
+            public static bool Fadind { get; private set; }
 
             public static void ClearSubtitles() {
                 subtitlesDuration = 0f;
@@ -75,7 +77,7 @@ namespace MyRPG {
                 MessageBoxDisplayed = false;
             }
             public static void ShowMessageBox( float duration, string text ) {
-                if( EnableСinematicView )
+                if( EnableСinematicView || Fadind || Console.Enable )
                     return;
                 messageBoxTimer = 0f;
                 messageBoxDuration = duration;
@@ -85,6 +87,18 @@ namespace MyRPG {
             public static void ShowMessageBox( float duration, string format, params object[] args ) {
                 ShowMessageBox( duration, string.Format( format, args ) );
             }
+            public static void Fade( FadeMode mode, float fadeSpeed = 0.01f ) {
+                if( mode == FadeMode.In ) {
+                    fadeStep = -fadeSpeed;
+                    fadeAlpha = 0f;
+                } else {
+                    fadeStep = fadeSpeed;
+                    fadeAlpha = 1f;
+                }
+                fadeOn = true;
+                Fadind = true;
+            }
+
 
             public static IEnumerator Init() {
                 if( IsInit )
@@ -102,6 +116,14 @@ namespace MyRPG {
                 subtitlesBlackPixel.SetPixel( 0, 0, Color.black );
                 subtitlesBlackPixel.Apply();
                 EnableСinematicView = false;
+
+                fadeRect = new Rect( 0, 0, Screen.width, Screen.height );
+                Fadind = false;
+                fadeOn = true;
+                fadeTexture = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+                fadeTexture.alphaIsTransparency = true;
+                fadeTexture.SetPixel( 0, 0, fadeColor );
+                fadeTexture.Apply();
 
                 yield return Console.Init();
 
@@ -126,7 +148,23 @@ namespace MyRPG {
             public static void Update() {
                 if( !IsInit || !Enable )
                     return;
-
+                if( Fadind ) {
+                    fadeAlpha = fadeColor.a + fadeStep;
+                    if( 0f > fadeAlpha ) {
+                        fadeAlpha = 0f;
+                        Fadind = false;
+                        fadeOn = false;
+                    }
+                    if( fadeAlpha > 1f ) {
+                        fadeAlpha = 1f;
+                        Fadind = false;
+                    }
+                    fadeColor.a = fadeAlpha;
+                    fadeRect.width = Screen.width;
+                    fadeRect.height = Screen.height;
+                    fadeTexture.SetPixel( 0, 0, fadeColor );
+                    fadeTexture.Apply();
+                }
                 if( EnableСinematicView ) {
                     if( subtitlesDuration > subtitlesTimer ) {
                         SubtitlesDisplayed = true;
@@ -136,7 +174,6 @@ namespace MyRPG {
                     }
                     return;
                 }
-
                 if( messageBoxDuration > messageBoxTimer ) {
                     MessageBoxDisplayed = true;
                     messageBoxTimer += 1f * Time.deltaTime;
@@ -147,6 +184,8 @@ namespace MyRPG {
 
             public static void Draw() {
                 if( IsInit && Enable ) {
+                    if( fadeOn )
+                        GUI.DrawTexture( fadeRect, fadeTexture, ScaleMode.StretchToFill );
                     if( messageBoxStyle == null ) {
                         messageBoxStyle = new GUIStyle( GUI.skin.box );
                         messageBoxStyle.normal.background = messageBoxBackground;
@@ -164,7 +203,6 @@ namespace MyRPG {
                         messageBoxLabelStyle.focused.textColor = Color.black;
                         messageBoxLabelStyle.hover.textColor = Color.black;
                     }
-
                     if( subtitlesStyle == null ) {
                         subtitlesStyle = new GUIStyle( messageBoxLabelStyle );
                         subtitlesStyle.alignment = TextAnchor.MiddleCenter;
@@ -173,7 +211,6 @@ namespace MyRPG {
                         subtitlesStyle.focused.textColor = Color.white;
                         subtitlesStyle.hover.textColor = Color.white;
                     }
-
                     if( EnableСinematicView ) {
                         subtitlesUpRect.width = Screen.width;
                         subtitlesBottomRect.width = Screen.width;
@@ -183,7 +220,6 @@ namespace MyRPG {
                         if( SubtitlesDisplayed )
                             GUI.Label( subtitlesBottomRect, subtitlesContent, subtitlesStyle );
                     }
-
                     if( MessageBoxDisplayed && !EnableСinematicView ) {
                         messageBoxRect.width = messageBoxWidth;
                         messageBoxRect.height = messageBoxLabelStyle.CalcHeight( messageBoxContent, messageBoxWidth );
@@ -191,7 +227,8 @@ namespace MyRPG {
                         GUI.Label( messageBoxRect, messageBoxContent, messageBoxLabelStyle );
                     }
                 }
-                Console.Draw();
+                if( !fadeOn && !EnableСinematicView )
+                    Console.Draw();
             }
 
             private static void playSound( AudioClip clip ) { AudioSource.PlayClipAtPoint( clip, Camera.main.transform.position ); }
@@ -199,5 +236,7 @@ namespace MyRPG {
         }
 
     }
+
+    public enum FadeMode { In, Out }
 
 }

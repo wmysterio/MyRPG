@@ -16,7 +16,7 @@ namespace MyRPG {
 
         public static class Console {
 
-            private const int MAX_COMMAND_LENGTH = 40;
+            private const int MAX_COMMAND_LENGTH = 30;
 
             private delegate void Command( string[] args );
 
@@ -25,11 +25,10 @@ namespace MyRPG {
                 { "PLAYER_PLACE", player_place } // сам метод буде написано нижче
             };
 
-
+            
             private static AudioClip soundSuccess = null, soundError = null;
             private static Texture2D boxBackground = null, areaBackground = null;
             private static GUIStyle boxStyle = null, areaStyle = null;
-            private static Font consoleFont = null;
             private static Rect rectBox = new Rect( 10, 10, Screen.width - 20, 40 );
             private static Rect rectArea = new Rect( 15, 15, Screen.width - 30, 30 );
             private static ResourceRequest request = null;
@@ -45,7 +44,11 @@ namespace MyRPG {
             }
             public static bool Enable {
                 get { return enable; }
-                set { enable = value; }
+                set {
+                    if( value )
+                        Interface.HideMessageBox();
+                    enable = value;
+                }
             }
 
 
@@ -69,10 +72,6 @@ namespace MyRPG {
                 yield return request;
                 soundError = request.asset as AudioClip;
 
-                request = Resources.LoadAsync<Font>( "UI/Console/fonts/WHITRABT" );
-                yield return request;
-                consoleFont = request.asset as Font;
-
                 IsInit = true;
             }
 
@@ -81,7 +80,6 @@ namespace MyRPG {
             public static void Draw() {
                 if( !IsInit || !Enable )
                     return;
-
                 if( boxStyle == null ) {
                     boxStyle = new GUIStyle( GUI.skin.box );
                     boxStyle.normal.background = boxBackground;
@@ -89,7 +87,6 @@ namespace MyRPG {
                     boxStyle.focused.background = boxBackground;
                     boxStyle.hover.background = boxBackground;
                 }
-
                 if( areaStyle == null ) {
                     areaStyle = new GUIStyle( GUI.skin.textArea );
                     areaStyle.normal.background = areaBackground;
@@ -100,14 +97,11 @@ namespace MyRPG {
                     areaStyle.active.textColor = Color.black;
                     areaStyle.focused.textColor = Color.black;
                     areaStyle.hover.textColor = Color.black;
-                    areaStyle.font = consoleFont;
-                    areaStyle.fontSize = 24;
+                    areaStyle.fontSize = 18;
                     areaStyle.wordWrap = false;
                 }
-
                 rectBox.width = Screen.width - 20;
                 rectArea.width = Screen.width - 30;
-
                 GUI.Box( rectBox, "", boxStyle );
 
                 command = command.Trim().ToUpper();
