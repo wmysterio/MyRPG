@@ -137,10 +137,15 @@ namespace MyRPG {
             CurrentEnergy = 0f;
         }
 
-        public void Reanimate() {
+        public void Reanimate( float percent = 20f ) {
             if( !IsDead )
                 return;
             IsDead = false;
+            if( percent > 0f && 99f > percent ) {
+                CurrentHealth = Characteristic.GetValueOfPercentage( CurrentCharacteristic.MaxHealth, percent );
+                CurrentMana = Characteristic.GetValueOfPercentage( CurrentCharacteristic.MaxMana, percent );
+                return;
+            }
             Restore();
         }
 

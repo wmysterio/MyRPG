@@ -18,11 +18,11 @@ namespace MyRPG {
         public static Characteristic CreateEmpty() { return new Characteristic(); }
         public static Characteristic CreateBase( int level, RankOfPersonage rank ) {
             return new Characteristic() {
-                MaxHealth = 10f * level * ( int ) rank,
-                MaxMana = 10f * level * ( int ) rank,
+                MaxHealth = 1000f * level * ( int ) rank,
+                MaxMana = 1000f * level * ( int ) rank,
                 MaxEnergy = 100f * ( int ) rank,
-                HealthRegeneration = 0.1f * level,
-                ManaRegeneration = 0.1f * level,
+                HealthRegeneration = 0.09f * level,
+                ManaRegeneration = 0.09f * level,
                 EnergyRegeneration = 0.1f,
                 MoveSpeed = 1f,
                 CastSpeed = 1f

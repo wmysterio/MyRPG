@@ -24,11 +24,11 @@ namespace MyRPG {
             private static bool isInit = false, enable = false, enableСinematicView, fadeOn;
             private static ResourceRequest request;
             private static float fadeStep, fadeAlpha, messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH, subtitlesTimer, subtitlesDuration;
-            private static Texture2D messageBoxBackground, subtitlesBlackPixel, fadeTexture;
+            private static Texture2D messageBoxBackground, subtitlesBlackPixel, fadeTexture, imageHP, imageMP, imageEP, imageHP_bg, imageMP_bg, imageEP_bg;
             private static AudioClip messageBoxPlay;
-            private static Rect messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect;
+            private static Rect messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
             private static GUIContent messageBoxContent, subtitlesContent;
-            private static GUIStyle messageBoxStyle, messageBoxLabelStyle, subtitlesStyle;
+            private static GUIStyle messageBoxStyle, messageBoxLabelStyle, subtitlesStyle, hudNameStyle;
             private static Color fadeColor = Color.black;
 
             public static Texture2D[] Icons { get; private set; }
@@ -125,6 +125,44 @@ namespace MyRPG {
                 fadeTexture.SetPixel( 0, 0, fadeColor );
                 fadeTexture.Apply();
 
+                hudRect = new Rect( 0f, 0f, 200f, 8f );
+                hudBorderRect = new Rect( 0f, 0f, 204f, 57f );
+                hudNameRect = new Rect( 0f, 0f, 200f, 32f );
+
+
+                imageHP = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+                imageHP.alphaIsTransparency = true;
+                imageHP.SetPixel( 0, 0, new Color( 180f / 255f, 25f / 255f, 29f / 255f, 1f ) );
+                imageHP.Apply();
+
+                imageHP_bg = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+                imageHP_bg.alphaIsTransparency = true;
+                imageHP_bg.SetPixel( 0, 0, new Color( 90f / 255f, 12f / 255f, 14f / 255f, 1f ) );
+                imageHP_bg.Apply();
+
+                imageMP = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+                imageMP.alphaIsTransparency = true;
+                imageMP.SetPixel( 0, 0, new Color( 172f / 255f, 203f / 255f, 241f / 255f, 1f ) );
+                imageMP.Apply();
+
+                imageMP_bg = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+                imageMP_bg.alphaIsTransparency = true;
+                imageMP_bg.SetPixel( 0, 0, new Color( 86f / 255f, 101f / 255f, 120f / 255f, 1f ) );
+                imageMP_bg.Apply();
+
+                imageEP = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+                imageEP.alphaIsTransparency = true;
+                imageEP.SetPixel( 0, 0, new Color( 83f / 255f, 153f / 255f, 51f / 255f, 1f ) );
+                imageEP.Apply();
+
+                imageEP_bg = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+                imageEP_bg.alphaIsTransparency = true;
+                imageEP_bg.SetPixel( 0, 0, new Color( 20f / 255f, 38f / 255f, 12f / 255f, 1f ) );
+                imageEP_bg.Apply();
+
+
+
+
                 yield return Console.Init();
 
                 Icons = new Texture2D[ MAX_ICON_COUNT ];
@@ -174,6 +212,8 @@ namespace MyRPG {
                     }
                     return;
                 }
+                if( Input.GetKeyDown( KeyCode.BackQuote ) )
+                    Console.Enable = !Console.Enable;
                 if( messageBoxDuration > messageBoxTimer ) {
                     MessageBoxDisplayed = true;
                     messageBoxTimer += 1f * Time.deltaTime;
@@ -195,7 +235,6 @@ namespace MyRPG {
                     }
                     if( messageBoxLabelStyle == null ) {
                         messageBoxLabelStyle = new GUIStyle( GUI.skin.label );
-                        messageBoxLabelStyle.fontSize = 16;
                         messageBoxLabelStyle.alignment = TextAnchor.UpperLeft;
                         messageBoxLabelStyle.padding = new RectOffset( DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING );
                         messageBoxLabelStyle.normal.textColor = Color.black;
@@ -227,8 +266,64 @@ namespace MyRPG {
                         GUI.Label( messageBoxRect, messageBoxContent, messageBoxLabelStyle );
                     }
                 }
-                if( !fadeOn && !EnableСinematicView )
+
+
+                if( !fadeOn && !EnableСinematicView ) {
                     Console.Draw();
+                    if( !Console.Enable ) {
+                        if( hudNameStyle == null ) {
+                            hudNameStyle = new GUIStyle( GUI.skin.label );
+                            hudNameStyle.normal.textColor = Color.white;
+                            hudNameStyle.active.textColor = Color.white;
+                            hudNameStyle.focused.textColor = Color.white;
+                            hudNameStyle.hover.textColor = Color.white;
+                            hudNameStyle.fontSize = 16;
+                            hudNameStyle.fontStyle = FontStyle.Bold;
+                        }
+
+                        if( !MessageBoxDisplayed )
+                            displayHUD( 10f, 10f, Current );
+                        if( Current.Target != null )
+                            displayHUD( Screen.width - 214f, 10f, Current.Target, true );
+                    }
+                }
+            }
+
+
+            private static void displayHUD( float x, float y, Personage personage, bool target = false ) {
+                hudBorderRect.x = x;
+                hudBorderRect.y = y;
+                hudRect.x = x + 2;
+                hudRect.y = y + 2;
+                hudRect.width = 200f;
+
+                GUI.DrawTexture( hudBorderRect, subtitlesBlackPixel, ScaleMode.StretchToFill );
+
+                hudNameRect.y = y;
+                if( target ) {
+                    hudNameRect.x = x - 5f;
+                    hudNameStyle.alignment = TextAnchor.UpperRight;
+                } else {
+                    hudNameRect.x = x + 5f;
+                    hudNameStyle.alignment = TextAnchor.UpperLeft;
+                }
+                GUI.Label( hudNameRect, personage.Name, hudNameStyle );
+
+
+                hudRect.y += 25;
+                GUI.DrawTexture( hudRect, imageHP_bg, ScaleMode.StretchToFill );
+                hudRect.width = Mathf.Round( 2f * Characteristic.GetPercentageOfValue( personage.CurrentCharacteristic.MaxHealth, personage.CurrentHealth ) );
+                GUI.DrawTexture( hudRect, imageHP, ScaleMode.StretchToFill );
+                hudRect.y += 10;
+                hudRect.width = 200f;
+                GUI.DrawTexture( hudRect, imageMP_bg, ScaleMode.StretchToFill );
+                hudRect.width = Mathf.Round( 2f * Characteristic.GetPercentageOfValue( personage.CurrentCharacteristic.MaxMana, personage.CurrentMana ) );
+                GUI.DrawTexture( hudRect, imageMP, ScaleMode.StretchToFill );
+                hudRect.y += 10;
+                hudRect.width = 200f;
+                GUI.DrawTexture( hudRect, imageEP_bg, ScaleMode.StretchToFill );
+                hudRect.width = Mathf.Round( 2f * Characteristic.GetPercentageOfValue( personage.CurrentCharacteristic.MaxEnergy, personage.CurrentEnergy ) );
+                GUI.DrawTexture( hudRect, imageEP, ScaleMode.StretchToFill );
             }
 
             private static void playSound( AudioClip clip ) { AudioSource.PlayClipAtPoint( clip, Camera.main.transform.position ); }

@@ -12,10 +12,10 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public class Jack : Humanoid {
+    public class TempHuman : Humanoid {
 
-        public Jack() : base( 1, RankOfPersonage.Normal, 0, new Vector3( -2f, 0.5f, -4f ) ) {
-            Name = "Jack";
+        public TempHuman( string name, Vector3 position ) : base( 1, RankOfPersonage.Normal, 0, position ) {
+            Name = name;
         }
 
     }
@@ -30,7 +30,7 @@ namespace MyRPG {
         }
 
         Player player;
-        Jack jack;
+        TempHuman jack, mike;
 
         IEnumerator Start() {
             yield return Player.Interface.Init();
@@ -40,12 +40,16 @@ namespace MyRPG {
             Model.LoadRequestedNow();
 
             player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
-            jack = new Jack();
+            jack = new TempHuman( "Jack", new Vector3( -2f, 0.5f, -4f ) );
+            mike = new TempHuman( "Mike", new Vector3( 2f, 0.5f, -4f ) );
+            mike.Die();
 
             Model.Unload();
 
-            Player.Interface.Fade( FadeMode.In, 0.007f );
+            Player.Interface.Fade( FadeMode.In );
 
+            yield return new WaitForSeconds( 4f );
+            Player.Interface.ShowMessageBox( 4f, "Hello, world!" );
         }
 
 
@@ -54,7 +58,8 @@ namespace MyRPG {
 
         void Update() {
             if( Player.Exist() ) {
-                //print( player.Target );
+                if( Input.GetKeyDown( KeyCode.F ) )
+                    mike.Reanimate();
             }
         }
 
