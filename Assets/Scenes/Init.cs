@@ -25,6 +25,7 @@ namespace MyRPG {
         bool chg = false;
 
         void Awake() {
+            InputManager.Init();
             var go = GameObject.Find( "EntityList" );
             go.AddComponent<Entity.EntityList>();
         }

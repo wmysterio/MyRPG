@@ -212,7 +212,7 @@ namespace MyRPG {
                     }
                     return;
                 }
-                if( Input.GetKeyDown( KeyCode.BackQuote ) )
+                if( InputManager.IsKeyDown( KeyName.CONSOLE ) )
                     Console.Enable = !Console.Enable;
                 if( messageBoxDuration > messageBoxTimer ) {
                     MessageBoxDisplayed = true;
