@@ -19,6 +19,7 @@ namespace MyRPG {
 
         private Characteristic baseCharacteristic;
         private RelationshipOfPersonage relationship = RelationshipOfPersonage.Friendly;
+        private Vector3 velocity;
 
         public TypeOfPersonage Type { get; private set; }
         public RankOfPersonage Rank { get; private set; }
@@ -34,6 +35,7 @@ namespace MyRPG {
         public int Level { get; protected set; }
         public Characteristic CurrentCharacteristic { get; protected set; }
         
+        public bool EnableJumping { get; set; }
         public bool CanMove { get; set; }
         public RelationshipOfPersonage Relationship {
             get { return relationship; }
@@ -43,7 +45,6 @@ namespace MyRPG {
                 relationship = value;
             }
         }
-
         public Personage Target { get; set; }
 
 
@@ -60,6 +61,8 @@ namespace MyRPG {
             Loot = new Bag();
             Equipments = new EquipmentList();
             Target = null;
+            EnableJumping = true;
+            velocity = Vector3.zero;
 
             // !!! Ініціалізацію об'єктів здійснювати до методу LevelUp
             LevelUp( level );
@@ -83,13 +86,15 @@ namespace MyRPG {
             updateCharacteristic();
 
             if( targetingScript.MouseHover ) {
-                if( Player.Exist() && Input.GetMouseButtonDown( 0 ) ) {
+                if( Player.Exist() && InputManager.IsMouseDown( MouseKeyName.Left ) ) {
                     if( !Player.Current.NoLongerNeeded && !Player.Current.IsDead )
                         Player.Current.Target = this;
                 }
             }
 
             if( !IsDead ) {
+                if( CanMove )
+                    move();
                 if( 0 >= CurrentHealth ) {
                     Die();
                     return;
@@ -107,7 +112,24 @@ namespace MyRPG {
 
         }
 
+        protected override void physics() {
+            base.physics();
+            rigidbody.velocity += velocity;
+            velocity = Vector3.zero;
+        }
 
+        protected virtual void move() { }
+
+        public void MoveForward() { gameObject.transform.Translate( Vector3.forward * CurrentCharacteristic.MoveSpeed * Time.deltaTime ); }
+        public void MoveBack() { gameObject.transform.Translate( Vector3.back * CurrentCharacteristic.MoveSpeed * Time.deltaTime ); }
+        public void MoveLeft() { gameObject.transform.Translate( Vector3.left * CurrentCharacteristic.MoveSpeed * Time.deltaTime ); }
+        public void MoveRight() { gameObject.transform.Translate( Vector3.right * CurrentCharacteristic.MoveSpeed * Time.deltaTime ); }
+        public void Turn( float speed ) { gameObject.transform.Rotate( 0f, speed * Time.deltaTime, 0f ); }
+        public void Jump() {
+            if( NoLongerNeeded || IsDead || !EnableJumping || DistanceToGround() > 0.02f )
+                return;
+            velocity.y += 4f;
+        }
 
         public void Restore() {
             if( IsDead )

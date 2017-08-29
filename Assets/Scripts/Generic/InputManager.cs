@@ -20,6 +20,8 @@ namespace MyRPG {
         public static KeyCode GetKeyCode( KeyName name ) { return keys[ name ]; }
 
         public static void Init() {
+            if( keys != null )
+                return;
             keys = new Dictionary<KeyName, KeyCode>();
             var values = ( KeyName[] ) Enum.GetValues( typeof( KeyName ) );
             for( iterator = 0; iterator < values.Length; iterator++ )
@@ -56,7 +58,6 @@ namespace MyRPG {
             keys[ KeyName.CANCEL ] = KeyCode.Backspace;
             keys[ KeyName.MENU ] = KeyCode.Escape;
         }
-
         public static bool BindKey( KeyName name, KeyCode code ) {
             if( name == KeyName.ACTION || name == KeyName.CONSOLE || name == KeyName.MENU || name == KeyName.CANCEL )
                 return false;
@@ -68,7 +69,6 @@ namespace MyRPG {
             keys[ name ] = code;
             return true;
         }
-
         public static bool GetKey( KeyName name ) { return Input.GetKey( keys[ name ] ); }
         public static bool IsKeyDown( KeyName name ) { return Input.GetKeyDown( keys[ name ] ); }
         public static bool IsKeyUp( KeyName name ) { return Input.GetKeyUp( keys[ name ] ); }

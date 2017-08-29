@@ -58,10 +58,32 @@ namespace MyRPG {
         }
 
         private int calculateMaxExperience() { return ( int ) ( 795 + 250 * Mathf.Pow( 1.08f, Level ) ); }
-        
+
+        protected override void move() {
+            base.move();
+
+            if( InputManager.GetKey( KeyName.TURN_LEFT ) ) {
+                Turn( -100f );
+            } else if( InputManager.GetKey( KeyName.TURN_RIGHT ) ) {
+                Turn( 100f );
+            }
+            if( InputManager.GetKey( KeyName.FORWARD ) ) {
+                MoveForward();
+            } else if( InputManager.GetKey( KeyName.BACK ) ) {
+                MoveBack();
+            }
+            if( InputManager.GetKey( KeyName.LEFT ) ) {
+                MoveLeft();
+            } else if( InputManager.GetKey( KeyName.RIGHT ) ) {
+                MoveRight();
+            }
+            if( InputManager.IsKeyDown( KeyName.JUMP ) ) { 
+                Jump();
+            }
+
+        }
 
         public void Draw() { Interface.Draw(); }
-
 
     }
 
