@@ -12,14 +12,16 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public abstract class Personage : Entity {
+    public abstract partial class Personage : Entity {
 
         public const int MIN_LEVEL = 1;
         public const int MAX_LEVEL = 100;
 
         private Characteristic baseCharacteristic;
         private RelationshipOfPersonage relationship = RelationshipOfPersonage.Friendly;
-        private Vector3 velocity;
+        private Vector3 velocity, tempVector;
+        private Path currentPath;
+        private Path.Node currentNode;
 
         public TypeOfPersonage Type { get; private set; }
         public RankOfPersonage Rank { get; private set; }
@@ -31,6 +33,7 @@ namespace MyRPG {
         public EffectList Effects { get; private set; }
         public Bag Loot { get; private set; }
         public EquipmentList Equipments { get; private set; }
+        public Task CurrentTask { get; private set; }
 
         public int Level { get; protected set; }
         public Characteristic CurrentCharacteristic { get; protected set; }
@@ -62,7 +65,9 @@ namespace MyRPG {
             Equipments = new EquipmentList();
             Target = null;
             EnableJumping = true;
+            ClearTask();
             velocity = Vector3.zero;
+            tempVector = Vector3.zero;
 
             // !!! Ініціалізацію об'єктів здійснювати до методу LevelUp
             LevelUp( level );
@@ -73,17 +78,16 @@ namespace MyRPG {
             CurrentCharacteristic = Characteristic.CreateEmpty();
             updateCharacteristic();
         }
-
         private void updateCharacteristic() {
             CurrentCharacteristic = ( ( ( CurrentCharacteristic.Clear() + baseCharacteristic ) + Equipments.CurrentCharacteristic ) + Effects.Update() );
         }
 
-        public bool IsFriendlyOf( Personage personage ) { return relationship != personage.relationship; }
 
         protected override void update() {
             base.update();
             Loot.UpdateItems();
             updateCharacteristic();
+            IsStopped = true;
 
             if( targetingScript.MouseHover ) {
                 if( Player.Exist() && InputManager.IsMouseDown( MouseKeyName.Left ) ) {
@@ -93,8 +97,11 @@ namespace MyRPG {
             }
 
             if( !IsDead ) {
+
                 if( CanMove )
-                    move();
+                    taskManager();
+
+
                 if( 0 >= CurrentHealth ) {
                     Die();
                     return;
@@ -120,17 +127,33 @@ namespace MyRPG {
 
         protected virtual void move() { }
 
-        public void MoveForward() { gameObject.transform.Translate( Vector3.forward * CurrentCharacteristic.MoveSpeed * Time.deltaTime ); }
-        public void MoveBack() { gameObject.transform.Translate( Vector3.back * CurrentCharacteristic.MoveSpeed * Time.deltaTime ); }
-        public void MoveLeft() { gameObject.transform.Translate( Vector3.left * CurrentCharacteristic.MoveSpeed * Time.deltaTime ); }
-        public void MoveRight() { gameObject.transform.Translate( Vector3.right * CurrentCharacteristic.MoveSpeed * Time.deltaTime ); }
-        public void Turn( float speed ) { gameObject.transform.Rotate( 0f, speed * Time.deltaTime, 0f ); }
+        public bool IsFriendlyOf( Personage personage ) { return relationship != personage.relationship; }
+        public void MoveForward() {
+            gameObject.transform.Translate( Vector3.forward * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
+            IsStopped = false;
+        }
+        public void MoveBack() {
+            gameObject.transform.Translate( Vector3.back * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
+            IsStopped = false;
+        }
+        public void MoveLeft() {
+            gameObject.transform.Translate( Vector3.left * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
+            IsStopped = false;
+        }
+        public void MoveRight() {
+            gameObject.transform.Translate( Vector3.right * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
+            IsStopped = false;
+        }
+        public void Turn( float speed ) {
+            gameObject.transform.Rotate( 0f, speed * Time.deltaTime, 0f );
+            IsStopped = false;
+        }
         public void Jump() {
             if( NoLongerNeeded || IsDead || !EnableJumping || DistanceToGround() > 0.02f )
                 return;
+            IsStopped = false;
             velocity.y += 4f;
         }
-
         public void Restore() {
             if( IsDead )
                 return;
@@ -138,7 +161,6 @@ namespace MyRPG {
             CurrentMana = CurrentCharacteristic.MaxMana;
             CurrentEnergy = CurrentCharacteristic.MaxEnergy;
         }
-
         public void LevelUp( int amount = 1 ) {
             Level += amount;
             if( MIN_LEVEL > Level )
@@ -148,17 +170,16 @@ namespace MyRPG {
             calculateCharacteristic();
             Restore();
         }
-
         public virtual void Die() {
             if( IsDead )
                 return;
             Effects.ClearAll();
+            ClearTask();
             IsDead = true;
             CurrentHealth = 0f;
             CurrentMana = 0f;
             CurrentEnergy = 0f;
         }
-
         public void Reanimate( float percent = 20f ) {
             if( !IsDead )
                 return;
@@ -170,6 +191,27 @@ namespace MyRPG {
             }
             Restore();
         }
+        public void ClearTask() {
+            CurrentTask = Task.STAY_IDLE;
+            currentNode = null;
+            currentPath = null;
+        }
+        public void WalkToPoint( Path.Node node ) {
+            CurrentTask = Task.WALK_TO_NODE;
+            currentNode = node;
+        }
+        public void AssignToPath( Path path ) {
+            currentPath = path;
+            if( !currentPath.NextNode( out currentNode ) ) {
+                currentNode = null;
+                currentPath = null;
+                return;
+            }
+            WalkToPoint( currentNode );
+        }
+
+
+        partial void taskManager();
 
     }
 

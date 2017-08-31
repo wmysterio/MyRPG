@@ -83,6 +83,7 @@ namespace MyRPG {
         public bool Near( float x, float y, float z, float radius ) { return radius >= Vector3.Distance( Position, new Vector3( x, y, z ) ); }
         public bool Near( Vector3 position, float radius ) { return radius >= Vector3.Distance( Position, position ); }
         public bool Near( Entity entity, float radius ) { return radius >= Vector3.Distance( Position, entity.Position ); }
+        public bool Near( Path.Node node ) { return node.Radius >= Vector3.Distance( Position, node.Point ); }
         public float DistanceToGround() { return Physics.Raycast( Position, Vector3.down, out hit, 100f ) ? hit.distance - ( gameObject.transform.localScale.y / 2.01f ) : 9999f; }
 
         protected virtual void update() { }

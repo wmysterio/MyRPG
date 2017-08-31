@@ -20,6 +20,16 @@ namespace MyRPG {
 
     }
 
+    public class TempEffect : PassiveEffect {
+
+        public TempEffect( Personage sender ) : base( sender ) {
+            CurrentCharacteristic.MoveSpeed = 4f;
+
+        }
+
+
+    }
+
     public class Init : MonoBehaviour {
 
         bool chg = false;
@@ -41,7 +51,10 @@ namespace MyRPG {
             Model.LoadRequestedNow();
 
             player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
+
             jack = new TempHuman( "Jack", new Vector3( -2f, 0.5f, -4f ) );
+            jack.Effects.Give( new TempEffect( jack ) );
+
             mike = new TempHuman( "Mike", new Vector3( 2f, 0.5f, -4f ) );
             mike.Die();
 
@@ -49,8 +62,18 @@ namespace MyRPG {
 
             Player.Interface.Fade( FadeMode.In );
 
-            yield return new WaitForSeconds( 4f );
-            Player.Interface.ShowMessageBox( 4f, "Hello, world!" );
+            var path = Path.Create( true );
+            //var path = Path.Create( false );
+            path.AddNode( -6f, 0.5f, -6f );
+            path.AddNode( 6f, 0.5f, -6f );
+            path.AddNode( 6f, 0.5f, 6f );
+            path.AddNode( -6f, 0.5f, 6f );
+
+            jack.AssignToPath( path );
+
+
+
+
         }
 
 
@@ -61,6 +84,10 @@ namespace MyRPG {
             if( Player.Exist() ) {
                 if( Input.GetKeyDown( KeyCode.F ) )
                     mike.Reanimate();
+                //if( jack != null ) {
+                //    jack.CurrentCharacteristic.MoveSpeed = 20f;
+                //    print( jack.CurrentTask );
+                //}
             }
         }
 
