@@ -37,7 +37,7 @@ namespace MyRPG {
                         gameObject.transform.rotation = Quaternion.Slerp( gameObject.transform.rotation, Quaternion.LookRotation( tempVector ), Time.deltaTime * 10f );
                     MoveForward();
                 }
-                return;
+                break;
                 default:
                 move();
                 break;

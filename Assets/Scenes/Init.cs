@@ -20,16 +20,6 @@ namespace MyRPG {
 
     }
 
-    public class TempEffect : PassiveEffect {
-
-        public TempEffect( Personage sender ) : base( sender ) {
-            CurrentCharacteristic.MoveSpeed = 4f;
-
-        }
-
-
-    }
-
     public class Init : MonoBehaviour {
 
         bool chg = false;
@@ -48,12 +38,11 @@ namespace MyRPG {
             Player.Interface.Enable = true;
 
             Model.Request( 0 );
-            Model.LoadRequestedNow();
+            yield return Model.LoadRequestedNowAsync();
 
             player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
 
             jack = new TempHuman( "Jack", new Vector3( -2f, 0.5f, -4f ) );
-            jack.Effects.Give( new TempEffect( jack ) );
 
             mike = new TempHuman( "Mike", new Vector3( 2f, 0.5f, -4f ) );
             mike.Die();
@@ -63,31 +52,18 @@ namespace MyRPG {
             Player.Interface.Fade( FadeMode.In );
 
             var path = Path.Create( true );
-            //var path = Path.Create( false );
             path.AddNode( -6f, 0.5f, -6f );
             path.AddNode( 6f, 0.5f, -6f );
             path.AddNode( 6f, 0.5f, 6f );
             path.AddNode( -6f, 0.5f, 6f );
 
             jack.AssignToPath( path );
-
-
-
-
         }
-
-
-
-
 
         void Update() {
             if( Player.Exist() ) {
                 if( Input.GetKeyDown( KeyCode.F ) )
                     mike.Reanimate();
-                //if( jack != null ) {
-                //    jack.CurrentCharacteristic.MoveSpeed = 20f;
-                //    print( jack.CurrentTask );
-                //}
             }
         }
 
@@ -95,6 +71,10 @@ namespace MyRPG {
 
         void OnGUI() {
             if( !chg ) {
+                if( !Player.Interface.IsInit )
+                    return;
+                Player.Interface.InitStyles();
+
                 GUI.skin.settings.cursorColor = new Color( 0.44f, 0.48f, 0.58f, 1f );
                 GUI.skin.settings.selectionColor = new Color( 0.44f, 0.48f, 0.58f, 1f );
                 GUI.skin.settings.cursorFlashSpeed = 1f;

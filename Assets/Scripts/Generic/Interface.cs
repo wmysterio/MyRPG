@@ -21,7 +21,7 @@ namespace MyRPG {
             public const int MAX_ICON_COUNT = 10;
             public const float DEFAULT_MESSAGE_BOX_WIDTH = 310f;
 
-            private static bool isInit = false, enable = false, enableСinematicView, fadeOn;
+            private static bool isInitStyles = false, isInit = false, enable = false, enableСinematicView, fadeOn;
             private static ResourceRequest request;
             private static float fadeStep, fadeAlpha, messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH, subtitlesTimer, subtitlesDuration;
             private static Texture2D messageBoxBackground, subtitlesBlackPixel, fadeTexture, imageHP, imageMP, imageEP, imageHP_bg, imageMP_bg, imageEP_bg;
@@ -226,30 +226,6 @@ namespace MyRPG {
                 if( IsInit && Enable ) {
                     if( fadeOn )
                         GUI.DrawTexture( fadeRect, fadeTexture, ScaleMode.StretchToFill );
-                    if( messageBoxStyle == null ) {
-                        messageBoxStyle = new GUIStyle( GUI.skin.box );
-                        messageBoxStyle.normal.background = messageBoxBackground;
-                        messageBoxStyle.active.background = messageBoxBackground;
-                        messageBoxStyle.focused.background = messageBoxBackground;
-                        messageBoxStyle.hover.background = messageBoxBackground;
-                    }
-                    if( messageBoxLabelStyle == null ) {
-                        messageBoxLabelStyle = new GUIStyle( GUI.skin.label );
-                        messageBoxLabelStyle.alignment = TextAnchor.UpperLeft;
-                        messageBoxLabelStyle.padding = new RectOffset( DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING );
-                        messageBoxLabelStyle.normal.textColor = Color.black;
-                        messageBoxLabelStyle.active.textColor = Color.black;
-                        messageBoxLabelStyle.focused.textColor = Color.black;
-                        messageBoxLabelStyle.hover.textColor = Color.black;
-                    }
-                    if( subtitlesStyle == null ) {
-                        subtitlesStyle = new GUIStyle( messageBoxLabelStyle );
-                        subtitlesStyle.alignment = TextAnchor.MiddleCenter;
-                        subtitlesStyle.normal.textColor = Color.white;
-                        subtitlesStyle.active.textColor = Color.white;
-                        subtitlesStyle.focused.textColor = Color.white;
-                        subtitlesStyle.hover.textColor = Color.white;
-                    }
                     if( EnableСinematicView ) {
                         subtitlesUpRect.width = Screen.width;
                         subtitlesBottomRect.width = Screen.width;
@@ -266,21 +242,9 @@ namespace MyRPG {
                         GUI.Label( messageBoxRect, messageBoxContent, messageBoxLabelStyle );
                     }
                 }
-
-
                 if( !fadeOn && !EnableСinematicView ) {
                     Console.Draw();
                     if( !Console.Enable ) {
-                        if( hudNameStyle == null ) {
-                            hudNameStyle = new GUIStyle( GUI.skin.label );
-                            hudNameStyle.normal.textColor = Color.white;
-                            hudNameStyle.active.textColor = Color.white;
-                            hudNameStyle.focused.textColor = Color.white;
-                            hudNameStyle.hover.textColor = Color.white;
-                            hudNameStyle.fontSize = 16;
-                            hudNameStyle.fontStyle = FontStyle.Bold;
-                        }
-
                         if( !MessageBoxDisplayed )
                             displayHUD( 10f, 10f, Current );
                         if( Current.Target != null )
@@ -289,6 +253,44 @@ namespace MyRPG {
                 }
             }
 
+            public static void InitStyles() {
+                if( isInitStyles )
+                    return;
+                if( messageBoxStyle == null ) {
+                    messageBoxStyle = new GUIStyle( GUI.skin.box );
+                    messageBoxStyle.normal.background = messageBoxBackground;
+                    messageBoxStyle.active.background = messageBoxBackground;
+                    messageBoxStyle.focused.background = messageBoxBackground;
+                    messageBoxStyle.hover.background = messageBoxBackground;
+                }
+                if( messageBoxLabelStyle == null ) {
+                    messageBoxLabelStyle = new GUIStyle( GUI.skin.label );
+                    messageBoxLabelStyle.alignment = TextAnchor.UpperLeft;
+                    messageBoxLabelStyle.padding = new RectOffset( DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING );
+                    messageBoxLabelStyle.normal.textColor = Color.black;
+                    messageBoxLabelStyle.active.textColor = Color.black;
+                    messageBoxLabelStyle.focused.textColor = Color.black;
+                    messageBoxLabelStyle.hover.textColor = Color.black;
+                }
+                if( subtitlesStyle == null ) {
+                    subtitlesStyle = new GUIStyle( messageBoxLabelStyle );
+                    subtitlesStyle.alignment = TextAnchor.MiddleCenter;
+                    subtitlesStyle.normal.textColor = Color.white;
+                    subtitlesStyle.active.textColor = Color.white;
+                    subtitlesStyle.focused.textColor = Color.white;
+                    subtitlesStyle.hover.textColor = Color.white;
+                }
+                if( hudNameStyle == null ) {
+                    hudNameStyle = new GUIStyle( GUI.skin.label );
+                    hudNameStyle.normal.textColor = Color.white;
+                    hudNameStyle.active.textColor = Color.white;
+                    hudNameStyle.focused.textColor = Color.white;
+                    hudNameStyle.hover.textColor = Color.white;
+                    hudNameStyle.fontSize = 16;
+                    hudNameStyle.fontStyle = FontStyle.Bold;
+                }
+                isInitStyles = true;
+            }
 
             private static void displayHUD( float x, float y, Personage personage, bool target = false ) {
                 hudBorderRect.x = x;
