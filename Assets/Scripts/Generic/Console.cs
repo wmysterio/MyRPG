@@ -25,7 +25,7 @@ namespace MyRPG {
                 { "PLAYER_PLACE", player_place } // сам метод буде написано нижче
             };
 
-            
+
             private static AudioClip soundSuccess = null, soundError = null;
             private static Texture2D boxBackground = null, areaBackground = null;
             private static GUIStyle boxStyle = null, areaStyle = null;
@@ -36,7 +36,7 @@ namespace MyRPG {
             private static char tmpChar = ' ';
             private static char[] normalChar = new char[] { '.', ',', ':', '-', '>' };
             private static string[] split = null, commandArgs = null;
-            private static bool isInit = false, enable = false;
+            private static bool isInit = false, isInitStyles = false, enable = false;
 
             public static bool IsInit {
                 get { return isInit; }
@@ -74,32 +74,35 @@ namespace MyRPG {
 
                 IsInit = true;
             }
+            public static void InitStyles() {
+                if( isInitStyles )
+                    return;
 
+                boxStyle = new GUIStyle( GUI.skin.box );
+                boxStyle.normal.background = boxBackground;
+                boxStyle.active.background = boxBackground;
+                boxStyle.focused.background = boxBackground;
+                boxStyle.hover.background = boxBackground;
+
+                areaStyle = new GUIStyle( GUI.skin.textArea );
+                areaStyle.normal.background = areaBackground;
+                areaStyle.active.background = areaBackground;
+                areaStyle.focused.background = areaBackground;
+                areaStyle.hover.background = areaBackground;
+                areaStyle.normal.textColor = Color.black;
+                areaStyle.active.textColor = Color.black;
+                areaStyle.focused.textColor = Color.black;
+                areaStyle.hover.textColor = Color.black;
+                areaStyle.fontSize = 18;
+                areaStyle.wordWrap = false;
+
+                isInitStyles = true;
+            }
 
 
             public static void Draw() {
                 if( !IsInit || !Enable )
                     return;
-                if( boxStyle == null ) {
-                    boxStyle = new GUIStyle( GUI.skin.box );
-                    boxStyle.normal.background = boxBackground;
-                    boxStyle.active.background = boxBackground;
-                    boxStyle.focused.background = boxBackground;
-                    boxStyle.hover.background = boxBackground;
-                }
-                if( areaStyle == null ) {
-                    areaStyle = new GUIStyle( GUI.skin.textArea );
-                    areaStyle.normal.background = areaBackground;
-                    areaStyle.active.background = areaBackground;
-                    areaStyle.focused.background = areaBackground;
-                    areaStyle.hover.background = areaBackground;
-                    areaStyle.normal.textColor = Color.black;
-                    areaStyle.active.textColor = Color.black;
-                    areaStyle.focused.textColor = Color.black;
-                    areaStyle.hover.textColor = Color.black;
-                    areaStyle.fontSize = 18;
-                    areaStyle.wordWrap = false;
-                }
                 rectBox.width = Screen.width - 20;
                 rectArea.width = Screen.width - 30;
                 GUI.Box( rectBox, "", boxStyle );

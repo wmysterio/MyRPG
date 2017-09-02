@@ -24,12 +24,13 @@ namespace MyRPG {
             private static bool isInitStyles = false, isInit = false, enable = false, enableСinematicView, fadeOn;
             private static ResourceRequest request;
             private static float fadeStep, fadeAlpha, messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH, subtitlesTimer, subtitlesDuration;
-            private static Texture2D messageBoxBackground, subtitlesBlackPixel, fadeTexture, imageHP, imageMP, imageEP, imageHP_bg, imageMP_bg, imageEP_bg;
+            private static Texture2D windowBackground, windowTitleBackground, messageBoxBackground, subtitlesBlackPixel, fadeTexture, imageHP, imageMP, imageEP, imageHP_bg, imageMP_bg, imageEP_bg;
             private static AudioClip messageBoxPlay;
-            private static Rect messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
+            private static Rect windowRect, windowTitleRect, windowCloseButtonRect, messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
             private static GUIContent messageBoxContent, subtitlesContent;
-            private static GUIStyle messageBoxStyle, messageBoxLabelStyle, subtitlesStyle, hudNameStyle;
-            private static Color fadeColor = Color.black;
+            private static GUIStyle windowStyle, windowTitleStyle, windowCloseButtonStyle, messageBoxStyle, messageBoxLabelStyle, subtitlesStyle, hudNameStyle;
+            private static Color windowTitleColor, fadeColor;
+            private static Dictionary<Window, Action> windowFunc;
 
             public static Texture2D[] Icons { get; private set; }
             public static bool SubtitlesDisplayed { get; private set; }
@@ -54,6 +55,7 @@ namespace MyRPG {
                 }
             }
             public static bool Fadind { get; private set; }
+            public static Window CurrentWindow { get; private set; }
 
             public static void ClearSubtitles() {
                 subtitlesDuration = 0f;
@@ -103,6 +105,16 @@ namespace MyRPG {
             public static IEnumerator Init() {
                 if( IsInit )
                     yield return null;
+
+                fadeColor = Color.black;
+
+                windowFunc = new Dictionary<Window, Action>() {
+                    { Window.Bag, drawBagWindow },
+                    { Window.Effects, drawEffectsWindow },
+                    { Window.Personage, drawPersonageWindow },
+                    { Window.Spells, drawSpellsWindow },
+                    { Window.Quests, drawQuestsWindow }
+                };
 
                 messageBoxRect = new Rect( 10f, 10f, 0f, 0f );
                 messageBoxContent = new GUIContent( string.Empty );
@@ -160,6 +172,16 @@ namespace MyRPG {
                 imageEP_bg.SetPixel( 0, 0, new Color( 20f / 255f, 38f / 255f, 12f / 255f, 1f ) );
                 imageEP_bg.Apply();
 
+                windowRect = new Rect( 0, 0, 400, 300 );
+                windowTitleRect = new Rect( 1, 1, 0, 35 );
+                windowCloseButtonRect = new Rect( 0, 0, 35, 35 );
+                CurrentWindow = Window.None;
+
+                windowTitleColor = new Color( 58f / 225f, 85f / 225f, 125f / 225f, 1f );
+
+                windowTitleBackground = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+                windowTitleBackground.SetPixel( 0, 0, new Color( 222f / 255f, 237f / 255f, 252f / 255f, 1f ) );
+                windowTitleBackground.Apply();
 
 
 
@@ -180,7 +202,76 @@ namespace MyRPG {
                 yield return request;
                 messageBoxPlay = request.asset as AudioClip;
 
+                request = Resources.LoadAsync<Texture2D>( "UI/Interface/images/windowBackgroundImage" );
+                yield return request;
+                windowBackground = request.asset as Texture2D;
+
                 IsInit = true;
+            }
+            public static void InitStyles() {
+                if( isInitStyles )
+                    return;
+
+                Console.InitStyles();
+
+                messageBoxStyle = new GUIStyle( GUI.skin.box );
+                messageBoxStyle.normal.background = messageBoxBackground;
+                messageBoxStyle.active.background = messageBoxBackground;
+                messageBoxStyle.focused.background = messageBoxBackground;
+                messageBoxStyle.hover.background = messageBoxBackground;
+
+                messageBoxLabelStyle = new GUIStyle( GUI.skin.label );
+                messageBoxLabelStyle.alignment = TextAnchor.UpperLeft;
+                messageBoxLabelStyle.padding = new RectOffset( DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING );
+                messageBoxLabelStyle.normal.textColor = Color.black;
+                messageBoxLabelStyle.active.textColor = Color.black;
+                messageBoxLabelStyle.focused.textColor = Color.black;
+                messageBoxLabelStyle.hover.textColor = Color.black;
+
+                subtitlesStyle = new GUIStyle( messageBoxLabelStyle );
+                subtitlesStyle.alignment = TextAnchor.MiddleCenter;
+                subtitlesStyle.normal.textColor = Color.white;
+                subtitlesStyle.active.textColor = Color.white;
+                subtitlesStyle.focused.textColor = Color.white;
+                subtitlesStyle.hover.textColor = Color.white;
+
+                hudNameStyle = new GUIStyle( GUI.skin.label );
+                hudNameStyle.normal.textColor = Color.white;
+                hudNameStyle.active.textColor = Color.white;
+                hudNameStyle.focused.textColor = Color.white;
+                hudNameStyle.hover.textColor = Color.white;
+                hudNameStyle.fontSize = 16;
+                hudNameStyle.fontStyle = FontStyle.Bold;
+
+                windowStyle = new GUIStyle( GUI.skin.window );
+                windowStyle.normal.background = windowBackground;
+                windowStyle.active.background = windowBackground;
+                windowStyle.focused.background = windowBackground;
+                windowStyle.hover.background = windowBackground;
+
+                windowCloseButtonStyle = new GUIStyle( GUI.skin.button );
+                windowCloseButtonStyle.normal.background = null;
+                windowCloseButtonStyle.active.background = null;
+                windowCloseButtonStyle.focused.background = null;
+                windowCloseButtonStyle.hover.background = null;
+                windowCloseButtonStyle.normal.textColor = windowTitleColor;
+                windowCloseButtonStyle.active.textColor = windowTitleColor;
+                windowCloseButtonStyle.focused.textColor = windowTitleColor;
+                windowCloseButtonStyle.hover.textColor = windowTitleColor;
+
+                windowTitleStyle = new GUIStyle( GUI.skin.label );
+                windowTitleStyle.padding = new RectOffset( DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING );
+                windowTitleStyle.wordWrap = false;
+                windowTitleStyle.normal.background = windowTitleBackground;
+                windowTitleStyle.active.background = windowTitleBackground;
+                windowTitleStyle.focused.background = windowTitleBackground;
+                windowTitleStyle.hover.background = windowTitleBackground;
+                windowTitleStyle.normal.textColor = windowTitleColor;
+                windowTitleStyle.active.textColor = windowTitleColor;
+                windowTitleStyle.focused.textColor = windowTitleColor;
+                windowTitleStyle.hover.textColor = windowTitleColor;
+
+                isInitStyles = true;
             }
 
             public static void Update() {
@@ -214,6 +305,8 @@ namespace MyRPG {
                 }
                 if( InputManager.IsKeyDown( KeyName.CONSOLE ) )
                     Console.Enable = !Console.Enable;
+                if( Console.Enable && InputManager.IsKeyDown( KeyName.MENU ) )
+                    Console.Enable = false;
                 if( messageBoxDuration > messageBoxTimer ) {
                     MessageBoxDisplayed = true;
                     messageBoxTimer += 1f * Time.deltaTime;
@@ -221,7 +314,6 @@ namespace MyRPG {
                         HideMessageBox();
                 }
             }
-
             public static void Draw() {
                 if( IsInit && Enable ) {
                     if( fadeOn )
@@ -249,48 +341,74 @@ namespace MyRPG {
                             displayHUD( 10f, 10f, Current );
                         if( Current.Target != null )
                             displayHUD( Screen.width - 214f, 10f, Current.Target, true );
+                        if( CurrentWindow != Window.None )
+                            windowRect = drawWindow( CurrentWindow.ToString(), windowRect );
                     }
                 }
             }
 
-            public static void InitStyles() {
-                if( isInitStyles )
-                    return;
-                if( messageBoxStyle == null ) {
-                    messageBoxStyle = new GUIStyle( GUI.skin.box );
-                    messageBoxStyle.normal.background = messageBoxBackground;
-                    messageBoxStyle.active.background = messageBoxBackground;
-                    messageBoxStyle.focused.background = messageBoxBackground;
-                    messageBoxStyle.hover.background = messageBoxBackground;
+            
+
+            public static void ToggleWindow( Window window ) {
+                if( window != Window.None ) {
+                    if( CurrentWindow == window ) {
+                        CurrentWindow = Window.None;
+                        return;
+                    }
+                    switch( CurrentWindow ) {
+                        case Window.Bag:
+                        // windowRect.width = ?
+                        // windowRect.height = ?
+                        break;
+                        case Window.Spells:
+                        // windowRect.width = ?
+                        // windowRect.height = ?
+                        break;
+                        case Window.Personage:
+                        // windowRect.width = ?
+                        // windowRect.height = ?
+                        break;
+                        case Window.Effects:
+                        // windowRect.width = ?
+                        // windowRect.height = ?
+                        break;
+                        case Window.Quests:
+                        // windowRect.width = ?
+                        // windowRect.height = ?
+                        break;
+                        default:
+                        // windowRect.width = ?
+                        // windowRect.height = ?
+                        break;
+                    }
+                    windowRect.x = Screen.width / 2f - windowRect.width / 2f;
+                    windowRect.y = Screen.height / 2f - windowRect.height / 2f;
+                    windowTitleRect.width = windowRect.width - 2;
                 }
-                if( messageBoxLabelStyle == null ) {
-                    messageBoxLabelStyle = new GUIStyle( GUI.skin.label );
-                    messageBoxLabelStyle.alignment = TextAnchor.UpperLeft;
-                    messageBoxLabelStyle.padding = new RectOffset( DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING, DEFAULT_PADDING );
-                    messageBoxLabelStyle.normal.textColor = Color.black;
-                    messageBoxLabelStyle.active.textColor = Color.black;
-                    messageBoxLabelStyle.focused.textColor = Color.black;
-                    messageBoxLabelStyle.hover.textColor = Color.black;
-                }
-                if( subtitlesStyle == null ) {
-                    subtitlesStyle = new GUIStyle( messageBoxLabelStyle );
-                    subtitlesStyle.alignment = TextAnchor.MiddleCenter;
-                    subtitlesStyle.normal.textColor = Color.white;
-                    subtitlesStyle.active.textColor = Color.white;
-                    subtitlesStyle.focused.textColor = Color.white;
-                    subtitlesStyle.hover.textColor = Color.white;
-                }
-                if( hudNameStyle == null ) {
-                    hudNameStyle = new GUIStyle( GUI.skin.label );
-                    hudNameStyle.normal.textColor = Color.white;
-                    hudNameStyle.active.textColor = Color.white;
-                    hudNameStyle.focused.textColor = Color.white;
-                    hudNameStyle.hover.textColor = Color.white;
-                    hudNameStyle.fontSize = 16;
-                    hudNameStyle.fontStyle = FontStyle.Bold;
-                }
-                isInitStyles = true;
+                CurrentWindow = window;
             }
+
+            private static Rect drawWindow( string title, Rect windowRect, bool dragable = true ) {
+                windowRect.x = Mathf.Clamp( windowRect.x, 0f, Screen.width - windowRect.width );
+                windowRect.y = Mathf.Clamp( windowRect.y, 0f, Screen.height - windowRect.height );
+                return GUI.ModalWindow( 0, windowRect, id => {
+                    GUI.Label( windowTitleRect, title, windowTitleStyle );
+                    windowCloseButtonRect.x = windowRect.width - 35;
+                    if( GUI.Button( windowCloseButtonRect, "X", windowCloseButtonStyle ) ) {
+                        CurrentWindow = Window.None;
+                        return;
+                    }
+                    windowFunc[ CurrentWindow ].Invoke();
+                    if( dragable )
+                        GUI.DragWindow();
+                }, string.Empty, windowStyle );
+            }
+
+            private static void drawBagWindow() { }
+            private static void drawSpellsWindow() { }
+            private static void drawPersonageWindow() { }
+            private static void drawEffectsWindow() { }
+            private static void drawQuestsWindow() { }
 
             private static void displayHUD( float x, float y, Personage personage, bool target = false ) {
                 hudBorderRect.x = x;
@@ -332,6 +450,15 @@ namespace MyRPG {
 
         }
 
+    }
+
+    public enum Window {
+        None,
+        Bag,
+        Spells,
+        Personage,
+        Effects,
+        Quests
     }
 
     public enum FadeMode { In, Out }

@@ -55,12 +55,24 @@ namespace MyRPG {
         public override void Die() {
             base.Die();
             Target = null;
+            Interface.ToggleWindow( Window.None );
         }
 
         private int calculateMaxExperience() { return ( int ) ( 795 + 250 * Mathf.Pow( 1.08f, Level ) ); }
 
         protected override void move() {
             base.move();
+
+            if( InputManager.IsKeyDown( KeyName.VIEW_BAG ) )
+                Interface.ToggleWindow( Window.Bag );
+            if( InputManager.IsKeyDown( KeyName.VIEW_EFFECTS ) )
+                Interface.ToggleWindow( Window.Effects );
+            if( InputManager.IsKeyDown( KeyName.VIEW_PERSONAGE ) )
+                Interface.ToggleWindow( Window.Personage );
+            if( InputManager.IsKeyDown( KeyName.VIEW_QUESTS ) )
+                Interface.ToggleWindow( Window.Quests );
+            if( InputManager.IsKeyDown( KeyName.VIEW_SPELLS ) )
+                Interface.ToggleWindow( Window.Spells );
 
             if( InputManager.GetKey( KeyName.TURN_LEFT ) ) {
                 Turn( -100f );
