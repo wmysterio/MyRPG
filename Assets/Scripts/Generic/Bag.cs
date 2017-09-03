@@ -14,7 +14,9 @@ namespace MyRPG {
 
     public sealed class Bag {
 
-        public const int MAX_ITEM_COUNT = 144;
+        public const int MAX_ITEM_COUNT = 100;
+
+        public static readonly int ItemsInRow = ( int ) Mathf.Sqrt( MAX_ITEM_COUNT );
 
         private Dictionary<System.Type, Item> items;
         private int iterator;
@@ -22,14 +24,14 @@ namespace MyRPG {
         public int Count { get { return items.Count; } }
         public Item this[ int index ] {
             get {
-                if( 0 > index || index > items.Count )
+                if( 0 > index || index >= items.Count )
                     return null;
                 return items.ElementAt( index ).Value;
             }
         }
 
         public Bag() {
-            items = new Dictionary<Type, Item>();
+            items = new Dictionary<System.Type, Item>();
             iterator = 0;
         }
 

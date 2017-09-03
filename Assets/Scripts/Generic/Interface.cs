@@ -24,13 +24,18 @@ namespace MyRPG {
             private static bool isInitStyles = false, isInit = false, enable = false, enableСinematicView, fadeOn;
             private static ResourceRequest request;
             private static float fadeStep, fadeAlpha, messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH, subtitlesTimer, subtitlesDuration;
-            private static Texture2D windowBackground, windowTitleBackground, messageBoxBackground, subtitlesBlackPixel, fadeTexture, imageHP, imageMP, imageEP, imageHP_bg, imageMP_bg, imageEP_bg;
+            private static Texture2D activeEquipmentImage, windowBackground, windowTitleBackground, messageBoxBackground, subtitlesBlackPixel, fadeTexture, imageHP, imageMP, imageEP, imageHP_bg, imageMP_bg, imageEP_bg;
             private static AudioClip messageBoxPlay;
-            private static Rect windowRect, windowTitleRect, windowCloseButtonRect, messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
+            private static Rect abilityButtonRect, windowRect, windowTitleRect, windowCloseButtonRect, messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
             private static GUIContent messageBoxContent, subtitlesContent;
-            private static GUIStyle windowStyle, windowTitleStyle, windowCloseButtonStyle, messageBoxStyle, messageBoxLabelStyle, subtitlesStyle, hudNameStyle;
+            private static GUIStyle activeEquipmentStyle, windowStyle, windowTitleStyle, windowCloseButtonStyle, messageBoxStyle, messageBoxLabelStyle, subtitlesStyle, hudNameStyle;
             private static Color windowTitleColor, fadeColor;
             private static Dictionary<Window, Action> windowFunc;
+            private static Dictionary<TypeOfItemRarity, Texture2D> borderImages;
+            private static Dictionary<TypeOfItemRarity, GUIStyle> borderStyles;
+            private static int iterator;
+            private static Item currentItem;
+            private static EquipmentItem currentEquipment;
 
             public static Texture2D[] Icons { get; private set; }
             public static bool SubtitlesDisplayed { get; private set; }
@@ -101,7 +106,6 @@ namespace MyRPG {
                 Fadind = true;
             }
 
-
             public static IEnumerator Init() {
                 if( IsInit )
                     yield return null;
@@ -140,7 +144,6 @@ namespace MyRPG {
                 hudRect = new Rect( 0f, 0f, 200f, 8f );
                 hudBorderRect = new Rect( 0f, 0f, 204f, 57f );
                 hudNameRect = new Rect( 0f, 0f, 200f, 32f );
-
 
                 imageHP = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
                 imageHP.alphaIsTransparency = true;
@@ -183,7 +186,10 @@ namespace MyRPG {
                 windowTitleBackground.SetPixel( 0, 0, new Color( 222f / 255f, 237f / 255f, 252f / 255f, 1f ) );
                 windowTitleBackground.Apply();
 
+                borderImages = new Dictionary<TypeOfItemRarity, Texture2D>();
+                borderStyles = new Dictionary<TypeOfItemRarity, GUIStyle>();
 
+                abilityButtonRect = new Rect( 0, 0, 32, 32 );
 
                 yield return Console.Init();
 
@@ -205,6 +211,18 @@ namespace MyRPG {
                 request = Resources.LoadAsync<Texture2D>( "UI/Interface/images/windowBackgroundImage" );
                 yield return request;
                 windowBackground = request.asset as Texture2D;
+
+                var bordersValues = ( TypeOfItemRarity[] ) Enum.GetValues( typeof( TypeOfItemRarity ) );
+                for( int i = 0; i < bordersValues.Length; i++ ) {
+                    request = Resources.LoadAsync<Texture2D>( string.Format( "UI/Interface/images/borders/{0}", ( int ) bordersValues[ i ] ) );
+                    yield return request;
+                    borderImages.Add( bordersValues[ i ], request.asset as Texture2D );
+                    borderStyles.Add( bordersValues[ i ], null );
+                }
+
+                request = Resources.LoadAsync<Texture2D>( "UI/Interface/images/activeEquipment" );
+                yield return request;
+                activeEquipmentImage = request.asset as Texture2D;
 
                 IsInit = true;
             }
@@ -243,11 +261,39 @@ namespace MyRPG {
                 hudNameStyle.fontSize = 16;
                 hudNameStyle.fontStyle = FontStyle.Bold;
 
+                foreach( var item in borderImages ) {
+                    borderStyles[ item.Key ] = new GUIStyle( GUI.skin.button );
+                    borderStyles[ item.Key ].normal.background = borderImages[ item.Key ];
+                    borderStyles[ item.Key ].hover.background = borderImages[ item.Key ];
+                    borderStyles[ item.Key ].active.background = borderImages[ item.Key ];
+                    borderStyles[ item.Key ].focused.background = borderImages[ item.Key ];
+                    borderStyles[ item.Key ].normal.textColor = Color.yellow;
+                    borderStyles[ item.Key ].hover.textColor = Color.yellow;
+                    borderStyles[ item.Key ].active.textColor = Color.yellow;
+                    borderStyles[ item.Key ].focused.textColor = Color.yellow;
+                    borderStyles[ item.Key ].fontStyle = FontStyle.Bold;
+                }
+
+                activeEquipmentStyle = new GUIStyle( GUI.skin.button );
+                activeEquipmentStyle.normal.background = activeEquipmentImage;
+                activeEquipmentStyle.hover.background = activeEquipmentImage;
+                activeEquipmentStyle.active.background = activeEquipmentImage;
+                activeEquipmentStyle.focused.background = activeEquipmentImage;
+                activeEquipmentStyle.normal.textColor = Color.white;
+                activeEquipmentStyle.hover.textColor = Color.white;
+                activeEquipmentStyle.active.textColor = Color.white;
+                activeEquipmentStyle.focused.textColor = Color.white;
+                activeEquipmentStyle.fontStyle = FontStyle.Bold;
+
                 windowStyle = new GUIStyle( GUI.skin.window );
                 windowStyle.normal.background = windowBackground;
                 windowStyle.active.background = windowBackground;
                 windowStyle.focused.background = windowBackground;
                 windowStyle.hover.background = windowBackground;
+                windowStyle.onNormal.background = windowBackground;
+                windowStyle.onActive.background = windowBackground;
+                windowStyle.onFocused.background = windowBackground;
+                windowStyle.onHover.background = windowBackground;
 
                 windowCloseButtonStyle = new GUIStyle( GUI.skin.button );
                 windowCloseButtonStyle.normal.background = null;
@@ -347,7 +393,7 @@ namespace MyRPG {
                 }
             }
 
-            
+
 
             public static void ToggleWindow( Window window ) {
                 if( window != Window.None ) {
@@ -355,10 +401,10 @@ namespace MyRPG {
                         CurrentWindow = Window.None;
                         return;
                     }
-                    switch( CurrentWindow ) {
+                    switch( window ) {
                         case Window.Bag:
-                        // windowRect.width = ?
-                        // windowRect.height = ?
+                        windowRect.width = 36f * Bag.ItemsInRow + 4f;
+                        windowRect.height = 36f * Bag.ItemsInRow + 40f;
                         break;
                         case Window.Spells:
                         // windowRect.width = ?
@@ -391,7 +437,7 @@ namespace MyRPG {
             private static Rect drawWindow( string title, Rect windowRect, bool dragable = true ) {
                 windowRect.x = Mathf.Clamp( windowRect.x, 0f, Screen.width - windowRect.width );
                 windowRect.y = Mathf.Clamp( windowRect.y, 0f, Screen.height - windowRect.height );
-                return GUI.ModalWindow( 0, windowRect, id => {
+                return GUI.Window( 0, windowRect, id => {
                     GUI.Label( windowTitleRect, title, windowTitleStyle );
                     windowCloseButtonRect.x = windowRect.width - 35;
                     if( GUI.Button( windowCloseButtonRect, "X", windowCloseButtonStyle ) ) {
@@ -404,7 +450,54 @@ namespace MyRPG {
                 }, string.Empty, windowStyle );
             }
 
-            private static void drawBagWindow() { }
+            private static void drawBagWindow() {
+                abilityButtonRect.x = 4f;
+                abilityButtonRect.y = 4f;
+
+                for( iterator = 0; iterator < Current.Loot.Count; iterator++ ) {
+                    if( iterator % Bag.ItemsInRow == 0 ) {
+                        abilityButtonRect.x = 4f;
+                        abilityButtonRect.y += 36f;
+                    }
+                    currentItem = Current.Loot[ iterator ];
+                    if( currentItem.Class == ClassOfItem.Equipment ) {
+                        currentEquipment = ( EquipmentItem ) currentItem;
+                        GUI.DrawTexture( abilityButtonRect, currentEquipment.Icon );
+                        if( Current.Equipments[ currentEquipment.EquipmentPart ] != null ) {
+                            if( GUI.Button( abilityButtonRect, currentEquipment.Timer > 0f ? currentEquipment.Timer.ToString() : currentItem.Count > 2 ? currentItem.Count.ToString() : string.Empty, activeEquipmentStyle ) ) {
+                                Current.Equipments.Set( currentEquipment );
+                            }
+                        } else {
+                            if( GUI.Button( abilityButtonRect, currentEquipment.Timer > 0f ? currentEquipment.Timer.ToString() : currentItem.Count > 2 ? currentItem.Count.ToString() : string.Empty, borderStyles[ currentItem.Rarity ] ) ) {
+                                Current.Equipments.Set( currentEquipment );
+                            }
+                        }
+                    } else {
+                        GUI.DrawTexture( abilityButtonRect, currentItem.Icon );
+                        if( currentItem.Timer > 0f ) {
+                            if( GUI.Button( abilityButtonRect, currentItem.Timer.ToString(), borderStyles[ currentItem.Rarity ] ) ) {
+                                // select item
+                            }
+                        } else {
+                            if( GUI.Button( abilityButtonRect, currentItem.Count > 2 ? currentItem.Count.ToString() : string.Empty, borderStyles[ currentItem.Rarity ] ) ) {
+                                currentItem.Use( Current );
+                            }
+                        }
+                    }
+                    abilityButtonRect.x += 36f;
+                }
+                for( ; iterator < Bag.MAX_ITEM_COUNT; iterator++ ) {
+                    if( iterator % Bag.ItemsInRow == 0 ) {
+                        abilityButtonRect.x = 4f;
+                        abilityButtonRect.y += 36f;
+                    }
+                    GUI.DrawTexture( abilityButtonRect, borderImages[ TypeOfItemRarity.Normal ] );
+                    abilityButtonRect.x += 36f;
+                }
+            }
+
+
+
             private static void drawSpellsWindow() { }
             private static void drawPersonageWindow() { }
             private static void drawEffectsWindow() { }

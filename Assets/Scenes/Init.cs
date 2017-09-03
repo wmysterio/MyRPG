@@ -20,6 +20,51 @@ namespace MyRPG {
 
     }
 
+    public class Item1 : NormalItem {
+
+        public Item1() : base( 1, TypeOfItemRarity.Epic ) { }
+
+    }
+
+    public class Item2 : NormalItem {
+
+        public Item2() : base( 1, TypeOfItemRarity.Legendary ) { }
+
+    }
+
+    public class Item3 : NormalItem {
+
+        public Item3() : base( 1, TypeOfItemRarity.Rare ) {
+            Count = 20;
+        }
+
+    }
+
+    public class Item4 : NormalItem {
+
+        public Item4() : base( 1, TypeOfItemRarity.Unusual ) { }
+
+    }
+
+    public class Item5 : NormalItem {
+
+        public Item5() : base( 1, TypeOfItemRarity.Junk ) { }
+
+    }
+
+    public class Item6 : SwordWeapon {
+
+        public Item6() : base( "Мега меч", 1, TypeOfItemRarity.Normal, 0 ) {
+            baseCharacteristic.MaxHealth = 5000;
+            baseCharacteristic.PhysicalAttackPower = 300;
+            baseCharacteristic.HealthRegeneration = 5;
+            Delay = 60;
+        }
+
+    }
+
+
+
     public class Init : MonoBehaviour {
 
         bool chg = false;
@@ -41,6 +86,14 @@ namespace MyRPG {
             yield return Model.LoadRequestedNowAsync();
 
             player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
+
+            player.Loot.Add( new Item1() );
+            player.Loot.Add( new Item2() );
+            player.Loot.Add( new Item3() );
+            player.Loot.Add( new Item4() );
+            player.Loot.Add( new Item5() );
+            player.Loot.Add( new Item6() );
+
 
             jack = new TempHuman( "Jack", new Vector3( -2f, 0.5f, -4f ) );
 
