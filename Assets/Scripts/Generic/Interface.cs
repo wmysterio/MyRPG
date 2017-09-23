@@ -26,16 +26,19 @@ namespace MyRPG {
             private static float fadeStep, fadeAlpha, messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH, subtitlesTimer, subtitlesDuration;
             private static Texture2D activeEquipmentImage, windowBackground, windowTitleBackground, messageBoxBackground, subtitlesBlackPixel, fadeTexture, imageHP, imageMP, imageEP, imageHP_bg, imageMP_bg, imageEP_bg;
             private static AudioClip messageBoxPlay;
-            private static Rect abilityButtonRect, windowRect, windowTitleRect, windowCloseButtonRect, messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
+            private static Rect abilityRect,abilityButtonRect, windowRect, windowTitleRect, windowCloseButtonRect, messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
             private static GUIContent messageBoxContent, subtitlesContent;
-            private static GUIStyle activeEquipmentStyle, windowStyle, windowTitleStyle, windowCloseButtonStyle, messageBoxStyle, messageBoxLabelStyle, subtitlesStyle, hudNameStyle;
+            private static GUIStyle abilityStyle, activeEquipmentStyle, windowStyle, windowTitleStyle, windowCloseButtonStyle, messageBoxStyle, messageBoxLabelStyle, subtitlesStyle, hudNameStyle;
             private static Color windowTitleColor, fadeColor;
             private static Dictionary<Window, Action> windowFunc;
             private static Dictionary<TypeOfItemRarity, Texture2D> borderImages;
             private static Dictionary<TypeOfItemRarity, GUIStyle> borderStyles;
-            private static int iterator;
+            private static int iterator, iteratior2;
             private static Item currentItem;
             private static EquipmentItem currentEquipment;
+
+            private static IAbility[] abilitys;
+
 
             public static Texture2D[] Icons { get; private set; }
             public static bool SubtitlesDisplayed { get; private set; }
@@ -119,6 +122,9 @@ namespace MyRPG {
                     { Window.Spells, drawSpellsWindow },
                     { Window.Quests, drawQuestsWindow }
                 };
+
+                abilityRect = new Rect( 0, 0, 36 * 12 + 4, 76 );
+                abilitys = ( IAbility[] ) Array.CreateInstance( typeof( IAbility ), 24 );
 
                 messageBoxRect = new Rect( 10f, 10f, 0f, 0f );
                 messageBoxContent = new GUIContent( string.Empty );
@@ -317,6 +323,8 @@ namespace MyRPG {
                 windowTitleStyle.focused.textColor = windowTitleColor;
                 windowTitleStyle.hover.textColor = windowTitleColor;
 
+                abilityStyle = new GUIStyle( windowStyle );
+
                 isInitStyles = true;
             }
 
@@ -387,6 +395,9 @@ namespace MyRPG {
                             displayHUD( 10f, 10f, Current );
                         if( Current.Target != null )
                             displayHUD( Screen.width - 214f, 10f, Current.Target, true );
+
+                        drawAbilityPanel();
+                        
                         if( CurrentWindow != Window.None )
                             windowRect = drawWindow( CurrentWindow.ToString(), windowRect );
                     }
@@ -496,7 +507,39 @@ namespace MyRPG {
                 }
             }
 
+            private static void drawAbilityPanel() {
+                abilityRect.x = ( Screen.width / 2 ) - ( 32 * 12 ) / 2 - 26;
+                abilityRect.y = Screen.height - 76;
+                GUI.Box( abilityRect, string.Empty, abilityStyle );
 
+                abilityButtonRect.x = abilityRect.x + 4;
+                abilityButtonRect.y = abilityRect.y + 4;
+                for( iterator = 0; iterator < 12; iterator++ ) {
+                    if( abilitys[ iterator ] == null ) {
+                        GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] );
+                    } else {
+                        GUI.DrawTexture( abilityButtonRect, abilitys[ iterator ].Icon );
+                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
+                            Debug.Log( "click" );
+                        }
+                    }
+                    abilityButtonRect.x += 36f;
+                }
+                abilityButtonRect.x = abilityRect.x + 4;
+                abilityButtonRect.y = abilityRect.y + 40;
+                abilityRect.x = Screen.width / 2 - abilityRect.width + 4;
+                for( iteratior2 = 0, iterator = 12; iteratior2 < 12; iteratior2++, iterator++ ) {
+                    if( abilitys[ iterator ] == null ) {
+                        GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] );
+                    } else {
+                        GUI.DrawTexture( abilityButtonRect, abilitys[ iterator ].Icon );
+                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
+                            Debug.Log( "click" );
+                        }
+                    }
+                    abilityButtonRect.x += 36f;
+                }
+            }
 
             private static void drawSpellsWindow() { }
             private static void drawPersonageWindow() { }

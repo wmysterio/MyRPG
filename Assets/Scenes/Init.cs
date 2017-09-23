@@ -63,7 +63,19 @@ namespace MyRPG {
 
     }
 
+    //public class XmlExamlpe {
 
+    //    public string Name { get; set; }
+    //    public int ID { get; set; }
+
+    //    [System.Xml.Serialization.XmlIgnore]
+    //    public bool IsAdmin { get; set; }
+
+    //    public int[] Ages { get; set; }
+
+    //    public XmlExamlpe() { }
+
+    //}
 
     public class Init : MonoBehaviour {
 
@@ -73,6 +85,20 @@ namespace MyRPG {
             InputManager.Init();
             var go = GameObject.Find( "EntityList" );
             go.AddComponent<Entity.EntityList>();
+
+            //XmlExamlpe expl = new XmlExamlpe();
+            //expl.ID = 15;
+            //expl.Name = "Joe";
+            //expl.IsAdmin = true;
+            //expl.Ages = new int[ 3 ] { 2, 1, 2 };
+
+            //XmlExamlpe expl;
+
+            //var xmlFile = XMLFile<XmlExamlpe>.CreateInstance( "example" );
+
+            //print( xmlFile.Save( expl ) ? "Done!" : "Error!" );
+            //print( xmlFile.Load( out expl ) ? "Done!" : "Error!" );
+
         }
 
         Player player;
