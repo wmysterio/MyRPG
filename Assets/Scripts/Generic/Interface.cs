@@ -21,23 +21,23 @@ namespace MyRPG {
             public const int MAX_ICON_COUNT = 10;
             public const float DEFAULT_MESSAGE_BOX_WIDTH = 310f;
 
-            private static bool isInitStyles = false, isInit = false, enable = false, enableСinematicView, fadeOn;
+            private static bool mouseLeft = false, mouseRight = false, isInitStyles = false, isInit = false, enable = false, enableСinematicView, fadeOn;
             private static ResourceRequest request;
             private static float fadeStep, fadeAlpha, messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH, subtitlesTimer, subtitlesDuration;
             private static Texture2D activeEquipmentImage, windowBackground, windowTitleBackground, messageBoxBackground, subtitlesBlackPixel, fadeTexture, imageHP, imageMP, imageEP, imageHP_bg, imageMP_bg, imageEP_bg;
             private static AudioClip messageBoxPlay;
-            private static Rect abilityRect,abilityButtonRect, windowRect, windowTitleRect, windowCloseButtonRect, messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
+            private static Rect selectedAbilityRect, abilityRect,abilityButtonRect, windowRect, windowTitleRect, windowCloseButtonRect, messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
             private static GUIContent messageBoxContent, subtitlesContent;
-            private static GUIStyle abilityStyle, activeEquipmentStyle, windowStyle, windowTitleStyle, windowCloseButtonStyle, messageBoxStyle, messageBoxLabelStyle, subtitlesStyle, hudNameStyle;
+            private static GUIStyle selectedAbilityStyle, abilityStyle, activeEquipmentStyle, windowStyle, windowTitleStyle, windowCloseButtonStyle, messageBoxStyle, messageBoxLabelStyle, subtitlesStyle, hudNameStyle;
             private static Color windowTitleColor, fadeColor;
             private static Dictionary<Window, Action> windowFunc;
             private static Dictionary<TypeOfItemRarity, Texture2D> borderImages;
             private static Dictionary<TypeOfItemRarity, GUIStyle> borderStyles;
-            private static int iterator, iteratior2;
-            private static Item currentItem;
+            private static int iterator, iterator2;
+            private static Item currentItem, tempItem;
             private static EquipmentItem currentEquipment;
-
             private static IAbility[] abilitys;
+            private static IAbility selectedAbility;
 
 
             public static Texture2D[] Icons { get; private set; }
@@ -114,6 +114,9 @@ namespace MyRPG {
                     yield return null;
 
                 fadeColor = Color.black;
+
+                selectedAbilityRect = new Rect( 0, 0, 32, 32 );
+                deselectAbility();
 
                 windowFunc = new Dictionary<Window, Action>() {
                     { Window.Bag, drawBagWindow },
@@ -331,6 +334,12 @@ namespace MyRPG {
             public static void Update() {
                 if( !IsInit || !Enable )
                     return;
+                mouseLeft = InputManager.GetMouse( MouseKeyName.Left );
+                mouseRight = InputManager.GetMouse( MouseKeyName.Right );
+
+                if( InputManager.GetKey( KeyName.MENU ) || Console.Enable || ( selectedAbility != null && mouseRight ) )
+                    deselectAbility();
+
                 if( Fadind ) {
                     fadeAlpha = fadeColor.a + fadeStep;
                     if( 0f > fadeAlpha ) {
@@ -400,6 +409,14 @@ namespace MyRPG {
                         
                         if( CurrentWindow != Window.None )
                             windowRect = drawWindow( CurrentWindow.ToString(), windowRect );
+
+                        if( selectedAbility != null ) {
+                            selectedAbilityRect.x = Event.current.mousePosition.x - 16;
+                            selectedAbilityRect.y = Event.current.mousePosition.y - 16;
+                            GUI.Box( selectedAbilityRect, selectedAbility.Icon, selectedAbilityStyle );
+                            GUI.UnfocusWindow();
+                        }
+
                     }
                 }
             }
@@ -476,22 +493,32 @@ namespace MyRPG {
                         GUI.DrawTexture( abilityButtonRect, currentEquipment.Icon );
                         if( Current.Equipments[ currentEquipment.EquipmentPart ] != null ) {
                             if( GUI.Button( abilityButtonRect, currentEquipment.Timer > 0f ? currentEquipment.Timer.ToString() : currentItem.Count > 2 ? currentItem.Count.ToString() : string.Empty, activeEquipmentStyle ) ) {
-                                Current.Equipments.Set( currentEquipment );
+                                if( mouseLeft )
+                                    selectAbility( Current.Loot[ iterator ] );
+                                if( mouseRight )
+                                    Current.Equipments.Set( currentEquipment );
                             }
                         } else {
                             if( GUI.Button( abilityButtonRect, currentEquipment.Timer > 0f ? currentEquipment.Timer.ToString() : currentItem.Count > 2 ? currentItem.Count.ToString() : string.Empty, borderStyles[ currentItem.Rarity ] ) ) {
-                                Current.Equipments.Set( currentEquipment );
+                                if( mouseLeft )
+                                    selectAbility( Current.Loot[ iterator ] );
+                                if( mouseRight )
+                                    Current.Equipments.Set( currentEquipment );
                             }
                         }
                     } else {
                         GUI.DrawTexture( abilityButtonRect, currentItem.Icon );
                         if( currentItem.Timer > 0f ) {
                             if( GUI.Button( abilityButtonRect, currentItem.Timer.ToString(), borderStyles[ currentItem.Rarity ] ) ) {
-                                // select item
+                                if( mouseLeft )
+                                    selectAbility( Current.Loot[ iterator ] );
                             }
                         } else {
                             if( GUI.Button( abilityButtonRect, currentItem.Count > 2 ? currentItem.Count.ToString() : string.Empty, borderStyles[ currentItem.Rarity ] ) ) {
-                                currentItem.Use( Current );
+                                if( mouseLeft )
+                                    selectAbility( Current.Loot[ iterator ] );
+                                if( mouseRight )
+                                    currentItem.Use( Current );
                             }
                         }
                     }
@@ -507,6 +534,11 @@ namespace MyRPG {
                 }
             }
 
+            private static void drawSpellsWindow() { }
+            private static void drawPersonageWindow() { }
+            private static void drawEffectsWindow() { }
+            private static void drawQuestsWindow() { }
+
             private static void drawAbilityPanel() {
                 abilityRect.x = ( Screen.width / 2 ) - ( 32 * 12 ) / 2 - 26;
                 abilityRect.y = Screen.height - 76;
@@ -516,11 +548,18 @@ namespace MyRPG {
                 abilityButtonRect.y = abilityRect.y + 4;
                 for( iterator = 0; iterator < 12; iterator++ ) {
                     if( abilitys[ iterator ] == null ) {
-                        GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] );
+                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
+                            if( mouseLeft && selectedAbility != null ) {
+                                abilitys[ iterator ] = selectedAbility;
+                                deselectAbility();
+                            }
+                        }
                     } else {
                         GUI.DrawTexture( abilityButtonRect, abilitys[ iterator ].Icon );
-                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
-                            Debug.Log( "click" );
+                        currentItem = abilitys[ iterator ] == null ? null : ( Item ) abilitys[ iterator ];
+                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles [ currentItem == null ? TypeOfItemRarity.Normal : currentItem.Rarity ] ) ) {
+                            if( mouseRight )
+                                Debug.Log( "click" );
                         }
                     }
                     abilityButtonRect.x += 36f;
@@ -528,23 +567,36 @@ namespace MyRPG {
                 abilityButtonRect.x = abilityRect.x + 4;
                 abilityButtonRect.y = abilityRect.y + 40;
                 abilityRect.x = Screen.width / 2 - abilityRect.width + 4;
-                for( iteratior2 = 0, iterator = 12; iteratior2 < 12; iteratior2++, iterator++ ) {
+                for( iterator2 = 0, iterator = 12; iterator2 < 12; iterator2++, iterator++ ) {
                     if( abilitys[ iterator ] == null ) {
-                        GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] );
+                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
+                            if( mouseLeft && selectedAbility != null ) {
+                                abilitys[ iterator ] = selectedAbility;
+                                deselectAbility();
+                            }
+                        }
                     } else {
                         GUI.DrawTexture( abilityButtonRect, abilitys[ iterator ].Icon );
-                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
-                            Debug.Log( "click" );
+                        currentItem = abilitys[ iterator ] == null ? null : ( Item ) abilitys[ iterator ];
+                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ currentItem == null ? TypeOfItemRarity.Normal : currentItem.Rarity ] ) ) {
+                            if( mouseRight )
+                                Debug.Log( "click" );
                         }
                     }
                     abilityButtonRect.x += 36f;
                 }
             }
 
-            private static void drawSpellsWindow() { }
-            private static void drawPersonageWindow() { }
-            private static void drawEffectsWindow() { }
-            private static void drawQuestsWindow() { }
+            private static void selectAbility( IAbility ability ) {
+                selectedAbility = ability;
+                tempItem = ability.AbilityType == TypeOfAbility.Item ? ( Item ) ability : null;
+                selectedAbilityStyle = borderStyles[ tempItem == null ? TypeOfItemRarity.Normal : tempItem.Rarity ];
+            }
+            private static void deselectAbility() {
+                tempItem = null;
+                selectedAbilityStyle = null;
+                selectedAbility = null;
+            }
 
             private static void displayHUD( float x, float y, Personage personage, bool target = false ) {
                 hudBorderRect.x = x;
