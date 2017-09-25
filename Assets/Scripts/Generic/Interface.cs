@@ -340,6 +340,11 @@ namespace MyRPG {
                 if( InputManager.GetKey( KeyName.MENU ) || Console.Enable || ( selectedAbility != null && mouseRight ) )
                     deselectAbility();
 
+                for( iterator= 0; iterator < 24; iterator++ ) {
+                    if( abilitys[ iterator ] != null && InputManager.IsKeyDown( ( KeyName ) iterator ) )
+                        Debug.Log( "click" );
+                }
+
                 if( Fadind ) {
                     fadeAlpha = fadeColor.a + fadeStep;
                     if( 0f > fadeAlpha ) {
@@ -473,6 +478,13 @@ namespace MyRPG {
                         return;
                     }
                     windowFunc[ CurrentWindow ].Invoke();
+
+                    if( selectedAbility != null ) {
+                        selectedAbilityRect.x = Event.current.mousePosition.x - 16;
+                        selectedAbilityRect.y = Event.current.mousePosition.y - 16;
+                        GUI.Box( selectedAbilityRect, selectedAbility.Icon, selectedAbilityStyle );
+                    }
+
                     if( dragable )
                         GUI.DragWindow();
                 }, string.Empty, windowStyle );
@@ -546,27 +558,6 @@ namespace MyRPG {
 
                 abilityButtonRect.x = abilityRect.x + 4;
                 abilityButtonRect.y = abilityRect.y + 4;
-                for( iterator = 0; iterator < 12; iterator++ ) {
-                    if( abilitys[ iterator ] == null ) {
-                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
-                            if( mouseLeft && selectedAbility != null ) {
-                                abilitys[ iterator ] = selectedAbility;
-                                deselectAbility();
-                            }
-                        }
-                    } else {
-                        GUI.DrawTexture( abilityButtonRect, abilitys[ iterator ].Icon );
-                        currentItem = abilitys[ iterator ] == null ? null : ( Item ) abilitys[ iterator ];
-                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles [ currentItem == null ? TypeOfItemRarity.Normal : currentItem.Rarity ] ) ) {
-                            if( mouseRight )
-                                Debug.Log( "click" );
-                        }
-                    }
-                    abilityButtonRect.x += 36f;
-                }
-                abilityButtonRect.x = abilityRect.x + 4;
-                abilityButtonRect.y = abilityRect.y + 40;
-                abilityRect.x = Screen.width / 2 - abilityRect.width + 4;
                 for( iterator2 = 0, iterator = 12; iterator2 < 12; iterator2++, iterator++ ) {
                     if( abilitys[ iterator ] == null ) {
                         if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
@@ -578,7 +569,48 @@ namespace MyRPG {
                     } else {
                         GUI.DrawTexture( abilityButtonRect, abilitys[ iterator ].Icon );
                         currentItem = abilitys[ iterator ] == null ? null : ( Item ) abilitys[ iterator ];
+                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles [ currentItem == null ? TypeOfItemRarity.Normal : currentItem.Rarity ] ) ) {
+                            if( mouseLeft ) {
+                                if( selectedAbility == null ) {
+                                    selectAbility( abilitys[ iterator ] );
+                                    abilitys[ iterator ] = null;
+                                } else {
+                                    var tmp = abilitys[ iterator ];
+                                    abilitys[ iterator ] = selectedAbility;
+                                    selectAbility( tmp );
+                                }
+                            }
+                            if( mouseRight )
+                                Debug.Log( "click" );
+                        }
+                    }
+                    abilityButtonRect.x += 36f;
+                }
+                abilityButtonRect.x = abilityRect.x + 4;
+                abilityButtonRect.y = abilityRect.y + 40;
+                abilityRect.x = Screen.width / 2 - abilityRect.width + 4;
+                for( iterator = 0; iterator < 12; iterator++) {
+                    if( abilitys[ iterator ] == null ) {
+                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
+                            if( mouseLeft && selectedAbility != null ) {
+                                abilitys[ iterator ] = selectedAbility;
+                                deselectAbility();
+                            }
+                        }
+                    } else {
+                        GUI.DrawTexture( abilityButtonRect, abilitys[ iterator ].Icon );
+                        currentItem = abilitys[ iterator ] == null ? null : ( Item ) abilitys[ iterator ];
                         if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ currentItem == null ? TypeOfItemRarity.Normal : currentItem.Rarity ] ) ) {
+                            if( mouseLeft ) {
+                                if( selectedAbility == null ) {
+                                    selectAbility( abilitys[ iterator ] );
+                                    abilitys[ iterator ] = null;
+                                } else {
+                                    var tmp = abilitys[ iterator ];
+                                    abilitys[ iterator ] = selectedAbility;
+                                    selectAbility( tmp );
+                                }
+                            }
                             if( mouseRight )
                                 Debug.Log( "click" );
                         }
@@ -635,7 +667,7 @@ namespace MyRPG {
             }
 
             private static void playSound( AudioClip clip ) { AudioSource.PlayClipAtPoint( clip, Camera.main.transform.position ); }
-
+            
         }
 
     }
