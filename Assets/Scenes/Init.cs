@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 namespace MyRPG {
 
@@ -69,13 +70,31 @@ namespace MyRPG {
 
         void Awake() {
             InputManager.Init();
+
+            Config conf = null;
+            var xml = XMLFile<Config>.Create( "config" );
+            
+            if( !File.Exists( string.Format( "{0}/{1}.xml", Application.dataPath, "config" ) ) ) {
+                conf = Config.Default();
+                Config.Intance = conf;
+                if( !xml.Save( conf ) )
+                    Debug.LogWarning( "Файл 'config' не збережено!" );
+            } else {
+                if( !xml.Load( out conf ) ) {
+                    conf = Config.Default();
+                    if( !xml.Save( conf ) )
+                        Debug.LogWarning( "Файл 'config' не збережено!" );
+                } else {
+                    InputManager.SetDataBinding( conf.BindingKeys );
+                    Config.Intance = conf;
+                }
+            }
+
+
             var go = GameObject.Find( "EntityList" );
             go.AddComponent<Entity.EntityList>();
 
-            Config config;
-            var xml = XMLFile<Config>.Create( "config" );
-            if( !xml.Load( out config ) )
-                Debug.Log( "Файл не завантажено!" );
+
         }
 
         Player player;

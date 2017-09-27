@@ -121,6 +121,17 @@ namespace MyRPG {
             return keyNames[ keys[ ( KeyName ) index ] ];
         }
 
+        public static int[] GetDataBinding() { return ( from k in keys select ( int ) k.Value ).ToArray(); }
+        public static void SetDataBinding( int[] data ) {
+            try {
+                var query = ( from b in data select ( KeyCode ) b ).ToArray();
+                for( iterator = 0; iterator < keys.Count; iterator++ ) {
+                    var k = keys.Keys.ElementAt( iterator );
+                    BindKey( k, query[ iterator ] );
+                }
+            } catch { return; }
+        }
+
         public static void ToDefault() {
             for( int i = 0; i < 9; i++ )
                 keys[ ( KeyName ) i ] = ( KeyCode ) ( 49 + i );
