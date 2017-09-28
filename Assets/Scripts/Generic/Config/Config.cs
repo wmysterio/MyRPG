@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 namespace MyRPG {
 
@@ -17,13 +18,15 @@ namespace MyRPG {
         public static Config Intance { get; set; }
         public static Config Default() {
             return new Config() {
-                CurrentLanguage = "English",
+                CurrentLanguage = Localization.DEFAULT_LANGUAGE,
                 FullScreen = Screen.fullScreen,
                 ScreenWidth = Screen.width,
                 ScreenHeight = Screen.height,
                 BindingKeys = InputManager.GetDataBinding()
             };
         }
+
+        public static bool HasFile() { return File.Exists( string.Format( "{0}/{1}.xml", Application.dataPath, "config" ) ); }
 
         public string CurrentLanguage { get; set; }
         public int ScreenWidth { get; set; }

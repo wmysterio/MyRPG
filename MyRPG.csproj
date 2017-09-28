@@ -118,6 +118,7 @@
     <Compile Include="Assets\Scripts\Generic\Bag.cs" />
     <Compile Include="Assets\Scripts\Generic\Characteristic.cs" />
     <Compile Include="Assets\Scripts\Generic\Config\Config.cs" />
+    <Compile Include="Assets\Scripts\Generic\Config\Localization.cs" />
     <Compile Include="Assets\Scripts\Generic\Config\XMLFile.cs" />
     <Compile Include="Assets\Scripts\Generic\Console.cs" />
     <Compile Include="Assets\Scripts\Generic\EffectList.cs" />
@@ -136,6 +137,8 @@
     <Compile Include="Assets\Scripts\Interfaces\IDescription.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Localization\English\main.xml" />
+    <None Include="Assets\Localization\Українська\main.xml" />
     <None Include="Assets\config.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

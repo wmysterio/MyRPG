@@ -66,29 +66,47 @@ namespace MyRPG {
 
     public class Init : MonoBehaviour {
 
-        bool chg = false;
+        bool chg = false, hasError = false;
+        string errorMessage = string.Empty;
+
+        private void addError( string text ) {
+            hasError = transform;
+            errorMessage = text;
+        }
 
         void Awake() {
             InputManager.Init();
 
             Config conf = null;
             var xml = XMLFile<Config>.Create( "config" );
-            
+
             if( !File.Exists( string.Format( "{0}/{1}.xml", Application.dataPath, "config" ) ) ) {
                 conf = Config.Default();
-                Config.Intance = conf;
                 if( !xml.Save( conf ) )
                     Debug.LogWarning( "Файл 'config' не збережено!" );
             } else {
                 if( !xml.Load( out conf ) ) {
                     conf = Config.Default();
-                    if( !xml.Save( conf ) )
+                    if( !xml.Save( conf, true ) )
                         Debug.LogWarning( "Файл 'config' не збережено!" );
                 } else {
                     InputManager.SetDataBinding( conf.BindingKeys );
-                    Config.Intance = conf;
                 }
             }
+            Config.Intance = conf;
+
+            if( !Localization.Init() ) {
+                addError( "" );
+                return;
+            }
+
+            if( !Localization.SwitchLanguage( string.Empty, Config.Intance.CurrentLanguage.ToUpper() ) ) {
+                addError( "" );
+                return;
+            }
+
+
+
 
 
             var go = GameObject.Find( "EntityList" );
@@ -101,41 +119,48 @@ namespace MyRPG {
         TempHuman jack, mike;
 
         IEnumerator Start() {
-            yield return Player.Interface.Init();
-            Player.Interface.Enable = true;
+            if( !hasError ) {
 
-            Model.Request( 0 );
-            yield return Model.LoadRequestedNowAsync();
+                yield return Player.Interface.Init();
+                Player.Interface.Enable = true;
 
-            player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
+                Model.Request( 0 );
+                yield return Model.LoadRequestedNowAsync();
 
-            player.Loot.Add( new Item1() );
-            player.Loot.Add( new Item2() );
-            player.Loot.Add( new Item3() );
-            player.Loot.Add( new Item4() );
-            player.Loot.Add( new Item5() );
-            player.Loot.Add( new Item6() );
+                player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
+
+                player.Loot.Add( new Item1() );
+                player.Loot.Add( new Item2() );
+                player.Loot.Add( new Item3() );
+                player.Loot.Add( new Item4() );
+                player.Loot.Add( new Item5() );
+                player.Loot.Add( new Item6() );
 
 
-            jack = new TempHuman( "Jack", new Vector3( -2f, 0.5f, -4f ) );
+                jack = new TempHuman( "Jack", new Vector3( -2f, 0.5f, -4f ) );
 
-            mike = new TempHuman( "Mike", new Vector3( 2f, 0.5f, -4f ) );
-            mike.Die();
+                mike = new TempHuman( "Mike", new Vector3( 2f, 0.5f, -4f ) );
+                mike.Die();
 
-            Model.Unload();
+                Model.Unload();
 
-            Player.Interface.Fade( FadeMode.In );
+                Player.Interface.Fade( FadeMode.In );
 
-            var path = Path.Create( true );
-            path.AddNode( -6f, 0.5f, -6f );
-            path.AddNode( 6f, 0.5f, -6f );
-            path.AddNode( 6f, 0.5f, 6f );
-            path.AddNode( -6f, 0.5f, 6f );
+                var path = Path.Create( true );
+                path.AddNode( -6f, 0.5f, -6f );
+                path.AddNode( 6f, 0.5f, -6f );
+                path.AddNode( 6f, 0.5f, 6f );
+                path.AddNode( -6f, 0.5f, 6f );
 
-            jack.AssignToPath( path );
+                jack.AssignToPath( path );
+
+            }
         }
 
         void Update() {
+            if( hasError )
+                return;
+
             if( Player.Exist() ) {
                 if( Input.GetKeyDown( KeyCode.F ) )
                     mike.Reanimate();
@@ -145,6 +170,11 @@ namespace MyRPG {
         void FixedUpdate() { }
 
         void OnGUI() {
+            if( hasError )
+                return;
+
+
+
             if( !chg ) {
                 if( !Player.Interface.IsInit )
                     return;

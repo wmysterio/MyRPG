@@ -35,7 +35,6 @@ namespace MyRPG {
             } catch { return false; }
             return true;
         }
-
         public bool Save( T instance, bool replace = false ) {
             try {
                 if( replace ) {
