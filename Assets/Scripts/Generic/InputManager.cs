@@ -115,7 +115,7 @@ namespace MyRPG {
                 return string.Empty;
             return keyNames[ keys[ name ] ];
         }
-        public static string GetKeyName( byte index ) {
+        public static string GetKeyName( int index ) {
             if( !keyNames.ContainsKey( keys[ ( KeyName ) index ] ) )
                 return string.Empty;
             return keyNames[ keys[ ( KeyName ) index ] ];

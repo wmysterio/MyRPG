@@ -26,7 +26,7 @@ namespace MyRPG {
             private static float fadeStep, fadeAlpha, messageBoxDuration, messageBoxTimer, messageBoxWidth = DEFAULT_MESSAGE_BOX_WIDTH, subtitlesTimer, subtitlesDuration;
             private static Texture2D activeEquipmentImage, windowBackground, windowTitleBackground, messageBoxBackground, subtitlesBlackPixel, fadeTexture, imageHP, imageMP, imageEP, imageHP_bg, imageMP_bg, imageEP_bg;
             private static AudioClip messageBoxPlay;
-            private static Rect selectedAbilityRect, abilityRect,abilityButtonRect, windowRect, windowTitleRect, windowCloseButtonRect, messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
+            private static Rect selectedAbilityRect, abilityRect, abilityButtonRect, windowRect, windowTitleRect, windowCloseButtonRect, messageBoxRect, subtitlesUpRect, subtitlesBottomRect, fadeRect, hudRect, hudBorderRect, hudNameRect;
             private static GUIContent messageBoxContent, subtitlesContent;
             private static GUIStyle selectedAbilityStyle, abilityStyle, activeEquipmentStyle, windowStyle, windowTitleStyle, windowCloseButtonStyle, messageBoxStyle, messageBoxLabelStyle, subtitlesStyle, hudNameStyle;
             private static Color windowTitleColor, fadeColor;
@@ -64,6 +64,8 @@ namespace MyRPG {
             }
             public static bool Fadind { get; private set; }
             public static Window CurrentWindow { get; private set; }
+            public static string WindowName { get; private set; }
+
 
             public static void ClearSubtitles() {
                 subtitlesDuration = 0f;
@@ -114,7 +116,7 @@ namespace MyRPG {
                     yield return null;
 
                 fadeColor = Color.black;
-
+                WindowName = string.Empty;
                 selectedAbilityRect = new Rect( 0, 0, 32, 32 );
                 deselectAbility();
 
@@ -340,7 +342,7 @@ namespace MyRPG {
                 if( InputManager.GetKey( KeyName.MENU ) || Console.Enable || ( selectedAbility != null && mouseRight ) )
                     deselectAbility();
 
-                for( iterator= 0; iterator < 24; iterator++ ) {
+                for( iterator = 0; iterator < 24; iterator++ ) {
                     if( abilitys[ iterator ] != null && InputManager.IsKeyDown( ( KeyName ) iterator ) )
                         Debug.Log( "click" );
                 }
@@ -411,9 +413,9 @@ namespace MyRPG {
                             displayHUD( Screen.width - 214f, 10f, Current.Target, true );
 
                         drawAbilityPanel();
-                        
+
                         if( CurrentWindow != Window.None )
-                            windowRect = drawWindow( CurrentWindow.ToString(), windowRect );
+                            windowRect = drawWindow( WindowName, windowRect );
 
                         if( selectedAbility != null ) {
                             selectedAbilityRect.x = Event.current.mousePosition.x - 16;
@@ -432,30 +434,37 @@ namespace MyRPG {
                 if( window != Window.None ) {
                     if( CurrentWindow == window ) {
                         CurrentWindow = Window.None;
+                        WindowName = string.Empty;
                         return;
                     }
                     switch( window ) {
                         case Window.Bag:
+                        WindowName = Localization.Current.WindowNames[ 1 ];
                         windowRect.width = 36f * Bag.ItemsInRow + 4f;
                         windowRect.height = 36f * Bag.ItemsInRow + 40f;
                         break;
                         case Window.Spells:
+                        WindowName = Localization.Current.WindowNames[ 2 ];
                         // windowRect.width = ?
                         // windowRect.height = ?
                         break;
                         case Window.Personage:
+                        WindowName = Localization.Current.WindowNames[ 3 ];
                         // windowRect.width = ?
                         // windowRect.height = ?
                         break;
                         case Window.Effects:
+                        WindowName = Localization.Current.WindowNames[ 4 ];
                         // windowRect.width = ?
                         // windowRect.height = ?
                         break;
                         case Window.Quests:
+                        WindowName = Localization.Current.WindowNames[ 5 ];
                         // windowRect.width = ?
                         // windowRect.height = ?
                         break;
                         default:
+                        WindowName = string.Empty;
                         // windowRect.width = ?
                         // windowRect.height = ?
                         break;
@@ -560,7 +569,7 @@ namespace MyRPG {
                 abilityButtonRect.y = abilityRect.y + 4;
                 for( iterator2 = 0, iterator = 12; iterator2 < 12; iterator2++, iterator++ ) {
                     if( abilitys[ iterator ] == null ) {
-                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
+                        if( GUI.Button( abilityButtonRect, InputManager.GetKeyName( iterator ), borderStyles[ TypeOfItemRarity.Normal ] ) ) {
                             if( mouseLeft && selectedAbility != null ) {
                                 abilitys[ iterator ] = selectedAbility;
                                 deselectAbility();
@@ -569,7 +578,7 @@ namespace MyRPG {
                     } else {
                         GUI.DrawTexture( abilityButtonRect, abilitys[ iterator ].Icon );
                         currentItem = abilitys[ iterator ] == null ? null : ( Item ) abilitys[ iterator ];
-                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles [ currentItem == null ? TypeOfItemRarity.Normal : currentItem.Rarity ] ) ) {
+                        if( GUI.Button( abilityButtonRect, InputManager.GetKeyName( iterator ), borderStyles[ currentItem == null ? TypeOfItemRarity.Normal : currentItem.Rarity ] ) ) {
                             if( mouseLeft ) {
                                 if( selectedAbility == null ) {
                                     selectAbility( abilitys[ iterator ] );
@@ -589,9 +598,9 @@ namespace MyRPG {
                 abilityButtonRect.x = abilityRect.x + 4;
                 abilityButtonRect.y = abilityRect.y + 40;
                 abilityRect.x = Screen.width / 2 - abilityRect.width + 4;
-                for( iterator = 0; iterator < 12; iterator++) {
+                for( iterator = 0; iterator < 12; iterator++ ) {
                     if( abilitys[ iterator ] == null ) {
-                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ TypeOfItemRarity.Normal ] ) ) {
+                        if( GUI.Button( abilityButtonRect, InputManager.GetKeyName( iterator ), borderStyles[ TypeOfItemRarity.Normal ] ) ) {
                             if( mouseLeft && selectedAbility != null ) {
                                 abilitys[ iterator ] = selectedAbility;
                                 deselectAbility();
@@ -600,7 +609,7 @@ namespace MyRPG {
                     } else {
                         GUI.DrawTexture( abilityButtonRect, abilitys[ iterator ].Icon );
                         currentItem = abilitys[ iterator ] == null ? null : ( Item ) abilitys[ iterator ];
-                        if( GUI.Button( abilityButtonRect, string.Empty, borderStyles[ currentItem == null ? TypeOfItemRarity.Normal : currentItem.Rarity ] ) ) {
+                        if( GUI.Button( abilityButtonRect, InputManager.GetKeyName( iterator ), borderStyles[ currentItem == null ? TypeOfItemRarity.Normal : currentItem.Rarity ] ) ) {
                             if( mouseLeft ) {
                                 if( selectedAbility == null ) {
                                     selectAbility( abilitys[ iterator ] );
@@ -667,18 +676,18 @@ namespace MyRPG {
             }
 
             private static void playSound( AudioClip clip ) { AudioSource.PlayClipAtPoint( clip, Camera.main.transform.position ); }
-            
+
         }
 
     }
 
-    public enum Window {
-        None,
-        Bag,
-        Spells,
-        Personage,
-        Effects,
-        Quests
+    public enum Window : int {
+        None = 0,
+        Bag = 1,
+        Spells = 2,
+        Personage = 3,
+        Effects = 4,
+        Quests = 5
     }
 
     public enum FadeMode { In, Out }

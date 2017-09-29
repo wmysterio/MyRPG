@@ -48,7 +48,7 @@ namespace MyRPG {
             iconID = 0;
             Description = string.Empty;
             NoLongerNeeded = false;
-            gameObject = new GameObject( "Entity" );
+            gameObject = new GameObject( Localization.Current.EntityNames[ 0 ] );
             gameObject.transform.parent = EntityList.Container.transform;
             ModelID = modelID;
             var model = Model.Find( modelID );

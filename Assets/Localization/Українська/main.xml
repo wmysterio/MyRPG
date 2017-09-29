@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Localization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-
+  <EntityNames>
+    <string index="0">Сутність</string>
+  </EntityNames>
+  <WindowNames>
+    <string index="0"></string>
+    <string index="1">Сумка</string>
+    <string index="2">Заклинання</string>
+    <string index="3">Персонаж</string>
+    <string index="4">Ефекти</string>
+    <string index="5">Завдання</string>
+  </WindowNames>
 </Localization>

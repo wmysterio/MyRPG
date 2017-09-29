@@ -56,9 +56,14 @@ namespace MyRPG {
                 var lang = split[ split.Length - 1 ];
                 all.Add( lang.ToUpper(), string.Format( "Localization/{0}", lang ) );
             }
+            if( !all.ContainsKey( DEFAULT_LANGUAGE ) )
+                return false;
             isInit = true;
             return true;
         }
+
+        public string[] WindowNames { get; set; }
+        public string[] EntityNames { get; set; }
 
     }
 

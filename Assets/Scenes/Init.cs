@@ -70,7 +70,7 @@ namespace MyRPG {
         string errorMessage = string.Empty;
 
         private void addError( string text ) {
-            hasError = transform;
+            hasError = true;
             errorMessage = text;
         }
 
@@ -80,7 +80,7 @@ namespace MyRPG {
             Config conf = null;
             var xml = XMLFile<Config>.Create( "config" );
 
-            if( !File.Exists( string.Format( "{0}/{1}.xml", Application.dataPath, "config" ) ) ) {
+            if( !Config.HasFile() ) {
                 conf = Config.Default();
                 if( !xml.Save( conf ) )
                     Debug.LogWarning( "Файл 'config' не збережено!" );

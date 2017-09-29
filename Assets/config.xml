@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <CurrentLanguage>English</CurrentLanguage>
+  <CurrentLanguage>Українська</CurrentLanguage>
   <ScreenWidth>800</ScreenWidth>
   <ScreenHeight>600</ScreenHeight>
   <FullScreen>false</FullScreen>
