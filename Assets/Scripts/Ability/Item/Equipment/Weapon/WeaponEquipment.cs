@@ -33,7 +33,7 @@ namespace MyRPG {
         public float Delay { get; protected set; }
 
         public WeaponEquipment( int level, TypeOfWeapon type, TypeOfItemRarity rarity, int modelID ) : base( level, rarity, MaterialOfEquipment.Other, PartOfEquipment.Weapon, modelID ) {
-            Name = "Weapon Equipment";
+            nameId = 25;
             Type = type;
             Delay = 4f;
             delayTimer = 0f;

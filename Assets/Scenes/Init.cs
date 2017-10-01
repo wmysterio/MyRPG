@@ -55,7 +55,7 @@ namespace MyRPG {
 
     public class Item6 : SwordWeapon {
 
-        public Item6() : base( "Мега меч", 1, TypeOfItemRarity.Normal, 0 ) {
+        public Item6() : base( 1, TypeOfItemRarity.Normal, 0 ) {
             baseCharacteristic.MaxHealth = 5000;
             baseCharacteristic.PhysicalAttackPower = 300;
             baseCharacteristic.HealthRegeneration = 5;
@@ -161,9 +161,12 @@ namespace MyRPG {
             if( hasError )
                 return;
 
+
             if( Player.Exist() ) {
+                Debug.Log( player.Loot[ 0 ].Name );
                 if( Input.GetKeyDown( KeyCode.F ) )
-                    mike.Reanimate();
+                    //mike.Reanimate();
+                    Localization.SwitchLanguage( Config.Intance.CurrentLanguage, Localization.DEFAULT_LANGUAGE );
             }
         }
 

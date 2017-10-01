@@ -18,7 +18,7 @@ namespace MyRPG {
 
         private RaycastHit hit;
 
-        protected int iconID;
+        protected int iconID, nameId;
         protected GameObject gameObject;
         protected Collider collider;
         protected Rigidbody rigidbody;
@@ -37,7 +37,7 @@ namespace MyRPG {
             get { return gameObject.name; }
             protected set { gameObject.name = value; }
         }
-        public string Description { get; protected set; }
+        public virtual string Description { get { return string.Empty; } }
 
         public Vector3 Position {
             get { return gameObject.transform.localPosition; }
@@ -46,9 +46,9 @@ namespace MyRPG {
 
         public Entity( int modelID, Vector3 position ) {
             iconID = 0;
-            Description = string.Empty;
             NoLongerNeeded = false;
-            gameObject = new GameObject( Localization.Current.EntityNames[ 0 ] );
+            nameId = 0;
+            gameObject = new GameObject( Localization.Current.EntityNames[ nameId ] );
             gameObject.transform.parent = EntityList.Container.transform;
             ModelID = modelID;
             var model = Model.Find( modelID );
@@ -62,7 +62,13 @@ namespace MyRPG {
             collider = gameObject.GetComponentInChildren<Collider>();
             rigidbody = gameObject.AddComponent<Rigidbody>();
             targetingScript = gameObject.AddComponent<Targeting>();
+            Localization.LanguageChanged += Localization_LanguageChanged;
             updator.Add( this );
+        }
+
+        private void Localization_LanguageChanged( string path ) {
+            if( nameId != -1 )
+                Name = Localization.Current.EntityNames[ nameId ];
         }
 
         public bool IsColliderExist() { return collider != null; }
@@ -76,7 +82,12 @@ namespace MyRPG {
                 return false;
             return collider.enabled;
         }
-        public void Destroy() { NoLongerNeeded = true; }
+        public void Destroy() {
+            if( !NoLongerNeeded ) {
+                Localization.LanguageChanged -= Localization_LanguageChanged;
+            }
+            NoLongerNeeded = true;
+        }
         public float DistanceTo( float x, float y, float z ) { return Vector3.Distance( Position, new Vector3( x, y, z ) ); }
         public float DistanceTo( Vector3 position ) { return Vector3.Distance( Position, position ); }
         public float DistanceTo( Entity entity ) { return Vector3.Distance( Position, entity.Position ); }

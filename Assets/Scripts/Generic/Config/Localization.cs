@@ -28,18 +28,17 @@ namespace MyRPG {
         public static bool HasLanguage( string language ) { return all.ContainsKey( language ); }
         public static bool SwitchLanguage( string oldLanguage, string newLanguage ) {
             if( !all.ContainsKey( newLanguage ) )
-                return false;
+                newLanguage = DEFAULT_LANGUAGE;
             if( oldLanguage == newLanguage )
                 return true;
-
             Localization loc = null;
             var xml = XMLFile<Localization>.Create( string.Format( "{0}/{1}", all[ newLanguage ], "main" ) );
             if( !xml.Load( out loc ) )
                 return false;
             Config.Intance.CurrentLanguage = newLanguage;
+            Current = loc;
             if( LanguageChanged != null )
                 LanguageChanged.Invoke( all[ newLanguage ] );
-            Current = loc;
             return true;
         }
         public static bool Init() {

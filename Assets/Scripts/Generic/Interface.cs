@@ -235,6 +235,11 @@ namespace MyRPG {
                 yield return request;
                 activeEquipmentImage = request.asset as Texture2D;
 
+                Localization.LanguageChanged += path => {
+                    if( CurrentWindow != Window.None )
+                        WindowName = Localization.Current.WindowNames[ ( int ) CurrentWindow ];
+                };
+
                 IsInit = true;
             }
             public static void InitStyles() {

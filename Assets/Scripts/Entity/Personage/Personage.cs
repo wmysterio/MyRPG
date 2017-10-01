@@ -52,7 +52,7 @@ namespace MyRPG {
 
 
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
-            Name = "Personage";
+            nameId = 3;
             IsDead = false;
             CanMove = true;
             IsStopped = false;

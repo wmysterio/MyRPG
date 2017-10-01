@@ -15,7 +15,7 @@ namespace MyRPG {
     public abstract class ReagentItem : Item {
 
         public ReagentItem( int level, TypeOfItemRarity rarity ) : base( level, ClassOfItem.Reagent, rarity ) {
-            Name = "Reagent Item";
+            nameId = 10;
         }
 
     }

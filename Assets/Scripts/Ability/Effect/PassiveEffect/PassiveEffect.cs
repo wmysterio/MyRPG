@@ -15,7 +15,7 @@ namespace MyRPG {
 	public abstract class PassiveEffect : Effect {
         
 		public PassiveEffect( Personage sender ) : base( true, sender ) {
-            Name = "Passive Effect";
+            nameId = 7;
             Dispellable = false;
         }
 

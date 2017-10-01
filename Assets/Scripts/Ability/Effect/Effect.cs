@@ -14,16 +14,19 @@ namespace MyRPG {
 
     public abstract class Effect : IAbility {
 
-        protected int iconID;
+        protected int iconID, nameId;
 
         public TypeOfAbility AbilityType { get { return TypeOfAbility.Effect; } }
         public float Timer { get; protected set; }
         public int Count { get; protected set; }
         public Texture2D Icon { get { return Player.Interface.Icons[ iconID ]; } }
-        public string Name { get; protected set; }
-        public string Description { get; protected set; }
-        public bool IsPassive { get; private set; }
 
+        public string Name {
+            get { return Localization.Current.EntityNames[ nameId ]; }
+        }
+        public virtual string Description { get { return string.Empty; } }
+
+        public bool IsPassive { get; private set; }
 
         public Characteristic CurrentCharacteristic { get; private set; }
         public Personage Sender { get; private set; }
@@ -32,8 +35,7 @@ namespace MyRPG {
         public bool NoLongerNeeded { get; private set; }
 
         public Effect( bool isPassive, Personage sender, Personage target = null ) {
-            Name = "Effect";
-            Description = string.Empty;
+            nameId = 5;
             iconID = 0;
             Timer = 0f;
             Count = 0;
@@ -44,7 +46,7 @@ namespace MyRPG {
             Sender = sender;
             Target = target;
         }
-        
+
         protected virtual void end() { }
 
         public virtual bool Dispel( Personage helper ) {
@@ -68,7 +70,6 @@ namespace MyRPG {
             }
             return true;
         }
-
 
         public void Destroy() { NoLongerNeeded = true; }
 

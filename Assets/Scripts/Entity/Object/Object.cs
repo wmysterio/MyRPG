@@ -15,7 +15,7 @@ namespace MyRPG {
     public class Object : Entity {
 
         public Object( int modelId, Vector3 position ) : base( modelId, position ) {
-            Name = "Object";
+            nameId = 1;
         }
 
         public void Freeze( bool state ) { rigidbody.constraints = state ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None; }

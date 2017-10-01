@@ -24,7 +24,8 @@ namespace MyRPG {
         }
 
         public Player( int level, int modelId, Vector3 position ) : base( level, RankOfPersonage.Normal, modelId, position ) {
-            Name = "Player";
+            nameId = -1;
+            Name = "";
             Current = this;
             CurrentExperience = 0;
             TotalExperience = calculateMaxExperience();

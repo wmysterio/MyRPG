@@ -15,7 +15,7 @@ namespace MyRPG {
     public abstract class QuestItem : Item {
 
         public QuestItem( int level, TypeOfItemRarity rarity ) : base( level, ClassOfItem.Quest, rarity ) {
-            Name = "Quest Item";
+            nameId = 11;
         }
 
     }

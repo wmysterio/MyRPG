@@ -12,12 +12,10 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public abstract class WandWeapon : WeaponEquipment {
+	public interface INameChanger {
 
-        public WandWeapon( int level, TypeOfItemRarity rarity, int modelID ) : base( level, TypeOfWeapon.Wand, rarity, modelID ) {
-            nameId = 33;
-        }
+        void ResetEvent();
 
-    }
+	}
 
 }

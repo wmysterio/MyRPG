@@ -24,7 +24,7 @@ namespace MyRPG {
         private float restoreTimer;
 
         public PickUp( TypeOfPickUp type, int modelId, Vector3 position ) : base( modelId, position ) {
-            Name = "PickUp";
+            nameId = 2;
             EnableRotation = true;
             IsVisible = true;
             Type = type;

@@ -22,7 +22,7 @@ namespace MyRPG {
         public bool HasTick { get; protected set; }
 
         public ActiveEffect( float duration, Personage sender, Personage target= null ) : base( false, sender, target ) {
-            Name = "Active Effect";
+            nameId = 6;
             MaxCount = 0;
             HasTick = false;
             this.duration = duration;

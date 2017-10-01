@@ -12,10 +12,10 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public class DaggerWeapon : WeaponEquipment {
+    public abstract class DaggerWeapon : WeaponEquipment {
 
-        public DaggerWeapon( string name, int level, TypeOfItemRarity rarity, int modelID ) : base( level, TypeOfWeapon.Dagger, rarity, modelID ) {
-            Name = name;
+        public DaggerWeapon( int level, TypeOfItemRarity rarity, int modelID ) : base( level, TypeOfWeapon.Dagger, rarity, modelID ) {
+            nameId = 29;
         }
 
     }

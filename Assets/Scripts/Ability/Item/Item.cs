@@ -14,15 +14,18 @@ namespace MyRPG {
 
 	public abstract class Item : IAbility {
 
-        protected int iconID, price;
+        protected int iconID, price, nameId;
 
         public TypeOfAbility AbilityType {
             get { return TypeOfAbility.Item; }
         }
 
         public float Timer { get; protected set; }
-        public string Name { get; protected set; }
-        public string Description { get; protected set; }
+        public string Name {
+            get { return Localization.Current.EntityNames[ nameId ]; }
+        }
+        public virtual string Description { get { return string.Empty; } }
+
         public bool ForSelling { get; protected set; }
 
         public int Price { get { return price; } }
@@ -38,8 +41,7 @@ namespace MyRPG {
         public int Count { get; set; }
 
         public Item( int level, ClassOfItem itemClass, TypeOfItemRarity rarity ) {
-            Name = "Item";
-            Description = string.Empty;
+            nameId = 8;
             iconID = 0;
             Timer = 0f;
             Count = 1;
@@ -57,7 +59,6 @@ namespace MyRPG {
         public virtual void Use( Personage target = null ) { }
 
         public virtual void Update() { }
-
 
         public override string ToString() { return Name; }
 

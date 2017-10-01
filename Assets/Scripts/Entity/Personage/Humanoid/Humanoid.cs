@@ -18,7 +18,7 @@ namespace MyRPG {
         public RaseOfHumanoid Rase { get; private set; }
 
         public Humanoid( int level, RankOfPersonage rank, int modelId, Vector3 position ) : base( level, rank, TypeOfPersonage.Humanoid, modelId, position ) {
-            Name = "Humanoid";
+            nameId = 4;
             Gender = modelId % 2 == 0 ? GenderOfHumanoid.Male : GenderOfHumanoid.Female;
             Rase = ( RaseOfHumanoid ) ( modelId - ( byte ) Gender );
         }

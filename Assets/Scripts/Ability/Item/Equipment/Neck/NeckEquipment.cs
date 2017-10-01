@@ -15,7 +15,7 @@ namespace MyRPG {
     public abstract class NeckEquipment : EquipmentItem {
 
         public NeckEquipment( int level, TypeOfItemRarity rarity, int modelID ) : base( level, rarity, MaterialOfEquipment.Other, PartOfEquipment.Neck, modelID ) {
-            Name = "Neck Equipment";
+            nameId = 20;
         }
 
     }

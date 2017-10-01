@@ -36,7 +36,7 @@ namespace MyRPG {
         }
 
         public EquipmentItem( int level, TypeOfItemRarity rarity, MaterialOfEquipment material, PartOfEquipment part, int modelId ) : base( level, ClassOfItem.Equipment, rarity ) {
-            Name = "Equipment Item";
+            nameId = 13;
             baseCharacteristic = Characteristic.CreateEmpty();
             CurrentCharacteristic = Characteristic.CreateEmpty();
             Strength = 100;
