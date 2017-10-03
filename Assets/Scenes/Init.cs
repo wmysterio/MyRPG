@@ -13,68 +13,34 @@ using System.IO;
 
 namespace MyRPG {
 
-    public class TempHuman : Humanoid {
-
-        public TempHuman( string name, Vector3 position ) : base( 1, RankOfPersonage.Normal, 0, position ) {
-            Name = name;
-        }
-
-    }
-
-    public class Item1 : NormalItem {
-
-        public Item1() : base( 1, TypeOfItemRarity.Epic ) { }
-
-    }
-
-    public class Item2 : NormalItem {
-
-        public Item2() : base( 1, TypeOfItemRarity.Legendary ) { }
-
-    }
-
-    public class Item3 : NormalItem {
-
-        public Item3() : base( 1, TypeOfItemRarity.Rare ) {
-            Count = 20;
-        }
-
-    }
-
-    public class Item4 : NormalItem {
-
-        public Item4() : base( 1, TypeOfItemRarity.Unusual ) { }
-
-    }
-
-    public class Item5 : NormalItem {
-
-        public Item5() : base( 1, TypeOfItemRarity.Junk ) { }
-
-    }
-
-    public class Item6 : SwordWeapon {
-
-        public Item6() : base( 1, TypeOfItemRarity.Normal, 0 ) {
-            baseCharacteristic.MaxHealth = 5000;
-            baseCharacteristic.PhysicalAttackPower = 300;
-            baseCharacteristic.HealthRegeneration = 5;
-            Delay = 60;
-        }
-
-    }
-
     public class Init : MonoBehaviour {
 
-        bool chg = false, hasError = false;
-        string errorMessage = string.Empty;
-
-        private void addError( string text ) {
-            hasError = true;
-            errorMessage = text;
-        }
+        private bool chg = false, hasError = false;
+        private string errorMessage = string.Empty;
+        private Texture2D whitePixel, redPixel, blackPixel;
+        private Rect boxRect, wrapperRect, errorRect;
+        private int CurrentIndex = 0, totalIndexes = 5;
+        private float speed = 0f, range = 0.15f;
 
         void Awake() {
+
+            boxRect = new Rect( 0, 0, 10, 4 );
+            wrapperRect = new Rect();
+            errorRect = new Rect( 0, 0, 150, 36 );
+
+            blackPixel = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+            blackPixel.SetPixel( 0, 0, new Color( 30f / 255f, 30f / 255f, 30f / 255f, 1f ) );
+            blackPixel.Apply();
+
+            whitePixel = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+            whitePixel.SetPixel( 0, 0, Color.white );
+            whitePixel.Apply();
+
+            redPixel = new Texture2D( 1, 1, TextureFormat.RGBA32, false );
+            redPixel.SetPixel( 0, 0, new Color( 224f / 255f, 1f / 255f, 1f / 255f, 1f ) );
+            redPixel.Apply();
+
+
             InputManager.Init();
 
             Config conf = null;
@@ -105,78 +71,56 @@ namespace MyRPG {
                 return;
             }
 
-
-
-
-
             var go = GameObject.Find( "EntityList" );
             go.AddComponent<Entity.EntityList>();
-
+            go.AddComponent<Room>();
 
         }
 
-        Player player;
-        TempHuman jack, mike;
-
         IEnumerator Start() {
-            if( !hasError ) {
-
-                yield return Player.Interface.Init();
-                Player.Interface.Enable = true;
-
-                Model.Request( 0 );
-                yield return Model.LoadRequestedNowAsync();
-
-                player = new Player( 1, 0, new Vector3( 0f, 1f, 0f ) );
-
-                player.Loot.Add( new Item1() );
-                player.Loot.Add( new Item2() );
-                player.Loot.Add( new Item3() );
-                player.Loot.Add( new Item4() );
-                player.Loot.Add( new Item5() );
-                player.Loot.Add( new Item6() );
-
-
-                jack = new TempHuman( "Jack", new Vector3( -2f, 0.5f, -4f ) );
-
-                mike = new TempHuman( "Mike", new Vector3( 2f, 0.5f, -4f ) );
-                mike.Die();
-
-                Model.Unload();
-
-                Player.Interface.Fade( FadeMode.In );
-
-                var path = Path.Create( true );
-                path.AddNode( -6f, 0.5f, -6f );
-                path.AddNode( 6f, 0.5f, -6f );
-                path.AddNode( 6f, 0.5f, 6f );
-                path.AddNode( -6f, 0.5f, 6f );
-
-                jack.AssignToPath( path );
-
-            }
+            yield return Player.Interface.Init();
+            Player.Interface.Enable = true;
         }
 
         void Update() {
-            if( hasError )
+            if( hasError ) {
+                if( InputManager.AnyKeyDown() )
+                    Application.Quit();
                 return;
+            } else {
+                if( chg ) {
+                    Room.Load( Room.All.SelectProfile );
+                    return;
+                }
+                speed += Time.deltaTime;
+                if( speed > range ) {
+                    speed = 0f;
+                    CurrentIndex += 1;
+                    if( CurrentIndex >= totalIndexes )
+                        CurrentIndex = 0;
+                }
 
-
-            if( Player.Exist() ) {
-                Debug.Log( player.Loot[ 0 ].Name );
-                if( Input.GetKeyDown( KeyCode.F ) )
-                    //mike.Reanimate();
-                    Localization.SwitchLanguage( Config.Intance.CurrentLanguage, Localization.DEFAULT_LANGUAGE );
             }
         }
 
-        void FixedUpdate() { }
-
         void OnGUI() {
-            if( hasError )
+            wrapperRect.width = Screen.width;
+            wrapperRect.height = Screen.height;
+            GUI.DrawTexture( wrapperRect, blackPixel );
+
+            if( hasError ) {
+                errorRect.x = Screen.width / 2 - errorRect.width / 2;
+                errorRect.y = Screen.height - errorRect.height - boxRect.height * 2;
+                GUI.Label( errorRect, errorMessage, GUI.skin.button );
                 return;
+            }
 
-
+            boxRect.y = Screen.height - boxRect.height * 4f;
+            boxRect.x = Screen.width / 2 - ( ( boxRect.width * 2 ) * totalIndexes ) / 2;
+            for( int i = 0; i < totalIndexes; i++ ) {
+                GUI.DrawTexture( boxRect, i == CurrentIndex ? redPixel : whitePixel );
+                boxRect.x += boxRect.width * 2;
+            }
 
             if( !chg ) {
                 if( !Player.Interface.IsInit )
@@ -188,6 +132,11 @@ namespace MyRPG {
                 GUI.skin.settings.cursorFlashSpeed = 1f;
                 chg = true;
             }
+        }
+
+        private void addError( string text ) {
+            hasError = true;
+            errorMessage = text;
         }
 
     }

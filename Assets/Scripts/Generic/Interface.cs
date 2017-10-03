@@ -378,6 +378,8 @@ namespace MyRPG {
                     }
                     return;
                 }
+                if( !Exist() )
+                    return;
                 if( InputManager.IsKeyDown( KeyName.CONSOLE ) )
                     Console.Enable = !Console.Enable;
                 if( Console.Enable && InputManager.IsKeyDown( KeyName.MENU ) )
@@ -409,6 +411,8 @@ namespace MyRPG {
                         GUI.Label( messageBoxRect, messageBoxContent, messageBoxLabelStyle );
                     }
                 }
+                if( !Exist() )
+                    return;
                 if( !fadeOn && !EnableСinematicView ) {
                     Console.Draw();
                     if( !Console.Enable ) {

@@ -33,7 +33,6 @@ namespace MyRPG {
 
         protected override void update() {
             base.update();
-            Interface.Update();
         }
 
         public void AddExperience( int amount ) {
@@ -95,8 +94,6 @@ namespace MyRPG {
             }
 
         }
-
-        public void Draw() { Interface.Draw(); }
 
     }
 

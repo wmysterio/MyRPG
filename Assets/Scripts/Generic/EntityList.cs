@@ -29,6 +29,8 @@ namespace MyRPG {
 
             void Update() {
                 updator.Update();
+                if( Player.Interface.IsInit )
+                    Player.Interface.Update();
             }
             
             void FixedUpdate() {
@@ -36,14 +38,9 @@ namespace MyRPG {
             }
 
             void OnGUI() {
-                
-                if( Player.Exist() && Player.Interface.IsInit ) {
-                    Player.Current.Draw();
+                if( Player.Interface.IsInit ) {
+                    Player.Interface.Draw();
                 }
-
-
-
-
             }
 
         }
