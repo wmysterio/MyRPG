@@ -684,7 +684,7 @@ namespace MyRPG {
                 GUI.DrawTexture( hudRect, imageEP, ScaleMode.StretchToFill );
             }
 
-            private static void playSound( AudioClip clip ) { AudioSource.PlayClipAtPoint( clip, Camera.main.transform.position ); }
+            private static void playSound( AudioClip clip ) { AudioSource.PlayClipAtPoint( clip, Camera.Position ); }
 
         }
 

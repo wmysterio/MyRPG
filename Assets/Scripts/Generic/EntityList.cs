@@ -16,36 +16,35 @@ namespace MyRPG {
 
         public class EntityList : MonoBehaviour {
 
+            public static EntityList Current { get; private set; }
             public static GameObject Container { get; private set; }
 
-            void Awake() {
+            private void Awake() {
                 Container = gameObject;
+                Current = this;
                 DontDestroyOnLoad( this );
             }
 
-            void Start() {
+            private void Start() { }
 
-            }
-
-            void Update() {
+            private void Update() {
                 updator.Update();
                 if( Player.Interface.IsInit )
                     Player.Interface.Update();
+                Camera.Update();
             }
-            
-            void FixedUpdate() {
+
+            private void FixedUpdate() {
                 updator.FixedUpdate();
             }
 
-            void OnGUI() {
+            private void OnGUI() {
                 if( Player.Interface.IsInit ) {
                     Player.Interface.Draw();
                 }
             }
 
         }
-
-
 
     }
 

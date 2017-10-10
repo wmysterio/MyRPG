@@ -22,6 +22,7 @@ namespace MyRPG {
         private Vector3 velocity, tempVector;
         private Path currentPath;
         private Path.Node currentNode;
+        private bool moveFlag;
 
         public TypeOfPersonage Type { get; private set; }
         public RankOfPersonage Rank { get; private set; }
@@ -37,7 +38,8 @@ namespace MyRPG {
 
         public int Level { get; protected set; }
         public Characteristic CurrentCharacteristic { get; protected set; }
-        
+
+        public bool Immortal { get; set; }
         public bool EnableJumping { get; set; }
         public bool CanMove { get; set; }
         public RelationshipOfPersonage Relationship {
@@ -56,6 +58,7 @@ namespace MyRPG {
             IsDead = false;
             CanMove = true;
             IsStopped = false;
+            Immortal = false;
             Level = 0;
             Rank = rank;
             Relationship = RelationshipOfPersonage.Neutral;
@@ -65,6 +68,7 @@ namespace MyRPG {
             Equipments = new EquipmentList();
             Target = null;
             EnableJumping = true;
+            moveFlag = false;
             ClearTask();
             velocity = Vector3.zero;
             tempVector = Vector3.zero;
@@ -87,22 +91,18 @@ namespace MyRPG {
             base.update();
             Loot.UpdateItems();
             updateCharacteristic();
-            IsStopped = true;
-
+            moveFlag = false;
             if( targetingScript.MouseHover ) {
                 if( Player.Exist() && InputManager.IsMouseDown( MouseKeyName.Left ) ) {
                     if( !Player.Current.NoLongerNeeded && !Player.Current.IsDead )
                         Player.Current.Target = this;
                 }
             }
-
             if( !IsDead ) {
-
                 if( CanMove )
                     taskManager();
-
-
-                if( 0 >= CurrentHealth ) {
+                IsStopped = moveFlag;
+                if( 0 >= CurrentHealth && !Immortal ) {
                     Die();
                     return;
                 }
@@ -130,28 +130,28 @@ namespace MyRPG {
         public bool IsFriendlyOf( Personage personage ) { return relationship != personage.relationship; }
         public void MoveForward() {
             gameObject.transform.Translate( Vector3.forward * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            IsStopped = false;
+            moveFlag = true;
         }
         public void MoveBack() {
             gameObject.transform.Translate( Vector3.back * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            IsStopped = false;
+            moveFlag = true;
         }
         public void MoveLeft() {
             gameObject.transform.Translate( Vector3.left * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            IsStopped = false;
+            moveFlag = true;
         }
         public void MoveRight() {
             gameObject.transform.Translate( Vector3.right * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            IsStopped = false;
+            moveFlag = false;
         }
         public void Turn( float speed ) {
             gameObject.transform.Rotate( 0f, speed * Time.deltaTime, 0f );
-            IsStopped = false;
+            moveFlag = true;
         }
         public void Jump() {
             if( NoLongerNeeded || IsDead || !EnableJumping || DistanceToGround() > 0.02f )
                 return;
-            IsStopped = false;
+            moveFlag = true;
             velocity.y += 4f;
         }
         public void Restore() {
@@ -162,19 +162,16 @@ namespace MyRPG {
             CurrentEnergy = CurrentCharacteristic.MaxEnergy;
         }
         public void LevelUp( int amount = 1 ) {
-            Level += amount;
-            if( MIN_LEVEL > Level )
-                Level = MIN_LEVEL;
-            if( Level > MAX_LEVEL )
-                Level = MAX_LEVEL;
+            Level = Mathf.Clamp( Level += amount, MIN_LEVEL, MAX_LEVEL );
             calculateCharacteristic();
             Restore();
         }
         public virtual void Die() {
-            if( IsDead )
+            if( IsDead || Immortal )
                 return;
             Effects.ClearAll();
             ClearTask();
+            Target = null;
             IsDead = true;
             CurrentHealth = 0f;
             CurrentMana = 0f;

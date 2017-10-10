@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.1.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -116,6 +118,7 @@
     <Compile Include="Assets\Scripts\Entity\Personage\Humanoid\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Entity\Personage\Personage.cs" />
     <Compile Include="Assets\Scripts\Generic\Bag.cs" />
+    <Compile Include="Assets\Scripts\Generic\Camera.cs" />
     <Compile Include="Assets\Scripts\Generic\Characteristic.cs" />
     <Compile Include="Assets\Scripts\Generic\Config\Config.cs" />
     <Compile Include="Assets\Scripts\Generic\Config\Localization.cs" />
@@ -136,7 +139,6 @@
     <Compile Include="Assets\Scripts\Interfaces\IAbility.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamage.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDescription.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\INameChanger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Localization\English\main.xml" />

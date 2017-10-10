@@ -13,9 +13,11 @@ using UnityEngine.SceneManagement;
 namespace MyRPG {
 
 	public sealed class Room : MonoBehaviour {
-	
-        public static bool Loading { get; private set; }
+
         private static int unloadIndex = -1, currentIndex = -1;
+
+        public static bool Loading { get; private set; }
+
         public static void Load( All room ) {
             var lvl = ( int ) room;
             if( currentIndex == lvl )
@@ -28,13 +30,11 @@ namespace MyRPG {
 
         AsyncOperation asyncOperation = null;
 
-        void Awake() { Loading = false; }
-		
-		void Start() {
-			
-		}
-		
-		void Update() {
+        private void Awake() { Loading = false; }
+
+        private void Start() { }
+
+        private void Update() {
             if( !Loading )
                 return;
             if( Player.Interface.Fadind )
@@ -55,9 +55,9 @@ namespace MyRPG {
             Player.Interface.Fade( FadeMode.In );
             Loading = false;
         }
-		
-		
-		void OnGUI() {
+
+
+        private void OnGUI() {
 			// ... 
 		}
 

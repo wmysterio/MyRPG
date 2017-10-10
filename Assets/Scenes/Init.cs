@@ -22,7 +22,7 @@ namespace MyRPG {
         private int CurrentIndex = 0, totalIndexes = 5;
         private float speed = 0f, range = 0.15f;
 
-        void Awake() {
+        private void Awake() {
 
             boxRect = new Rect( 0, 0, 10, 4 );
             wrapperRect = new Rect();
@@ -75,14 +75,42 @@ namespace MyRPG {
             go.AddComponent<Entity.EntityList>();
             go.AddComponent<Room>();
 
+            Camera.Init();
+
         }
 
-        IEnumerator Start() {
+        private IEnumerator Start() {
             yield return Player.Interface.Init();
             Player.Interface.Enable = true;
+
+
+
+
+            Model.Request( 0 );
+            yield return Model.LoadRequestedNowAsync();
+
+            var plane = GameObject.CreatePrimitive( PrimitiveType.Plane );
+            var light = new GameObject( "Light" );
+            light.transform.localEulerAngles = new Vector3( 90f, 0, 0 );
+            var l = light.AddComponent<Light>();
+            l.type = LightType.Directional;
+            plane.transform.localScale = new Vector3( 2, 1, 2 );
+
+            var testBox = GameObject.CreatePrimitive( PrimitiveType.Cube );
+            testBox.transform.position = new Vector3( -8f, 5f, -8f );
+            testBox.transform.localScale = Vector3.one * 10f;
+
+            GameObject.DontDestroyOnLoad( plane );
+            GameObject.DontDestroyOnLoad( light );
+            GameObject.DontDestroyOnLoad( testBox );
+            new Player( "Player", 1, 0, new Vector3( 0, 1, 0 ) );
+
+            Camera.AttachToPlayer();
+
+            Model.Unload();
         }
 
-        void Update() {
+        private void Update() {
             if( hasError ) {
                 if( InputManager.AnyKeyDown() )
                     Application.Quit();
@@ -103,7 +131,7 @@ namespace MyRPG {
             }
         }
 
-        void OnGUI() {
+        private void OnGUI() {
             wrapperRect.width = Screen.width;
             wrapperRect.height = Screen.height;
             GUI.DrawTexture( wrapperRect, blackPixel );

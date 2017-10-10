@@ -96,6 +96,11 @@ namespace MyRPG {
         public bool Near( Entity entity, float radius ) { return radius >= Vector3.Distance( Position, entity.Position ); }
         public bool Near( Path.Node node ) { return node.Radius >= Vector3.Distance( Position, node.Point ); }
         public float DistanceToGround() { return Physics.Raycast( Position, Vector3.down, out hit, 100f ) ? hit.distance - ( gameObject.transform.localScale.y / 2.01f ) : 9999f; }
+        public GameObject GetGameObject() { return gameObject; }
+        public float RayCastDistance( Vector3 position, float maxDistance ) {
+            return Physics.Raycast( Position - gameObject.transform.forward, ( position - Position ).normalized, out hit, maxDistance ) ? Mathf.Abs( hit.distance ) : 9999f;
+        }
+
 
         protected virtual void update() { }
 

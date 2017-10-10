@@ -17,21 +17,21 @@ namespace MyRPG {
         public bool MouseHover { get; private set; }
         public event Action MouseEnter, MouseExit;
 
-		void Awake() {
+	    private void Awake() {
             MouseHover = false;
         }
-		
-        void OnMouseEnter() {
+
+        private void OnMouseEnter() {
             MouseHover = false;
             if( MouseEnter != null )
                 MouseEnter.Invoke();
         }
 
-        void OnMouseOver() {
+        private void OnMouseOver() {
             MouseHover = true;
         }
 
-        void OnMouseExit() {
+        private void OnMouseExit() {
             MouseHover = false;
             if( MouseExit != null )
                 MouseExit.Invoke();

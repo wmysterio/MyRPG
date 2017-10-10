@@ -14,6 +14,8 @@ namespace MyRPG {
 
     public partial class Player : Humanoid {
 
+        public const float TURN_SPEED = 100f;
+
         public static Player Current { get; private set; }
         public static bool Exist() { return Current != null; }
 
@@ -23,9 +25,9 @@ namespace MyRPG {
             get { return TotalExperience - CurrentExperience; }
         }
 
-        public Player( int level, int modelId, Vector3 position ) : base( level, RankOfPersonage.Normal, modelId, position ) {
+        public Player( string name, int level, int modelId, Vector3 position ) : base( level, RankOfPersonage.Normal, modelId, position ) {
             nameId = -1;
-            Name = "";
+            Name = name;
             Current = this;
             CurrentExperience = 0;
             TotalExperience = calculateMaxExperience();
@@ -54,7 +56,9 @@ namespace MyRPG {
 
         public override void Die() {
             base.Die();
-            Target = null;
+            if( Immortal )
+                return;
+            Camera.Detach();
             Interface.ToggleWindow( Window.None );
         }
 
@@ -74,20 +78,23 @@ namespace MyRPG {
             if( InputManager.IsKeyDown( KeyName.VIEW_SPELLS ) )
                 Interface.ToggleWindow( Window.Spells );
 
-            if( InputManager.GetKey( KeyName.TURN_LEFT ) ) {
-                Turn( -100f );
-            } else if( InputManager.GetKey( KeyName.TURN_RIGHT ) ) {
-                Turn( 100f );
+            if( !InputManager.GetMouse( MouseKeyName.Right ) ) {
+                if( InputManager.GetKey( KeyName.TURN_LEFT ) ) {
+                    Turn( -TURN_SPEED );
+                } else if( InputManager.GetKey( KeyName.TURN_RIGHT ) ) {
+                    Turn( TURN_SPEED );
+                }
+                if( InputManager.GetKey( KeyName.LEFT ) ) {
+                    MoveLeft();
+                } else if( InputManager.GetKey( KeyName.RIGHT ) ) {
+                    MoveRight();
+                }
             }
+
             if( InputManager.GetKey( KeyName.FORWARD ) ) {
                 MoveForward();
             } else if( InputManager.GetKey( KeyName.BACK ) ) {
                 MoveBack();
-            }
-            if( InputManager.GetKey( KeyName.LEFT ) ) {
-                MoveLeft();
-            } else if( InputManager.GetKey( KeyName.RIGHT ) ) {
-                MoveRight();
             }
             if( InputManager.IsKeyDown( KeyName.JUMP ) ) { 
                 Jump();

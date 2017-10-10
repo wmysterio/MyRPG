@@ -181,6 +181,12 @@ namespace MyRPG {
         public static bool GetMouse( MouseKeyName name ) { return Input.GetMouseButton( ( int ) name ); }
         public static bool IsMouseDown( MouseKeyName name ) { return Input.GetMouseButtonDown( ( int ) name ); }
         public static bool IsMouseUp( MouseKeyName name ) { return Input.GetMouseButtonUp( ( int ) name ); }
+        public static bool IsMouseScrollUp() { return Input.GetAxis( "Mouse ScrollWheel" ) > 0f; }
+        public static bool IsMouseScrollDown() { return 0f > Input.GetAxis( "Mouse ScrollWheel" ); }
+        public static bool IsMouseMoveLeft() { return 0f > Input.GetAxis( "Mouse X" ); }
+        public static bool IsMouseMoveRight() { return Input.GetAxis( "Mouse X" ) > 0f; }
+        public static bool IsMouseMoveDown() { return 0f > Input.GetAxis( "Mouse Y" ); }
+        public static bool IsMouseMoveUp() { return Input.GetAxis( "Mouse Y" ) > 0f; }
 
     }
 
