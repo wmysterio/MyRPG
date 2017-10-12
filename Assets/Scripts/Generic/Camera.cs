@@ -31,11 +31,7 @@ namespace MyRPG {
         public static bool IsAttached { get; private set; }
         public static float DistanceToPoint { get; private set; }
 
-        public static Vector3 Position {
-            get {
-                return IsAttached ? cameraScrollObject.transform.TransformPoint( cameraScrollObject.transform.localPosition ) : cameraObject.transform.position;
-            }
-        }
+        public static Vector3 Position { get { return IsAttached ? cameraScrollObject.transform.TransformPoint( cameraScrollObject.transform.localPosition ) : cameraObject.transform.position; } }
 
         public static void Init() {
             if( IsInit )
@@ -96,6 +92,7 @@ namespace MyRPG {
 
         }
 
+        public static void ResetRotation() { cameraObject.transform.rotation = Quaternion.identity; }
         public static bool IsMoving() { return isMovingPoint || isMovingPosition; }
         public static void AttachToPlayer() {
             if( !Player.Exist() )

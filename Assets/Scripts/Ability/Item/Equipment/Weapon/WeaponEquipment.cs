@@ -16,17 +16,11 @@ namespace MyRPG {
 
         private float delayTimer;
 
-        protected float minDamage = 1f, minRange = 1f, maxRange = 2f;
+        protected float minDamage, minRange, maxRange;
 
-        public float MinDamage {
-            get { return minDamage; }
-        }
-        public float MinRange {
-            get { return minRange; }
-        }
-        public float MaxRange {
-            get { return maxRange; }
-        }
+        public float MinDamage { get { return minDamage; } }
+        public float MinRange { get { return minRange; } }
+        public float MaxRange { get { return maxRange; } }
 
         public TypeOfWeapon Type { get; private set; }
 
@@ -37,6 +31,9 @@ namespace MyRPG {
             Type = type;
             Delay = 4f;
             delayTimer = 0f;
+            minDamage = 1f;
+            minRange = 1f;
+            maxRange = 2f;
         }
 
         public bool ReadyToUse() { return Timer == 0f; }

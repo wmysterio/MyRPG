@@ -39,7 +39,11 @@
     <string index="30">Молот</string>
     <string index="31">Посох</string>
     <string index="32">Меч</string>
-    <string index="33">Жезл</string>
+    <string index="33">Жезл</string>і
+    <string index="34">Заклинання</string>
+    <string index="35">Потокове заклинання</string>
+    <string index="36">Відтворюване заклинання</string>
+    <string index="37">Миттєве заклинання</string>
   </EntityNames>
   <WindowNames>
     <string index="0"></string>

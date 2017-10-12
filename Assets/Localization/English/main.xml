@@ -17,8 +17,8 @@
     <string index="8">Item</string>
     <string index="9">Trash</string>
     <string index="10">Reagent</string>
-    <string index="11">Quest Item</string>
-    <string index="12">Normal Item</string>
+    <string index="11">Quest item</string>
+    <string index="12">Normal item</string>
     <string index="13">Equipment</string>
     <string index="14">Accessory</string>
     <string index="15">Belt</string>
@@ -40,6 +40,10 @@
     <string index="31">Staff</string>
     <string index="32">Sword</string>
     <string index="33">Wand</string>
+    <string index="34">Spell</string>
+    <string index="35">Streaming spell</string>
+    <string index="36">Reproduction spell</string>
+    <string index="37">Instant spell</string>
   </EntityNames>
   <WindowNames>
     <string index="0"></string>

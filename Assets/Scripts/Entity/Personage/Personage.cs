@@ -35,13 +35,14 @@ namespace MyRPG {
         public Bag Loot { get; private set; }
         public EquipmentList Equipments { get; private set; }
         public Task CurrentTask { get; private set; }
-
-        public int Level { get; protected set; }
-        public Characteristic CurrentCharacteristic { get; protected set; }
+        public int Level { get; private set; }
+        public Characteristic CurrentCharacteristic { get; private set; }
 
         public bool Immortal { get; set; }
         public bool EnableJumping { get; set; }
         public bool CanMove { get; set; }
+        public Personage Target { get; set; }
+
         public RelationshipOfPersonage Relationship {
             get { return relationship; }
             set {
@@ -50,8 +51,7 @@ namespace MyRPG {
                 relationship = value;
             }
         }
-        public Personage Target { get; set; }
-
+        
 
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
             nameId = 3;
@@ -68,7 +68,7 @@ namespace MyRPG {
             Equipments = new EquipmentList();
             Target = null;
             EnableJumping = true;
-            moveFlag = false;
+            moveFlag = true;
             ClearTask();
             velocity = Vector3.zero;
             tempVector = Vector3.zero;
@@ -91,8 +91,8 @@ namespace MyRPG {
             base.update();
             Loot.UpdateItems();
             updateCharacteristic();
-            moveFlag = false;
-            if( targetingScript.MouseHover ) {
+            moveFlag = true;
+            if( eventSystemScript.MouseHover ) {
                 if( Player.Exist() && InputManager.IsMouseDown( MouseKeyName.Left ) ) {
                     if( !Player.Current.NoLongerNeeded && !Player.Current.IsDead )
                         Player.Current.Target = this;
@@ -130,15 +130,15 @@ namespace MyRPG {
         public bool IsFriendlyOf( Personage personage ) { return relationship != personage.relationship; }
         public void MoveForward() {
             gameObject.transform.Translate( Vector3.forward * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            moveFlag = true;
+            moveFlag = false;
         }
         public void MoveBack() {
             gameObject.transform.Translate( Vector3.back * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            moveFlag = true;
+            moveFlag = false;
         }
         public void MoveLeft() {
             gameObject.transform.Translate( Vector3.left * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            moveFlag = true;
+            moveFlag = false;
         }
         public void MoveRight() {
             gameObject.transform.Translate( Vector3.right * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
@@ -146,12 +146,12 @@ namespace MyRPG {
         }
         public void Turn( float speed ) {
             gameObject.transform.Rotate( 0f, speed * Time.deltaTime, 0f );
-            moveFlag = true;
+            moveFlag = false;
         }
         public void Jump() {
             if( NoLongerNeeded || IsDead || !EnableJumping || DistanceToGround() > 0.02f )
                 return;
-            moveFlag = true;
+            moveFlag = false;
             velocity.y += 4f;
         }
         public void Restore() {
@@ -162,7 +162,7 @@ namespace MyRPG {
             CurrentEnergy = CurrentCharacteristic.MaxEnergy;
         }
         public void LevelUp( int amount = 1 ) {
-            Level = Mathf.Clamp( Level += amount, MIN_LEVEL, MAX_LEVEL );
+            Level = Mathf.Clamp( Level + amount, MIN_LEVEL, MAX_LEVEL );
             calculateCharacteristic();
             Restore();
         }
@@ -181,7 +181,7 @@ namespace MyRPG {
             if( !IsDead )
                 return;
             IsDead = false;
-            if( percent > 0f && 99f > percent ) {
+            if( percent > 0f && 100f > percent ) {
                 CurrentHealth = Characteristic.GetValueOfPercentage( CurrentCharacteristic.MaxHealth, percent );
                 CurrentMana = Characteristic.GetValueOfPercentage( CurrentCharacteristic.MaxMana, percent );
                 return;

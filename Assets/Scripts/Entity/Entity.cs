@@ -22,13 +22,9 @@ namespace MyRPG {
         protected GameObject gameObject;
         protected Collider collider;
         protected Rigidbody rigidbody;
-        protected Targeting targetingScript;
+        protected EventSystem eventSystemScript;
 
-        public Texture2D Icon {
-            get {
-                return Player.Interface.Icons[ iconID ];
-            }
-        }
+        public Texture2D Icon { get { return Player.Interface.Icons[ iconID ]; } }
 
         public int ModelID { get; private set; }
         public bool NoLongerNeeded { get; private set; }
@@ -51,8 +47,7 @@ namespace MyRPG {
             gameObject = new GameObject( Localization.Current.EntityNames[ nameId ] );
             gameObject.transform.parent = EntityList.Container.transform;
             ModelID = modelID;
-            var model = Model.Find( modelID );
-            var obj = GameObject.Instantiate<GameObject>( model.Prefab );
+            var obj = GameObject.Instantiate<GameObject>( Model.Find( modelID ).Prefab );
             obj.name = "Model";
             obj.transform.parent = gameObject.transform;
             obj.transform.localPosition = Vector3.zero;
@@ -61,14 +56,9 @@ namespace MyRPG {
             Position = position;
             collider = gameObject.GetComponentInChildren<Collider>();
             rigidbody = gameObject.AddComponent<Rigidbody>();
-            targetingScript = gameObject.AddComponent<Targeting>();
+            eventSystemScript = gameObject.AddComponent<EventSystem>();
             Localization.LanguageChanged += Localization_LanguageChanged;
             updator.Add( this );
-        }
-
-        private void Localization_LanguageChanged( string path ) {
-            if( nameId != -1 )
-                Name = Localization.Current.EntityNames[ nameId ];
         }
 
         public bool IsColliderExist() { return collider != null; }
@@ -97,9 +87,7 @@ namespace MyRPG {
         public bool Near( Path.Node node ) { return node.Radius >= Vector3.Distance( Position, node.Point ); }
         public float DistanceToGround() { return Physics.Raycast( Position, Vector3.down, out hit, 100f ) ? hit.distance - ( gameObject.transform.localScale.y / 2.01f ) : 9999f; }
         public GameObject GetGameObject() { return gameObject; }
-        public float RayCastDistance( Vector3 position, float maxDistance ) {
-            return Physics.Raycast( Position - gameObject.transform.forward, ( position - Position ).normalized, out hit, maxDistance ) ? Mathf.Abs( hit.distance ) : 9999f;
-        }
+        public float RayCastDistance( Vector3 position, float maxDistance ) { return Physics.Raycast( Position - gameObject.transform.forward, ( position - Position ).normalized, out hit, maxDistance ) ? Mathf.Abs( hit.distance ) : 9999f; }
 
 
         protected virtual void update() { }
@@ -107,6 +95,8 @@ namespace MyRPG {
         protected virtual void physics() { }
 
         public override string ToString() { return gameObject.name; }
+
+        private void Localization_LanguageChanged( string path ) { if( nameId != -1 ) Name = Localization.Current.EntityNames[ nameId ]; }
 
     }
 

@@ -16,23 +16,15 @@ namespace MyRPG {
 
         protected int iconID, price, nameId;
 
-        public TypeOfAbility AbilityType {
-            get { return TypeOfAbility.Item; }
-        }
-
-        public float Timer { get; protected set; }
-        public string Name {
-            get { return Localization.Current.EntityNames[ nameId ]; }
-        }
+        public TypeOfAbility AbilityType { get { return TypeOfAbility.Item; } }
+        public string Name { get { return Localization.Current.EntityNames[ nameId ]; } }
         public virtual string Description { get { return string.Empty; } }
-
-        public bool ForSelling { get; protected set; }
-
+        public Texture2D Icon { get { return Player.Interface.Icons[ iconID ]; } }
         public int Price { get { return price; } }
         public int TotalPrice { get { return price * Count; } }
-        public Texture2D Icon {
-            get { return Player.Interface.Icons[ iconID ]; }
-        }
+
+        public float Timer { get; protected set; }
+        public bool ForSelling { get; protected set; }
 
         public ClassOfItem Class { get; private set; }
         public TypeOfItemRarity Rarity { get; private set; }
@@ -47,12 +39,8 @@ namespace MyRPG {
             Count = 1;
             Class = itemClass;
             Rarity = rarity;
-            if( Personage.MIN_LEVEL > level )
-                level = Personage.MIN_LEVEL;
-            if( level > Personage.MAX_LEVEL )
-                level = Personage.MAX_LEVEL;
-            Level = level;
-            price = level * ( int ) itemClass * ( int ) rarity;
+            Level = Mathf.Clamp( level, Personage.MIN_LEVEL, Personage.MAX_LEVEL );
+            price = Level * ( int ) itemClass * ( int ) rarity;
             ForSelling = itemClass != ClassOfItem.Quest;
         }
 

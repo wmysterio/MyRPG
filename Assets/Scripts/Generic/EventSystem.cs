@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-	public class Targeting : MonoBehaviour {
+	public class EventSystem : MonoBehaviour {
 
         public bool MouseHover { get; private set; }
         public event Action MouseEnter, MouseExit;

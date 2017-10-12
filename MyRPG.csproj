@@ -110,7 +110,10 @@
     <Compile Include="Assets\Scripts\Ability\Item\Quest\QuestItem.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Reagent\ReagentItem.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Trash\TrashItem.cs" />
+    <Compile Include="Assets\Scripts\Ability\Spell\Instant\InstantSpell.cs" />
+    <Compile Include="Assets\Scripts\Ability\Spell\Reproduction\ReproductionSpell.cs" />
     <Compile Include="Assets\Scripts\Ability\Spell\Spell.cs" />
+    <Compile Include="Assets\Scripts\Ability\Spell\Streaming\StreamingSpell.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity.cs" />
     <Compile Include="Assets\Scripts\Entity\Object\Object.cs" />
     <Compile Include="Assets\Scripts\Entity\Object\PickUp\PickUp.cs" />
@@ -128,21 +131,25 @@
     <Compile Include="Assets\Scripts\Generic\EntityList.cs" />
     <Compile Include="Assets\Scripts\Generic\EntityUpdator.cs" />
     <Compile Include="Assets\Scripts\Generic\EquipmentList.cs" />
+    <Compile Include="Assets\Scripts\Generic\EventSystem.cs" />
     <Compile Include="Assets\Scripts\Generic\InputManager.cs" />
     <Compile Include="Assets\Scripts\Generic\Interface.cs" />
     <Compile Include="Assets\Scripts\Generic\Model.cs" />
     <Compile Include="Assets\Scripts\Generic\Node.cs" />
     <Compile Include="Assets\Scripts\Generic\Path.cs" />
     <Compile Include="Assets\Scripts\Generic\Room.cs" />
-    <Compile Include="Assets\Scripts\Generic\Targeting.cs" />
     <Compile Include="Assets\Scripts\Generic\TaskManager.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IAbility.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamage.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDescription.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Localization\English\main.xml" />
-    <None Include="Assets\Localization\Українська\main.xml" />
+    <None Include="Assets\Localization\English\main.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Assets\Localization\Українська\main.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Assets\config.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
