@@ -54,11 +54,14 @@ namespace MyRPG {
             minRange = 1f;
             maxRange = 2f;
             Type = type;
-            MinLevel = minLevel;
+            MinLevel = Mathf.Clamp( minLevel, Personage.MIN_LEVEL, Personage.MAX_LEVEL );
             CastTime = castTime;
-            Delay = 1f;
+            Delay = 0f;
             delayTimer = 0f;
             TakeResourcesAmount = 0;
+            EnableCastInAir = false;
+            EnableCastInRun = false;
+            CastOnlyInSpine = false;
             DamageResources = TypeOfResources.Nothing;
             TakeResources = TypeOfResources.Nothing;
             School = SchoolOfDamage.Other;

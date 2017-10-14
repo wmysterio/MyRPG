@@ -41,6 +41,8 @@ namespace MyRPG {
         public bool Immortal { get; set; }
         public bool EnableJumping { get; set; }
         public bool CanMove { get; set; }
+        public bool Targetable { get; set; }
+        public bool EnableWalking { get; set; }
         public Personage Target { get; set; }
 
         public RelationshipOfPersonage Relationship {
@@ -98,6 +100,12 @@ namespace MyRPG {
                         Player.Current.Target = this;
                 }
             }
+            if( Target != null ) {
+                if( !Target.Targetable )
+                    Target = null;
+            }
+            if( 0 > CurrentCharacteristic.MoveSpeed )
+                CurrentCharacteristic.MoveSpeed = 0f;
             if( !IsDead ) {
                 if( CanMove )
                     taskManager();
@@ -115,6 +123,13 @@ namespace MyRPG {
                     CurrentMana = CurrentCharacteristic.MaxMana;
                 if( CurrentEnergy > CurrentCharacteristic.MaxEnergy )
                     CurrentEnergy = CurrentCharacteristic.MaxEnergy;
+            } else {
+                if( 0f > CurrentHealth )
+                    CurrentHealth = 0f;
+                if( 0f > CurrentMana )
+                    CurrentMana = 0f;
+                if( 0f > CurrentEnergy )
+                    CurrentEnergy = 0f;
             }
 
         }
@@ -129,27 +144,34 @@ namespace MyRPG {
 
         public bool IsFriendlyOf( Personage personage ) { return relationship != personage.relationship; }
         public void MoveForward() {
+            if( !EnableWalking )
+                return;
             gameObject.transform.Translate( Vector3.forward * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
             moveFlag = false;
         }
         public void MoveBack() {
+            if( !EnableWalking )
+                return;
             gameObject.transform.Translate( Vector3.back * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
             moveFlag = false;
         }
         public void MoveLeft() {
+            if( !EnableWalking )
+                return;
             gameObject.transform.Translate( Vector3.left * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
             moveFlag = false;
         }
         public void MoveRight() {
+            if( !EnableWalking )
+                return;
             gameObject.transform.Translate( Vector3.right * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
             moveFlag = false;
         }
         public void Turn( float speed ) {
             gameObject.transform.Rotate( 0f, speed * Time.deltaTime, 0f );
-            moveFlag = false;
         }
         public void Jump() {
-            if( NoLongerNeeded || IsDead || !EnableJumping || DistanceToGround() > 0.02f )
+            if( !EnableJumping || DistanceToGround() > 0.02f )
                 return;
             moveFlag = false;
             velocity.y += 4f;
@@ -206,6 +228,68 @@ namespace MyRPG {
             }
             WalkToPoint( currentNode );
         }
+        public bool IsTargetItYourself() {
+            if( Target == null )
+                return true;
+            return Target == this;
+        }
+        public DamageResult AddDamage( TypeOfResources resource, float damage, SchoolOfDamage school = SchoolOfDamage.Other ) {
+            if( damage == 0f || resource == TypeOfResources.Nothing )
+                return DamageResult.NoDamage;
+            switch( resource ) {
+                case TypeOfResources.Energy:
+                CurrentEnergy -= damage;
+                return damage > 0 ? DamageResult.AddEnergy : DamageResult.SubEnergy;
+                case TypeOfResources.Mana:
+                CurrentMana -= damage;
+                return damage > 0 ? DamageResult.AddMana : DamageResult.SubMana;
+                case TypeOfResources.Health:
+                if( damage > 0 ) {
+                    var finalDamage = 0f;
+                    switch( school ) {
+                        case SchoolOfDamage.Air:
+                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfAir;
+                        break;
+                        case SchoolOfDamage.Darkness:
+                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfDarkness;
+                        break;
+                        case SchoolOfDamage.Earth:
+                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfEarth;
+                        break;
+                        case SchoolOfDamage.Fire:
+                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfFire;
+                        break;
+                        case SchoolOfDamage.Light:
+                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfLight;
+                        break;
+                        case SchoolOfDamage.Nature:
+                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfNature;
+                        break;
+                        case SchoolOfDamage.Water:
+                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfWater;
+                        break;
+                        case SchoolOfDamage.Physic:
+                        if( CurrentCharacteristic.ChanceOfParrying > UnityEngine.Random.Range( 1, 100 ) )
+                            return DamageResult.Parrying;
+                        if( CurrentCharacteristic.ChanceOfBlocking > UnityEngine.Random.Range( 1, 100 ) )
+                            return DamageResult.Blocked;
+                        finalDamage = damage - CurrentCharacteristic.PhysicalDefencePower;
+                        break;
+                        default:
+                        finalDamage = damage;
+                        break;
+                    }
+                    if( finalDamage > 0f ) {
+                        CurrentMana -= finalDamage;
+                        return DamageResult.SubHealth;
+                    }
+                    return DamageResult.Absorb;
+                } else { CurrentHealth -= damage; }
+                break;
+
+            }
+            return DamageResult.AddHealth;
+        }
 
 
         partial void taskManager();
@@ -232,6 +316,19 @@ namespace MyRPG {
         Friendly,   // Привітний
         Neutral,    // Нейтральний
         Enemy       // Ворог
+    }
+
+    public enum DamageResult {
+        NoDamage,
+        AddHealth,
+        SubHealth,
+        AddMana,
+        SubMana,
+        AddEnergy,
+        SubEnergy,
+        Parrying,
+        Blocked,
+        Absorb
     }
 
 }

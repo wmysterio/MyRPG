@@ -17,6 +17,7 @@ namespace MyRPG {
         private static EntityUpdator updator = new EntityUpdator();
 
         private RaycastHit hit;
+        private GameObject model;
 
         protected int iconID, nameId;
         protected GameObject gameObject;
@@ -25,6 +26,7 @@ namespace MyRPG {
         protected EventSystem eventSystemScript;
 
         public Texture2D Icon { get { return Player.Interface.Icons[ iconID ]; } }
+        public virtual string Description { get { return string.Empty; } }
 
         public int ModelID { get; private set; }
         public bool NoLongerNeeded { get; private set; }
@@ -33,8 +35,6 @@ namespace MyRPG {
             get { return gameObject.name; }
             protected set { gameObject.name = value; }
         }
-        public virtual string Description { get { return string.Empty; } }
-
         public Vector3 Position {
             get { return gameObject.transform.localPosition; }
             set { gameObject.transform.localPosition = value; }
@@ -47,12 +47,12 @@ namespace MyRPG {
             gameObject = new GameObject( Localization.Current.EntityNames[ nameId ] );
             gameObject.transform.parent = EntityList.Container.transform;
             ModelID = modelID;
-            var obj = GameObject.Instantiate<GameObject>( Model.Find( modelID ).Prefab );
-            obj.name = "Model";
-            obj.transform.parent = gameObject.transform;
-            obj.transform.localPosition = Vector3.zero;
-            obj.transform.localRotation = Quaternion.identity;
-            obj.transform.localScale = Vector3.one;
+            model = GameObject.Instantiate<GameObject>( Model.Find( modelID ).Prefab );
+            model.name = "Model";
+            model.transform.parent = gameObject.transform;
+            model.transform.localPosition = Vector3.zero;
+            model.transform.localRotation = Quaternion.identity;
+            model.transform.localScale = Vector3.one;
             Position = position;
             collider = gameObject.GetComponentInChildren<Collider>();
             rigidbody = gameObject.AddComponent<Rigidbody>();
@@ -87,11 +87,13 @@ namespace MyRPG {
         public bool Near( Path.Node node ) { return node.Radius >= Vector3.Distance( Position, node.Point ); }
         public float DistanceToGround() { return Physics.Raycast( Position, Vector3.down, out hit, 100f ) ? hit.distance - ( gameObject.transform.localScale.y / 2.01f ) : 9999f; }
         public GameObject GetGameObject() { return gameObject; }
-        public float RayCastDistance( Vector3 position, float maxDistance ) { return Physics.Raycast( Position - gameObject.transform.forward, ( position - Position ).normalized, out hit, maxDistance ) ? Mathf.Abs( hit.distance ) : 9999f; }
+        public float RayCastDistance( Vector3 position, float maxDistance ) { return Physics.Raycast( Position - gameObject.transform.forward, GetDirection( position ), out hit, maxDistance ) ? Mathf.Abs( hit.distance ) : 9999f; }
+        public GameObject GetModel() { return model; }
+        public Vector3 GetDirection( Vector3 position ) { return ( position - Position ).normalized; }
+        public Vector3 GetDirection( Entity entity ) { return ( entity.Position - Position ).normalized; }
 
 
         protected virtual void update() { }
-
         protected virtual void physics() { }
 
         public override string ToString() { return gameObject.name; }
