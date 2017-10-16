@@ -96,7 +96,7 @@ namespace MyRPG {
             } else if( InputManager.GetKey( KeyName.BACK ) ) {
                 MoveBack();
             }
-            if( InputManager.IsKeyDown( KeyName.JUMP ) ) { 
+            if( InputManager.IsKeyDown( KeyName.JUMP ) ) {
                 Jump();
             }
 

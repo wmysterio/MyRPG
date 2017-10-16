@@ -58,9 +58,13 @@ namespace MyRPG {
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
             nameId = 3;
             IsDead = false;
-            CanMove = true;
             IsStopped = false;
             Immortal = false;
+            CanMove = true;
+            EnableJumping = true;
+            Targetable = true;
+            EnableWalking = true;
+            moveFlag = true;
             Level = 0;
             Rank = rank;
             Relationship = RelationshipOfPersonage.Neutral;
@@ -69,8 +73,6 @@ namespace MyRPG {
             Loot = new Bag();
             Equipments = new EquipmentList();
             Target = null;
-            EnableJumping = true;
-            moveFlag = true;
             ClearTask();
             velocity = Vector3.zero;
             tempVector = Vector3.zero;
@@ -233,6 +235,12 @@ namespace MyRPG {
                 return true;
             return Target == this;
         }
+        public bool IsTurnedFaceTo( Vector3 position ) { return Vector3.Distance( GetPositionWithOffset( Vector3.back ), position ) - Vector3.Distance( GetPositionWithOffset( Vector3.forward ), position ) > 1.5f; }
+        public bool IsTurnedFaceTo( Entity entity ) {
+            if( entity == this )
+                return false;
+            return Vector3.Distance( GetPositionWithOffset( Vector3.back ), entity.Position ) - Vector3.Distance( GetPositionWithOffset( Vector3.forward ), entity.Position ) > 1.5f;
+        }
         public DamageResult AddDamage( TypeOfResources resource, float damage, SchoolOfDamage school = SchoolOfDamage.Other ) {
             if( damage == 0f || resource == TypeOfResources.Nothing )
                 return DamageResult.NoDamage;
@@ -280,20 +288,49 @@ namespace MyRPG {
                         break;
                     }
                     if( finalDamage > 0f ) {
-                        CurrentMana -= finalDamage;
+                        CurrentHealth -= finalDamage;
                         return DamageResult.SubHealth;
                     }
                     return DamageResult.Absorb;
                 } else { CurrentHealth -= damage; }
                 break;
-
             }
             return DamageResult.AddHealth;
         }
-
+        public float GetRandomDamage( float minDamage, SchoolOfDamage school = SchoolOfDamage.Other ) {
+            minDamage *= Level;
+            switch( school ) {
+                case SchoolOfDamage.Air:
+                minDamage += CurrentCharacteristic.MagicPowerOfAir;
+                break;
+                case SchoolOfDamage.Darkness:
+                minDamage += CurrentCharacteristic.MagicPowerOfDarkness;
+                break;
+                case SchoolOfDamage.Earth:
+                minDamage += CurrentCharacteristic.MagicPowerOfEarth;
+                break;
+                case SchoolOfDamage.Fire:
+                minDamage += CurrentCharacteristic.MagicPowerOfFire;
+                break;
+                case SchoolOfDamage.Light:
+                minDamage += CurrentCharacteristic.MagicPowerOfLight;
+                break;
+                case SchoolOfDamage.Nature:
+                minDamage += CurrentCharacteristic.MagicPowerOfNature;
+                break;
+                case SchoolOfDamage.Water:
+                minDamage += CurrentCharacteristic.MagicPowerOfWater;
+                break;
+                case SchoolOfDamage.Physic:
+                minDamage += CurrentCharacteristic.PhysicalAttackPower;
+                break;
+            }
+            return minDamage * UnityEngine.Random.Range( 1 + CurrentCharacteristic.CriticalChance, 100 + CurrentCharacteristic.CriticalEffect );
+        }
 
         partial void taskManager();
 
+        
     }
 
     public enum RankOfPersonage : int {

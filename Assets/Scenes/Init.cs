@@ -103,7 +103,10 @@ namespace MyRPG {
             GameObject.DontDestroyOnLoad( plane );
             GameObject.DontDestroyOnLoad( light );
             GameObject.DontDestroyOnLoad( testBox );
-            new Player( "Player", 1, 0, new Vector3( 0, 1, 0 ) );
+            new CC( new Vector3( 0, 1, 5 ) );
+            new CC( new Vector3( 0, 1, 7 ) );
+            new CC( new Vector3( -4, 1, 7 ) );
+            new Player( "Player", Player.MAX_LEVEL, 0, new Vector3( 0, 1, 0 ) );
 
             Camera.AttachToPlayer();
 
@@ -169,4 +172,9 @@ namespace MyRPG {
 
     }
 
+    public class CC : Humanoid {
+
+        public CC( Vector3 position ) : base( 1, RankOfPersonage.Normal, 0, position ) { }
+
+    }
 }

@@ -14,7 +14,7 @@ namespace MyRPG {
 
 	public abstract class InstantSpell : Spell {
 
-        public InstantSpell( int minLevel ) : base( minLevel, TypeOfSpell.Streaming, 0f ) {
+        public InstantSpell( int minLevel ) : base( minLevel, TypeOfSpell.Instant, 0f ) {
             nameId = 37;
         }
 

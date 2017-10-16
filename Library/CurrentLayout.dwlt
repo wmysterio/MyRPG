@@ -459,15 +459,15 @@ MonoBehaviour:
     width: 200
     height: 533
   m_SceneLighting: 1
-  lastFramingTime: 1774.4504805854797
+  lastFramingTime: 4200.383387461548
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 8.509351, y: 3.6314588, z: -7.9345818}
+    m_Target: {x: -3.8847656, y: -2.1777344, z: 4.8016205}
     speed: 2
-    m_Value: {x: 8.509351, y: 3.6314588, z: -7.9345818}
-  m_RenderMode: 0
+    m_Value: {x: -3.8847656, y: -2.1777344, z: 4.8016205}
+  m_RenderMode: 1
   m_ValidateTrueMetals: 0
   m_SceneViewState:
     showFog: 1
@@ -489,17 +489,17 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.0039489325, y: 0.99516886, z: -0.087110475, w: 0.045111433}
+    m_Target: {x: 0.52205575, y: 0.47375953, z: -0.5451086, w: 0.4537249}
     speed: 2
-    m_Value: {x: 0.003948932, y: 0.99516886, z: -0.087110475, w: 0.045111433}
+    m_Value: {x: 0.52205575, y: 0.47375953, z: -0.5451086, w: 0.4537249}
   m_Size:
-    m_Target: 39.50184
+    m_Target: 13.000848
     speed: 2
-    m_Value: 39.50184
+    m_Value: 13.000848
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_LastSceneViewRotation: {x: -0.13688041, y: -0.5245419, z: 0.08589389, w: -0.83590776}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
@@ -560,9 +560,9 @@ MonoBehaviour:
     height: 282
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 1afcffff00000000
+    m_SelectedIDs: aad8feff
+    m_LastClickedID: -75606
+    m_ExpandedIDs: 1afcfffff4ffffff00000000e0270000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -578,7 +578,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 0
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 8}
     m_SearchString: 
   m_ExpandedScenes:
   - init
@@ -661,7 +661,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000042700002027000026270000322700003c2700006e270000802700009e270000a8270000122800001428000016280000182800001a2800001c2800001e28000020280000222800002428000026280000282800002a2800002c280000
+    m_ExpandedIDs: 000000000427000026270000322700003c2700009e270000122800001428000016280000182800001a2800001c2800001e28000020280000222800002428000026280000282800002a2800002c280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

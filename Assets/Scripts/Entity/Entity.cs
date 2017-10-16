@@ -91,7 +91,15 @@ namespace MyRPG {
         public GameObject GetModel() { return model; }
         public Vector3 GetDirection( Vector3 position ) { return ( position - Position ).normalized; }
         public Vector3 GetDirection( Entity entity ) { return ( entity.Position - Position ).normalized; }
-
+        public Vector3 GetPositionWithOffset( Vector3 offset ) { return gameObject.transform.TransformPoint( offset ); }
+        public bool IsFreeDistanceTo( Entity entity ) {
+            if( entity == this )
+                return false;
+            if( Physics.Raycast( Position, GetDirection( entity ), out hit, DistanceTo( entity ) ) ) {
+                return gameObject.transform == hit.transform;
+            }
+            return true;
+        }
 
         protected virtual void update() { }
         protected virtual void physics() { }
