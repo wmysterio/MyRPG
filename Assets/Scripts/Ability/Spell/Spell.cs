@@ -39,6 +39,7 @@ namespace MyRPG {
         public bool EnableCastInAir { get; protected set; }
         public bool EnableCastInRun { get; protected set; }
         public bool CastOnlyInSpine { get; protected set; }
+        public bool EnableCastInDeadTarget { get; protected set; }
 
         public int MinLevel { get; private set; }
         public float CastTime { get; private set; }
@@ -51,7 +52,7 @@ namespace MyRPG {
             Count = 0;
             MaxCount = 0;
             minDamage = 1f;
-            minRange = 1f;
+            minRange = 0f;
             maxRange = 2f;
             Type = type;
             MinLevel = Mathf.Clamp( minLevel, Personage.MIN_LEVEL, Personage.MAX_LEVEL );
@@ -62,11 +63,15 @@ namespace MyRPG {
             EnableCastInAir = false;
             EnableCastInRun = false;
             CastOnlyInSpine = false;
+            EnableCastInDeadTarget = false;
             DamageResources = TypeOfResources.Nothing;
             TakeResources = TypeOfResources.Nothing;
             School = SchoolOfDamage.Other;
             Mode = ModeOfCast.OnlyNotFriendly;
         }
+
+        public virtual void Continue() { }
+        public virtual void Stop() { }
 
         public bool ReadyToUse() { return Timer == 0f; }
 
@@ -122,8 +127,7 @@ namespace MyRPG {
     public enum ModeOfCast : byte {
         OnlySender,
         OnlyFriendly,
-        OnlyNotFriendly,
-        ForAll
+        OnlyNotFriendly
     }
 
 }

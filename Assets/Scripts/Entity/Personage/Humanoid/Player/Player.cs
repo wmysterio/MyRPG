@@ -35,7 +35,15 @@ namespace MyRPG {
 
         protected override void update() {
             base.update();
+            if( Input.GetKeyDown( KeyCode.F ) )
+                Cast( csp.Instance );
         }
+
+        protected override void onCast( CastResult result, TypeOfResources resource = TypeOfResources.Nothing ) {
+            base.onCast( result, resource );
+            Debug.Log( result );
+        }
+
 
         public void AddExperience( int amount ) {
             if( MAX_LEVEL == Level )

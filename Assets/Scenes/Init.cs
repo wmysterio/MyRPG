@@ -103,9 +103,9 @@ namespace MyRPG {
             GameObject.DontDestroyOnLoad( plane );
             GameObject.DontDestroyOnLoad( light );
             GameObject.DontDestroyOnLoad( testBox );
-            new CC( new Vector3( 0, 1, 5 ) );
-            new CC( new Vector3( 0, 1, 7 ) );
-            new CC( new Vector3( -4, 1, 7 ) );
+            var c1 = new CC( new Vector3( 0, 1, 5 ) );
+            var c2 = new CC( new Vector3( 0, 1, 7 ) );
+            var c3 = new CC( new Vector3( -4, 1, 7 ) );
             new Player( "Player", Player.MAX_LEVEL, 0, new Vector3( 0, 1, 0 ) );
 
             Camera.AttachToPlayer();
@@ -174,7 +174,30 @@ namespace MyRPG {
 
     public class CC : Humanoid {
 
-        public CC( Vector3 position ) : base( 1, RankOfPersonage.Normal, 0, position ) { }
+        public CC( Vector3 position ) : base( Player.MAX_LEVEL, RankOfPersonage.Normal, 0, position ) { }
 
     }
+
+    public class csp : InstantSpell {
+
+        public static readonly csp Instance = new csp();
+
+        public csp() : base( 2 ) {
+            TakeResources = TypeOfResources.Energy;
+            TakeResourcesAmount = 20;
+            minDamage = 1;
+            DamageResources = TypeOfResources.Health;
+            Mode = ModeOfCast.OnlyNotFriendly;
+            CastOnlyInSpine = true;
+            EnableCastInRun = true;
+        }
+
+        public override void Use( Personage target = null ) {
+            base.Use( target );
+            if( ReadyToUse() )
+                target.Target.AddDamage( DamageResources, target.GetRandomDamage( MinDamage, School ) );
+        }
+
+    }
+
 }

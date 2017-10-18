@@ -95,11 +95,12 @@ namespace MyRPG {
         public bool IsFreeDistanceTo( Entity entity ) {
             if( entity == this )
                 return false;
-            if( Physics.Raycast( Position, GetDirection( entity ), out hit, DistanceTo( entity ) ) ) {
-                return gameObject.transform == hit.transform;
+            if( Physics.Raycast( Position, GetDirection( entity ), out hit, DistanceTo( entity ) + 1f ) ) {
+                return entity.gameObject.transform == hit.transform;
             }
             return true;
         }
+        public bool IsInAir() { return DistanceToGround() > 0.02f; }
 
         protected virtual void update() { }
         protected virtual void physics() { }
