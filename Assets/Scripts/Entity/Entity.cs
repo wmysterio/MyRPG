@@ -72,7 +72,7 @@ namespace MyRPG {
                 return false;
             return collider.enabled;
         }
-        public void Destroy() {
+        public virtual void Destroy() {
             if( !NoLongerNeeded ) {
                 Localization.LanguageChanged -= Localization_LanguageChanged;
             }

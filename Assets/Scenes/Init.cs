@@ -109,7 +109,6 @@ namespace MyRPG {
             new Player( "Player", Player.MAX_LEVEL, 0, new Vector3( 0, 1, 0 ) );
 
             Camera.AttachToPlayer();
-
             Model.Unload();
         }
 
@@ -178,24 +177,79 @@ namespace MyRPG {
 
     }
 
-    public class csp : InstantSpell {
+    public class csq : InstantSpell {
 
-        public static readonly csp Instance = new csp();
+        public static readonly csq Instance = new csq();
 
-        public csp() : base( 2 ) {
+        public csq() : base( Personage.MAX_LEVEL ) {
             TakeResources = TypeOfResources.Energy;
-            TakeResourcesAmount = 20;
-            minDamage = 1;
+            TakeResourcesAmount = 4 ;
+            minDamage = 15f;
             DamageResources = TypeOfResources.Health;
             Mode = ModeOfCast.OnlyNotFriendly;
-            CastOnlyInSpine = true;
-            EnableCastInRun = true;
         }
 
         public override void Use( Personage target = null ) {
             base.Use( target );
             if( ReadyToUse() )
                 target.Target.AddDamage( DamageResources, target.GetRandomDamage( MinDamage, School ) );
+        }
+
+    }
+
+    public class csp : ReproductionSpell {
+
+        public static readonly csp Instance = new csp();
+
+        public csp() : base( Personage.MAX_LEVEL, 3f ) {
+            TakeResources = TypeOfResources.Mana;
+            TakeResourcesAmount = 4 * MinLevel ;
+            minDamage = 1;
+            maxRange = 6f;
+            DamageResources = TypeOfResources.Health;
+            Mode = ModeOfCast.OnlyNotFriendly;
+        }
+
+        public override void Use( Personage target = null ) {
+            base.Use( target );
+            if( ReadyToUse() )
+                target.Target.AddDamage( DamageResources, target.GetRandomDamage( MinDamage, School ) );
+        }
+
+    }
+
+    public class cst : StreamingSpell {
+
+        public static readonly cst Instance = new cst();
+
+        public cst() : base( Personage.MAX_LEVEL, 8f ) {
+            TakeResources = TypeOfResources.Mana;
+            TakeResourcesAmount = 40;
+            minDamage = 1;
+            maxRange = 10f;
+            EnableCastInRun = true;
+            DamageResources = TypeOfResources.Health;
+            Mode = ModeOfCast.OnlyNotFriendly;
+            School = SchoolOfDamage.Darkness;
+        }
+
+        private Personage target, sender;
+
+        public override void Continue() {
+            base.Continue();
+
+            target.AddDamage( DamageResources, 40f );
+            Debug.DrawLine( sender.Position, target.Position, Color.red );
+        }
+
+        public override void Stop() {
+            base.Stop();
+        }
+
+        public override void Use( Personage sender = null ) {
+            base.Use( target );
+            this.sender = sender;
+            target = sender.Target;
         }
 
     }

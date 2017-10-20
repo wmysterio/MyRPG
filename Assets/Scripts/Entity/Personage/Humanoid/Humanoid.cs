@@ -19,6 +19,7 @@ namespace MyRPG {
 
         public Humanoid( int level, RankOfPersonage rank, int modelId, Vector3 position ) : base( level, rank, TypeOfPersonage.Humanoid, modelId, position ) {
             nameId = 4;
+            Name = Localization.Current.EntityNames[ nameId ];
             Gender = modelId % 2 == 0 ? GenderOfHumanoid.Male : GenderOfHumanoid.Female;
             Rase = ( RaseOfHumanoid ) ( modelId - ( byte ) Gender );
         }

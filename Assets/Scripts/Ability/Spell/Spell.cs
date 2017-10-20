@@ -35,7 +35,7 @@ namespace MyRPG {
         public int Count { get; protected set; }
         public int MaxCount { get; protected set; }
         public float Delay { get; protected set; }
-        public int TakeResourcesAmount { get; protected set; } // %
+        public int TakeResourcesAmount { get; protected set; }
         public bool EnableCastInAir { get; protected set; }
         public bool EnableCastInRun { get; protected set; }
         public bool CastOnlyInSpine { get; protected set; }
@@ -86,7 +86,7 @@ namespace MyRPG {
             Timer = Mathf.Round( Delay - delayTimer );
         }
 
-        public virtual void Use( Personage target = null ) {
+        public virtual void Use( Personage sender = null ) {
             if( Count > 0 ) {
                 Count--;
                 return;

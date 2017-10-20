@@ -25,6 +25,7 @@ namespace MyRPG {
 
         public PickUp( TypeOfPickUp type, int modelId, Vector3 position ) : base( modelId, position ) {
             nameId = 2;
+            Name = Localization.Current.EntityNames[ nameId ];
             EnableRotation = true;
             IsVisible = true;
             Type = type;

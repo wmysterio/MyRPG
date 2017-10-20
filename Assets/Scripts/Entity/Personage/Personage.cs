@@ -64,6 +64,7 @@ namespace MyRPG {
 
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
             nameId = 3;
+            Name = Localization.Current.EntityNames[ nameId ];
             IsDead = false;
             IsStopped = false;
             Immortal = false;
@@ -199,20 +200,24 @@ namespace MyRPG {
                             StopCast();
                             return;
                         }
-                        var dist = DistanceTo( Target );
-                        if( CurrentCastSpell.MinRange > dist || dist > CurrentCastSpell.MaxRange ) {
-                            StopCast();
-                            return;
-                        }
-                        if( dist > 1.2f && !IsFreeDistanceTo( Target ) ) {
-                            StopCast();
-                            return;
+                        if( CurrentCastSpell.Type != TypeOfSpell.Streaming ) {
+                            var dist = DistanceTo( Target );
+                            if( CurrentCastSpell.MinRange > dist || dist > CurrentCastSpell.MaxRange ) {
+                                StopCast();
+                                return;
+                            }
+                            if( !IsFreeDistanceTo( Target ) ) {
+                                StopCast();
+                                return;
+                            }
                         }
                     }
                     if( CurrentCastTime > MaxCastTime ) {
                         if( CurrentCastSpell.Type != TypeOfSpell.Streaming ) {
                             CurrentCastSpell.Use( this );
                             AddDamage( CurrentCastSpell.TakeResources, takeAmount );
+                            GlobalCoolDown = 1f;
+                            onCast( CastResult.Done );
                         }
                         StopCast();
                     } else {
@@ -296,6 +301,14 @@ namespace MyRPG {
             CurrentMana = 0f;
             CurrentEnergy = 0f;
         }
+        public override void Destroy() {
+            base.Destroy();
+            Effects.ClearAll( false );
+            ClearTask();
+            Target = null;
+            IsDead = true;
+            StopCast();
+        }
         public void Reanimate( float percent = 20f ) {
             if( !IsDead )
                 return;
@@ -330,7 +343,7 @@ namespace MyRPG {
                 return true;
             return Target == this;
         }
-        public bool IsTurnedFaceTo( Vector3 position ) { return Vector3.Distance( GetPositionWithOffset( Vector3.back ), position ) - Vector3.Distance( GetPositionWithOffset( Vector3.forward ), position ) > 05f; }
+        public bool IsTurnedFaceTo( Vector3 position ) { return Vector3.Distance( GetPositionWithOffset( Vector3.back ), position ) - Vector3.Distance( GetPositionWithOffset( Vector3.forward ), position ) > 0f; }
         public bool IsTurnedFaceTo( Entity entity ) {
             if( entity == this )
                 return false;
@@ -532,11 +545,12 @@ namespace MyRPG {
                     return;
                 }
             }
-            if( spell.Type != TypeOfSpell.Reproduction )
+            if( spell.Type != TypeOfSpell.Reproduction ) {
                 AddDamage( spell.TakeResources, takeAmount );
-            spell.Use( this );
+                GlobalCoolDown = 1f;
+                spell.Use( this );
+            }
             onCast( CastResult.Done );
-            GlobalCoolDown = 1f;
             if( spell.Type == TypeOfSpell.Instant ) {
                 StopCast();
                 return;

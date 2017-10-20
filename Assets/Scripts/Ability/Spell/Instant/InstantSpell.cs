@@ -16,6 +16,8 @@ namespace MyRPG {
 
         public InstantSpell( int minLevel ) : base( minLevel, TypeOfSpell.Instant, 0f ) {
             nameId = 37;
+            EnableCastInAir = true;
+            EnableCastInRun = true;
         }
 
     }

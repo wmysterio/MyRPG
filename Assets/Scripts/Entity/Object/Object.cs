@@ -16,6 +16,7 @@ namespace MyRPG {
 
         public Object( int modelId, Vector3 position ) : base( modelId, position ) {
             nameId = 1;
+            Name = Localization.Current.EntityNames[ nameId ];
         }
 
         public void Freeze( bool state ) { rigidbody.constraints = state ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None; }
