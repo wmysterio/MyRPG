@@ -83,9 +83,6 @@ namespace MyRPG {
             yield return Player.Interface.Init();
             Player.Interface.Enable = true;
 
-
-
-
             Model.Request( 0 );
             yield return Model.LoadRequestedNowAsync();
 

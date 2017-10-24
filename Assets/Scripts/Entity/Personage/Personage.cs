@@ -37,6 +37,7 @@ namespace MyRPG {
         public EffectList Effects { get; private set; }
         public Bag Loot { get; private set; }
         public EquipmentList Equipments { get; private set; }
+        public SkillBook SpellBook { get; private set; }
         public Task CurrentTask { get; private set; }
         public int Level { get; private set; }
         public Characteristic CurrentCharacteristic { get; private set; }
@@ -79,6 +80,7 @@ namespace MyRPG {
             Relationship = RelationshipOfPersonage.Neutral;
             rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             Effects = new EffectList();
+            SpellBook = new SkillBook();
             Loot = new Bag();
             Equipments = new EquipmentList();
             Target = null;
@@ -105,6 +107,7 @@ namespace MyRPG {
         protected override void update() {
             base.update();
             Loot.UpdateItems();
+            SpellBook.Update();
             updateCharacteristic();
             moveFlag = true;
             if( eventSystemScript.MouseHover ) {
@@ -305,6 +308,8 @@ namespace MyRPG {
             base.Destroy();
             Effects.ClearAll( false );
             ClearTask();
+            Loot.Clear();
+            SpellBook.Clear();
             Target = null;
             IsDead = true;
             StopCast();
