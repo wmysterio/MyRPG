@@ -99,15 +99,15 @@ namespace MyRPG {
             updateCharacteristic();
         }
         private void updateCharacteristic() {
+            Loot.UpdateItems();
             CurrentCharacteristic = ( ( ( CurrentCharacteristic.Clear() + baseCharacteristic ) + Equipments.CurrentCharacteristic ) + Effects.Update() );
+            SpellBook.Update();
         }
 
         protected virtual void onCast( CastResult result, TypeOfResources resource = TypeOfResources.Nothing ) { }
 
         protected override void update() {
             base.update();
-            Loot.UpdateItems();
-            SpellBook.Update();
             updateCharacteristic();
             moveFlag = true;
             if( eventSystemScript.MouseHover ) {
