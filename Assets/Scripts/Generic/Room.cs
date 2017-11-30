@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-	public sealed class Room : MonoBehaviour {
+    public sealed class Room : MonoBehaviour {
 
         private static int unloadIndex = -1, currentIndex = -1;
 
@@ -28,7 +28,7 @@ namespace MyRPG {
             Loading = true;
         }
 
-        AsyncOperation asyncOperation = null;
+        private AsyncOperation asyncOperation = null;
 
         private void Awake() { Loading = false; }
 
@@ -58,15 +58,15 @@ namespace MyRPG {
 
 
         private void OnGUI() {
-			// ... 
-		}
+            // ... 
+        }
 
-        IEnumerator loadLevel( int index ) {
+        private IEnumerator loadLevel( int index ) {
             asyncOperation = SceneManager.LoadSceneAsync( index );
             yield return asyncOperation;
         }
 
-        IEnumerator unloadLevel( int index ) {
+        private IEnumerator unloadLevel( int index ) {
             asyncOperation = SceneManager.UnloadSceneAsync( index );
             yield return asyncOperation;
         }
