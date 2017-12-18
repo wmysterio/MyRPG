@@ -15,13 +15,12 @@ namespace MyRPG {
     public partial class Entity {
 
         public class EntityList : MonoBehaviour {
-
-            public static EntityList Current { get; private set; }
+            
             public static GameObject Container { get; private set; }
 
             private void Awake() {
                 Container = gameObject;
-                Current = this;
+                Coroutines.Init( this );
                 DontDestroyOnLoad( this );
             }
 

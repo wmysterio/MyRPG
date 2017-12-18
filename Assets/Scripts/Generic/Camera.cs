@@ -129,22 +129,22 @@ namespace MyRPG {
         public static void TransversePosition( Vector3 from, Vector3 to, float speed = 1f ) {
             endTransversePosition();
             cameraObject.transform.position = from;
-            transversePositionCoroutine = Entity.EntityList.Current.StartCoroutine( transversePositionAsync( from, to, Time.time, speed, Vector3.Distance( from, to ) ) );
+            transversePositionCoroutine = Coroutines.Start( transversePositionAsync( from, to, Time.time, speed, Vector3.Distance( from, to ) ) );
         }
         public static void TransversePoint( Vector3 from, Vector3 to, float speed = 1f ) {
             endTransversePoint();
             cameraObject.transform.LookAt( from );
-            transversePointCoroutine = Entity.EntityList.Current.StartCoroutine( transversePointAsync( from, to, Time.time, speed, Vector3.Distance( from, to ) ) );
+            transversePointCoroutine = Coroutines.Start( transversePointAsync( from, to, Time.time, speed, Vector3.Distance( from, to ) ) );
         }
 
         private static void endTransversePosition() {
             if( isMovingPosition )
-                Entity.EntityList.Current.StopCoroutine( transversePositionCoroutine );
+                Coroutines.Stop( transversePositionCoroutine );
             isMovingPosition = false;
         }
         private static void endTransversePoint() {
             if( isMovingPoint )
-                Entity.EntityList.Current.StopCoroutine( transversePointCoroutine );
+                Coroutines.Stop( transversePointCoroutine );
             isMovingPoint = false;
         }
         private static IEnumerator transversePositionAsync( Vector3 start, Vector3 stop, float startTime, float speed, float distance ) {
