@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-	public static class Coroutines {
+    public static class Coroutines {
 
         private static MonoBehaviour behaviour = null;
 
@@ -28,7 +28,29 @@ namespace MyRPG {
         public static Coroutine Start( IEnumerator routine ) { return behaviour.StartCoroutine( routine ); }
         public static void Stop( IEnumerator routine ) { behaviour.StopCoroutine( routine ); }
         public static void Stop( Coroutine routine ) { behaviour.StopCoroutine( routine ); }
-        public static void StopAllCoroutines() { behaviour.StopAllCoroutines(); }
+        public static void StopAll() { behaviour.StopAllCoroutines(); }
+
+
+        public static Coroutine Repeat( Action func, float time, float repeatRate ) {
+            return behaviour.StartCoroutine( repeatCoroutine( func, time, repeatRate ) );
+        }
+
+        private static IEnumerator repeatCoroutine( Action func, float time, float repeatRate ) {
+            float timer = 0f;
+            while( timer < time ) {
+                yield return null;
+                timer += Time.unscaledDeltaTime;
+            }
+            timer = 0f;
+            while( true ) {
+                while( timer < repeatRate ) {
+                    yield return null;
+                    timer += Time.unscaledDeltaTime;
+                }
+                timer = 0f;
+                func();
+            }
+        }
 
     }
 

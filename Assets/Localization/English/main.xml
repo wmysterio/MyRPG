@@ -53,4 +53,13 @@
     <string index="4">Effects</string>
     <string index="5">Quests</string>
   </WindowNames>
+  <DayNames>
+    <string index="0">Monday</string>
+    <string index="1">Tuesday</string>
+    <string index="2">Wednesday</string>
+    <string index="3">Thursday</string>
+    <string index="4">Friday</string>
+    <string index="5">Saturday</string>
+    <string index="6">Sunday</string>
+  </DayNames>
 </Localization>

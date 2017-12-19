@@ -63,7 +63,7 @@ namespace MyRPG {
 
         public string[] WindowNames { get; set; }
         public string[] EntityNames { get; set; }
-
+        public string[] DayNames { get; set; }
     }
 
 }
