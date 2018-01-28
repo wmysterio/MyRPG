@@ -12,9 +12,9 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-	public static class Calendar {
+    public static class Calendar {
 
-        private static byte dayId = 0;
+        private static byte day = 0;
         private static byte minute = 0;
         private static byte hour = 0;
         private static uint totalDays = 0;
@@ -23,29 +23,17 @@ namespace MyRPG {
             get { return totalDays; }
             set { totalDays = value; }
         }
-
-
         public static int Minute {
             get { return minute; }
-            set {
-                value = Mathf.Clamp( value, 0, 60 );
-                if( value == 60 )
-                    value = 0;
-                minute = ( byte ) value;
-            }
+            set { minute = ( byte ) Mathf.Clamp( value, 0, 59 ); }
         }
         public static int Hour {
             get { return hour; }
-            set {
-                value = Mathf.Clamp( value, 0, 24 );
-                if( value == 24 )
-                    value = 0;
-                hour = ( byte ) value;
-            }
+            set { hour = ( byte ) Mathf.Clamp( value, 0, 23 ); }
         }
         public static Weekday Day {
-            get { return ( Weekday ) dayId; }
-            set { dayId = ( byte ) value; }
+            get { return ( Weekday ) day; }
+            set { day = ( byte ) value; }
         }
         public static bool Stop { get; set; }
 
@@ -59,27 +47,20 @@ namespace MyRPG {
             }
             if( hour > 23 ) {
                 hour = 0;
-                dayId += 1;
+                NextDay();
             }
-            if( dayId > 6 ) {
-                dayId = 0;
-                totalDays += 1;
-            }
-            Debug.Log( GetCalendarInfo() );
         }
 
         public static void NextDay() {
-            dayId += 1;
-            if( dayId > 6 )
-                dayId = 0;
+            day += 1;
+            if( day > 6 )
+                day = 0;
             totalDays += 1;
         }
 
-        public static string GetDayName() { return Localization.Current.DayNames[ dayId ]; }
-        public static string GetDayName( Weekday day ) { return Localization.Current.DayNames[ ( int ) day ]; }
+        public static string GetDayName() { return Localization.Current.DayNames[ day ]; }
+        public static string GetDayName( Weekday weekday ) { return Localization.Current.DayNames[ ( int ) weekday ]; }
         public static string GetCalendarInfo() { return string.Format( "{0}, {1}:{2}", GetDayName(), hour, minute ); }
-
-
     }
 
     public enum Weekday : byte {
@@ -88,7 +69,7 @@ namespace MyRPG {
         Wednesday = 2,  // Середа
         Thursday = 3,   // Четвер
         Friday = 4,     // П'ятниця
-        Saturday = 5,    // Субота
+        Saturday = 5,   // Субота
         Sunday = 6      // Неділя
     }
 

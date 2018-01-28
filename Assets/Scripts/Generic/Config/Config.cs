@@ -18,7 +18,7 @@ namespace MyRPG {
         public static Config Intance { get; set; }
         public static Config Default() {
             return new Config() {
-                CurrentLanguage = Localization.DEFAULT_LANGUAGE,
+                LastSelectedLanguage = Localization.DEFAULT_LANGUAGE,
                 FullScreen = Screen.fullScreen,
                 ScreenWidth = Screen.width,
                 ScreenHeight = Screen.height,
@@ -28,7 +28,7 @@ namespace MyRPG {
 
         public static bool HasFile() { return File.Exists( string.Format( "{0}/{1}.xml", Application.dataPath, "config" ) ); }
 
-        public string CurrentLanguage { get; set; }
+        public string LastSelectedLanguage { get; set; }
         public int ScreenWidth { get; set; }
         public int ScreenHeight { get; set; }
         public bool FullScreen { get; set; }

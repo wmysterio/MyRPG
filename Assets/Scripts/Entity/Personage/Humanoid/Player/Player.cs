@@ -35,14 +35,7 @@ namespace MyRPG {
 
         protected override void update() {
             base.update();
-            if( Input.GetKeyDown( KeyCode.Alpha1 ) )
-                Cast( csq.Instance );
-            if( Input.GetKeyDown( KeyCode.Alpha2 ) )
-                Cast( csp.Instance );
-            if( Input.GetKeyDown( KeyCode.Alpha3 ) )
-                Cast( cst.Instance );
-            if( CurrentCastSpell != null && !( CurrentCastSpell is csq ) )
-                Debug.Log( string.Format( "{0} : {1}", CurrentCastTime, MaxCastTime ) );
+
         }
 
         protected override void onCast( CastResult result, TypeOfResources resource = TypeOfResources.Nothing ) {

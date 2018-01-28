@@ -35,7 +35,7 @@ namespace MyRPG {
             var xml = XMLFile<Localization>.Create( string.Format( "{0}/{1}", all[ newLanguage ], "main" ) );
             if( !xml.Load( out loc ) )
                 return false;
-            Config.Intance.CurrentLanguage = newLanguage;
+            Config.Intance.LastSelectedLanguage = newLanguage;
             Current = loc;
             if( LanguageChanged != null )
                 LanguageChanged.Invoke( all[ newLanguage ] );
@@ -61,9 +61,13 @@ namespace MyRPG {
             return true;
         }
 
+        public static int GetLanguageIndex( string language ) { return all.Keys.ToList().IndexOf( language ); }
+
+
         public string[] WindowNames { get; set; }
         public string[] EntityNames { get; set; }
         public string[] DayNames { get; set; }
+
     }
 
 }

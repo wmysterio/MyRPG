@@ -21,11 +21,6 @@ namespace MyRPG {
             private void Awake() {
                 Container = gameObject;
                 Coroutines.Init( this );
-
-                Calendar.Day = Weekday.Sunday;
-                Calendar.Hour = 23;
-                Calendar.Minute = 55;
-
                 Coroutines.Repeat( Calendar.Update, 0f, 1f );
                 DontDestroyOnLoad( this );
             }
