@@ -15,27 +15,14 @@ namespace MyRPG {
 	public class EventSystem : MonoBehaviour {
 
         public bool MouseHover { get; private set; }
-        public event Action MouseEnter, MouseExit;
 
-	    private void Awake() {
-            MouseHover = false;
-        }
+	    private void Awake() { MouseHover = false; }
 
-        private void OnMouseEnter() {
-            MouseHover = false;
-            if( MouseEnter != null )
-                MouseEnter.Invoke();
-        }
+        private void OnMouseEnter() { MouseHover = false; }
 
-        private void OnMouseOver() {
-            MouseHover = true;
-        }
+        private void OnMouseOver() { MouseHover = true; }
 
-        private void OnMouseExit() {
-            MouseHover = false;
-            if( MouseExit != null )
-                MouseExit.Invoke();
-        }
+        private void OnMouseExit() { MouseHover = false; }
 
     }
 

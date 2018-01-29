@@ -30,14 +30,19 @@ namespace MyRPG {
 
         public int ModelID { get; private set; }
         public bool NoLongerNeeded { get; private set; }
-
+        
         public string Name {
             get { return gameObject.name; }
             protected set { gameObject.name = value; }
         }
+
         public Vector3 Position {
             get { return gameObject.transform.localPosition; }
             set { gameObject.transform.localPosition = value; }
+        }
+        public bool IsActive {
+            get { return gameObject.activeInHierarchy; }
+            set { gameObject.SetActive( value ); }
         }
 
         public Entity( int modelID, Vector3 position ) {
@@ -57,7 +62,6 @@ namespace MyRPG {
             collider = gameObject.GetComponentInChildren<Collider>();
             rigidbody = gameObject.AddComponent<Rigidbody>();
             eventSystemScript = gameObject.AddComponent<EventSystem>();
-            Localization.LanguageChanged += Localization_LanguageChanged;
             updator.Add( this );
         }
 
@@ -72,15 +76,11 @@ namespace MyRPG {
                 return false;
             return collider.enabled;
         }
-        public virtual void Destroy() {
-            if( !NoLongerNeeded ) {
-                Localization.LanguageChanged -= Localization_LanguageChanged;
-            }
-            NoLongerNeeded = true;
-        }
+        public virtual void Destroy() { NoLongerNeeded = true; }
         public float DistanceTo( float x, float y, float z ) { return Vector3.Distance( Position, new Vector3( x, y, z ) ); }
         public float DistanceTo( Vector3 position ) { return Vector3.Distance( Position, position ); }
         public float DistanceTo( Entity entity ) { return Vector3.Distance( Position, entity.Position ); }
+        public float DistanceTo( Path.Node node ) { return Vector3.Distance( Position, node.Point ); }
         public bool Near( float x, float y, float z, float radius ) { return radius >= Vector3.Distance( Position, new Vector3( x, y, z ) ); }
         public bool Near( Vector3 position, float radius ) { return radius >= Vector3.Distance( Position, position ); }
         public bool Near( Entity entity, float radius ) { return radius >= Vector3.Distance( Position, entity.Position ); }
@@ -91,6 +91,7 @@ namespace MyRPG {
         public GameObject GetModel() { return model; }
         public Vector3 GetDirection( Vector3 position ) { return ( position - Position ).normalized; }
         public Vector3 GetDirection( Entity entity ) { return ( entity.Position - Position ).normalized; }
+        public Vector3 GetDirection( Path.Node node ) { return ( node.Point - Position ).normalized; }
         public Vector3 GetPositionWithOffset( Vector3 offset ) { return gameObject.transform.TransformPoint( offset ); }
         public bool IsFreeDistanceTo( Entity entity ) {
             if( entity == this )
@@ -106,8 +107,6 @@ namespace MyRPG {
         protected virtual void physics() { }
 
         public override string ToString() { return gameObject.name; }
-
-        private void Localization_LanguageChanged( string path ) { if( nameId != -1 ) Name = Localization.Current.EntityNames[ nameId ]; }
 
     }
 

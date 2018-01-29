@@ -143,6 +143,19 @@ namespace MyRPG {
 
                 case InitState.InitCamera:
                 Camera.Init();
+                // ----------------------------------------
+
+
+
+                Model.Request( 0 );
+                Model.LoadRequestedNow();
+                new Player( "My Player", Personage.MIN_LEVEL, 0, Vector3.up );
+                Model.Unload( 0 );
+                Camera.AttachToPlayer();
+                
+
+
+                // ----------------------------------------
                 state = InitState.Stop;
                 Room.Load( Room.All.SelectProfile );
                 break;

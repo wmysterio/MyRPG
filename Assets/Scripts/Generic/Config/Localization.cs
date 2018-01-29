@@ -16,12 +16,10 @@ namespace MyRPG {
     public sealed class Localization {
         
         public const string DEFAULT_LANGUAGE = "ENGLISH";
-        public delegate void LocalizationHandler( string path );
         
         private static Dictionary<string, string> all = new Dictionary<string, string>();
         private static bool isInit = false;
         
-        public static event LocalizationHandler LanguageChanged;
         public static Localization Current { get; private set; }
         public static string[] GetLanguages() { return all.Keys.ToArray(); }
         public static int GetTotalLanguages() { return all.Count; }
@@ -37,8 +35,6 @@ namespace MyRPG {
                 return false;
             Config.Intance.LastSelectedLanguage = newLanguage;
             Current = loc;
-            if( LanguageChanged != null )
-                LanguageChanged.Invoke( all[ newLanguage ] );
             return true;
         }
         public static bool Init() {
@@ -62,7 +58,6 @@ namespace MyRPG {
         }
 
         public static int GetLanguageIndex( string language ) { return all.Keys.ToList().IndexOf( language ); }
-
 
         public string[] WindowNames { get; set; }
         public string[] EntityNames { get; set; }
