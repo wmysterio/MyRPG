@@ -24,6 +24,7 @@ namespace MyRPG {
         public int ExperienceToLevel {
             get { return TotalExperience - CurrentExperience; }
         }
+        public RingForKeys Keys { get; private set; }
 
         public Player( string name, int level, int modelId, Vector3 position ) : base( level, RankOfPersonage.Normal, modelId, position ) {
             nameId = -1;
@@ -31,6 +32,7 @@ namespace MyRPG {
             Current = this;
             CurrentExperience = 0;
             TotalExperience = calculateMaxExperience();
+            Keys = new RingForKeys();
         }
 
         protected override void update() {

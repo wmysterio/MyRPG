@@ -56,12 +56,13 @@ namespace MyRPG {
             isInit = true;
             return true;
         }
-
         public static int GetLanguageIndex( string language ) { return all.Keys.ToList().IndexOf( language ); }
 
         public string[] WindowNames { get; set; }
         public string[] EntityNames { get; set; }
         public string[] DayNames { get; set; }
+        public string[] KeyNames { get; set; }
+
 
     }
 

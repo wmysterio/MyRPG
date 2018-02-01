@@ -62,4 +62,7 @@
     <string index="5">Saturday</string>
     <string index="6">Sunday</string>
   </DayNames>
+  <KeyNames>
+    <string index="0">Universal key</string>
+  </KeyNames>
 </Localization>

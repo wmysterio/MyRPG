@@ -62,4 +62,7 @@
     <string index="5">Субота</string>
     <string index="6">Неділя</string>
   </DayNames>
+  <KeyNames>
+    <string index="0">Універсальний ключ</string>
+  </KeyNames>
 </Localization>
