@@ -44,6 +44,7 @@
     <string index="35">Streaming spell</string>
     <string index="36">Reproduction spell</string>
     <string index="37">Instant spell</string>
+    <string index="38">Chest</string>
   </EntityNames>
   <WindowNames>
     <string index="0"></string>

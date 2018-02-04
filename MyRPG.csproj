@@ -256,6 +256,7 @@
     <Compile Include="Assets\Scripts\Ability\Spell\Spell.cs" />
     <Compile Include="Assets\Scripts\Ability\Spell\Streaming\StreamingSpell.cs" />
     <Compile Include="Assets\Scripts\Entity\Entity.cs" />
+    <Compile Include="Assets\Scripts\Entity\Object\Chest\Chest.cs" />
     <Compile Include="Assets\Scripts\Entity\Object\Object.cs" />
     <Compile Include="Assets\Scripts\Entity\Object\PickUp\PickUp.cs" />
     <Compile Include="Assets\Scripts\Entity\Personage\Humanoid\Humanoid.cs" />

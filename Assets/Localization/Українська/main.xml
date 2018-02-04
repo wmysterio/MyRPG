@@ -44,6 +44,7 @@
     <string index="35">Потокове заклинання</string>
     <string index="36">Відтворюване заклинання</string>
     <string index="37">Миттєве заклинання</string>
+    <string index="38">Скриня</string>
   </EntityNames>
   <WindowNames>
     <string index="0"></string>

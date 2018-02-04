@@ -159,18 +159,18 @@ namespace MyRPG {
                 GameObject.DontDestroyOnLoad( plane );
 
 
+                
 
-
-                //Model.Request( Chest.GetModelByType( TypeOfChest.Quest ) );
+                Model.Request( Chest.GetModelByType( TypeOfChest.Quest ) );
                 Model.Request( 0 );
                 Model.LoadRequestedNow();
 
-                
+
 
                 new Player( "My Player", Personage.MIN_LEVEL, 0, Vector3.up );
-                //var chest = new Chest( TypeOfChest.Quest, new Vector3( 0f, 0.5f, -5f ), false );
-                
-                
+                var chest = new Chest( TypeOfChest.Quest, new Vector3( 0f, 0.5f, -5f ) );
+
+
 
 
                 Model.Unload();
