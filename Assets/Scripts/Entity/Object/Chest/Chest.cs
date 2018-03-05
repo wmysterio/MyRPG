@@ -38,8 +38,6 @@ namespace MyRPG {
 
         protected override void update() {
             base.update();
-            if( NoLongerNeeded )
-                return;
             if( !IsActive )
                 return;
             if( !Player.Exist() )
@@ -58,31 +56,21 @@ namespace MyRPG {
                 return;
             if( Player.Current.IsInAir() )
                 return;
+            if( !Player.Current.Keys.HasKey( Key ) )
+                return;
+            Player.Current.Keys.Remove( Key );
             if( IsLocked ) {
                 if( !Unlock() )
                     return;
             }
-
             Debug.Log( "Unlock chest!" );
         }
 
-
-
-
         public bool Unlock() {
+            if( NoLongerNeeded )
+                return false;
             if( !IsLocked )
                 return true;
-            if( !Player.Exist() )
-                return false;
-            if( Player.Current.NoLongerNeeded )
-                return false;
-            if( !Player.Current.IsActive )
-                return false;
-            if( !Player.Current.CanMove )
-                return false;
-            if( !Player.Current.Keys.HasKey( Key ) )
-                return false;
-            Player.Current.Keys.Remove( Key );
             generateLoot();
             IsLocked = false;
             return true;

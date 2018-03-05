@@ -13,7 +13,7 @@ using UnityEngine.SceneManagement;
 namespace MyRPG {
 
     public static class Camera {
-
+        
         private const float MIN_DISTANCE = -16f;
         private const float MAX_DISTANCE = -3f;
         private const float MIN_ANGLE = 8f;
@@ -49,9 +49,11 @@ namespace MyRPG {
             DistanceToPoint = scrollPosition.z;
             IsAttached = false;
             IsInit = true;
+            Sky.Init( cameraComponent );
         }
 
         public static void Update() {
+            Sky.Update();
             if( !IsInit || IsMoving() )
                 return;
             DistanceToPoint = scrollPosition.z;

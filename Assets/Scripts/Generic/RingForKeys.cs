@@ -16,6 +16,11 @@ namespace MyRPG {
 
         private Dictionary<KeysForChest, byte> keys;
 
+        public byte this[ KeysForChest key ] {
+            get { return keys[ key ]; }
+            set { keys[ key ] = value; }
+        }
+
         public RingForKeys() {
             keys = new Dictionary<KeysForChest, byte>();
             var enumKeys = ( KeysForChest[] ) Enum.GetValues( typeof( KeysForChest ) );
@@ -23,7 +28,6 @@ namespace MyRPG {
                 keys.Add( enumKeys[ i ], 0 );
         }
 
-        public byte GetKeyAmount( KeysForChest key ) { return keys[ key ]; }
         public string GetKeyName( KeysForChest key ) { return Localization.Current.KeyNames[ ( int ) key ]; }
         public void Add( KeysForChest key ) {
             if( key == KeysForChest.Universal )

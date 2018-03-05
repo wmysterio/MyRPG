@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.2.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -284,18 +282,15 @@
     <Compile Include="Assets\Scripts\Generic\RingForKeys.cs" />
     <Compile Include="Assets\Scripts\Generic\Room.cs" />
     <Compile Include="Assets\Scripts\Generic\SkillBook.cs" />
+    <Compile Include="Assets\Scripts\Generic\Sync\Sky.cs" />
     <Compile Include="Assets\Scripts\Generic\TaskManager.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IAbility.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDamage.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IDescription.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Localization\English\main.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Assets\Localization\Українська\main.xml">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Assets\Localization\English\main.xml" />
+    <None Include="Assets\Localization\Українська\main.xml" />
     <None Include="Assets\config.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -37,7 +37,16 @@ namespace MyRPG {
 
         protected override void update() {
             base.update();
-
+            //
+            if( Input.GetKeyDown( KeyCode.Q ) ) {
+                Calendar.Hour = 17;
+                Calendar.Minute = 55;
+            }
+            if( Input.GetKeyDown( KeyCode.E ) ) {
+                Calendar.Hour = 5;
+                Calendar.Minute = 55;
+            }
+            //
         }
 
         protected override void onCast( CastResult result, TypeOfResources resource = TypeOfResources.Nothing ) {

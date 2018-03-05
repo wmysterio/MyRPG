@@ -61,6 +61,7 @@ namespace MyRPG {
         public static string GetDayName() { return Localization.Current.DayNames[ day ]; }
         public static string GetDayName( Weekday weekday ) { return Localization.Current.DayNames[ ( int ) weekday ]; }
         public static string GetCalendarInfo() { return string.Format( "{0}, {1}:{2}", GetDayName(), hour, minute ); }
+
     }
 
     public enum Weekday : byte {

@@ -15,7 +15,7 @@ namespace MyRPG {
     public partial class Entity {
 
         public class EntityList : MonoBehaviour {
-            
+
             public static GameObject Container { get; private set; }
 
             private void Awake() {

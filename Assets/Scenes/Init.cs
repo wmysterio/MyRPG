@@ -150,12 +150,6 @@ namespace MyRPG {
                 plane.transform.position = Vector3.zero;
                 plane.transform.rotation = Quaternion.identity;
                 plane.transform.localScale = new Vector3( 25f, 0.001f, 25f );
-                var tmpGo = new GameObject( "Light" );
-                tmpGo.transform.parent = plane.transform;
-                tmpGo.transform.localEulerAngles = new Vector3( 90f, 0f, 0f );
-                tmpGo.transform.localPosition = new Vector3( 0f, 150f, 0f );
-                var light = tmpGo.AddComponent<Light>();
-                light.type = LightType.Directional;
                 GameObject.DontDestroyOnLoad( plane );
 
 
@@ -168,7 +162,7 @@ namespace MyRPG {
 
 
                 new Player( "My Player", Personage.MIN_LEVEL, 0, Vector3.up );
-                var chest = new Chest( TypeOfChest.Quest, new Vector3( 0f, 0.5f, -5f ) );
+                var chest = new Chest( TypeOfChest.Quest, new Vector3( 0f, 0.05f, -5f ) );
 
 
 
