@@ -56,14 +56,13 @@ namespace MyRPG {
                 return;
             if( Player.Current.IsInAir() )
                 return;
-            if( !Player.Current.Keys.HasKey( Key ) )
-                return;
-            Player.Current.Keys.Remove( Key );
             if( IsLocked ) {
+                if( !Player.Current.Keys.HasKey( Key ) )
+                    return;
                 if( !Unlock() )
                     return;
+                Player.Current.Keys.Remove( Key );
             }
-            Debug.Log( "Unlock chest!" );
         }
 
         public bool Unlock() {

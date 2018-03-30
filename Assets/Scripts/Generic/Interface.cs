@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.SceneManagement;
 
 namespace MyRPG {
@@ -111,9 +112,32 @@ namespace MyRPG {
                 Fadind = true;
             }
 
+
+
+
+            #region New Version
+            private static SpriteAtlas spriteAtlas;
+            private static GameObject playerUIObject;
+
+            public static Sprite GetSprite( Sprites sprite ) { return spriteAtlas.GetSprite( sprite.ToString() ); }
+
+            #endregion
+
             public static IEnumerator Init() {
                 if( IsInit )
                     yield return null;
+
+                request = Resources.LoadAsync<SpriteAtlas>( "Sprites" );
+                yield return request;
+                spriteAtlas = request.asset as SpriteAtlas;
+
+                request = Resources.LoadAsync<GameObject>( "PlayerUI" );
+                yield return request;
+                playerUIObject = request.asset as GameObject;
+
+
+
+
 
                 fadeColor = Color.black;
                 WindowName = string.Empty;
@@ -695,5 +719,19 @@ namespace MyRPG {
     }
 
     public enum FadeMode { In, Out }
+
+    public enum Sprites {
+        _0,
+        _1,
+        _2,
+        _3,
+        _4,
+        _5,
+        _6,
+        _7,
+        _8,
+        _9,
+        PlayerUI
+    }
 
 }

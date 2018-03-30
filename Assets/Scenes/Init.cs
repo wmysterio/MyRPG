@@ -135,7 +135,7 @@ namespace MyRPG {
 
 
                 case InitState.InitEntityListAndRooms:
-                var go = GameObject.Find( "EntityList" );
+                var go = new GameObject( "EntityList" );
                 go.AddComponent<Entity.EntityList>();
                 go.AddComponent<Room>();
                 state = InitState.InitCamera;
