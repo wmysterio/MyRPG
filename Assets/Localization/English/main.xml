@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+	License: CC-BY
+	Author: Василь ( wmysterio )
+	Web: http://www.unity3d.tk/
+-->
+<Localization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <EntityNames>
+    <string index="0">Entity</string>
+    <string index="1">Object</string>
+    <string index="2">PickUp</string>
+    <string index="3">Personage</string>
+    <string index="4">Humanoid</string>
+    <string index="5">Effect</string>
+    <string index="6">Active effect</string>
+    <string index="7">Passive effect</string>
+    <string index="8">Item</string>
+    <string index="9">Trash</string>
+    <string index="10">Reagent</string>
+    <string index="11">Quest item</string>
+    <string index="12">Normal item</string>
+    <string index="13">Equipment</string>
+    <string index="14">Accessory</string>
+    <string index="15">Belt</string>
+    <string index="16">Feet</string>
+    <string index="17">Footwear</string>
+    <string index="18">Hands</string>
+    <string index="19">Head</string>
+    <string index="20">Neck</string>
+    <string index="21">Ring</string>
+    <string index="22">Shoulders</string>
+    <string index="23">Spine</string>
+    <string index="24">Torso</string>
+    <string index="25">Weapon</string>
+    <string index="26">Ax</string>
+    <string index="27">Bow</string>
+    <string index="28">Brass Knuckles</string>
+    <string index="29">Dagger</string>
+    <string index="30">Hammer</string>
+    <string index="31">Staff</string>
+    <string index="32">Sword</string>
+    <string index="33">Wand</string>
+    <string index="34">Spell</string>
+    <string index="35">Streaming spell</string>
+    <string index="36">Reproduction spell</string>
+    <string index="37">Instant spell</string>
+    <string index="38">Chest</string>
+  </EntityNames>
+  <WindowNames>
+    <string index="0"></string>
+    <string index="1">Bag</string>
+    <string index="2">Spells</string>
+    <string index="3">Personage</string>
+    <string index="4">Effects</string>
+    <string index="5">Quests</string>
+  </WindowNames>
+  <DayNames>
+    <string index="0">Monday</string>
+    <string index="1">Tuesday</string>
+    <string index="2">Wednesday</string>
+    <string index="3">Thursday</string>
+    <string index="4">Friday</string>
+    <string index="5">Saturday</string>
+    <string index="6">Sunday</string>
+  </DayNames>
+  <KeyNames>
+    <string index="0">Universal key</string>
+  </KeyNames>
+</Localization>
