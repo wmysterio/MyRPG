@@ -60,7 +60,7 @@ namespace MyRPG {
 
         public static string GetDayName() { return Localization.Current.DayNames[ day ]; }
         public static string GetDayName( Weekday weekday ) { return Localization.Current.DayNames[ ( int ) weekday ]; }
-        public static string GetCalendarInfo() { return string.Format( "{0}, {1}:{2}", GetDayName(), hour, minute ); }
+        public static string GetCalendarInfo() { return string.Format( "{0}, {1}{2}:{3}{4}", GetDayName(), hour > 9 ? string.Empty : "0", hour, minute > 9 ? string.Empty : "0", minute ); }
 
     }
 

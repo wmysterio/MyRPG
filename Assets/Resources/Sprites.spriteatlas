@@ -15,7 +15,7 @@ SpriteAtlas:
       textureCompression: 0
       filterMode: 0
       generateMipMaps: 0
-      readable: 0
+      readable: 1
       crunchedCompression: 0
       sRGB: 1
     platformSettings: []
@@ -28,7 +28,7 @@ SpriteAtlas:
       enableTightPacking: 0
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: f572eb81d547bf745b3a1ddbeb1dc15a, type: 3}
+    - {fileID: 102900000, guid: 5f34c28b4328bda43a8ca9e7dcbbe657, type: 3}
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -42,7 +42,6 @@ SpriteAtlas:
   - {fileID: 21300000, guid: c431c3991e67c9a4e89c3fc581d2c09e, type: 3}
   - {fileID: 21300000, guid: c388c602477764945bd42e6d035839cf, type: 3}
   - {fileID: 21300000, guid: a8c9ebde4f668ab40bb6385ec466001c, type: 3}
-  - {fileID: 21300000, guid: 69f4be2700a47414fb9db78b92be71dc, type: 3}
   m_PackedSpriteNamesToIndex:
   - _8
   - _9
@@ -54,6 +53,5 @@ SpriteAtlas:
   - _3
   - _0
   - _1
-  - CloseBtn
   m_Tag: Sprites
   m_IsVariant: 0

@@ -26,6 +26,8 @@ namespace MyRPG {
         private static Coroutine transversePositionCoroutine, transversePointCoroutine;
         private static bool isMovingPosition = false, isMovingPoint = false;
         private static float scrollSpeed = 0f;
+        private static AudioSource audioSource = null;
+
 
         public static bool IsInit { get; private set; }
         public static bool IsAttached { get; private set; }
@@ -43,7 +45,8 @@ namespace MyRPG {
             cameraScrollObject.tag = "MainCamera";
             cameraComponent = cameraScrollObject.AddComponent<UnityEngine.Camera>();
             cameraComponent.nearClipPlane = 0.01f;
-            listener = cameraObject.AddComponent<AudioListener>();
+            listener = cameraScrollObject.AddComponent<AudioListener>();
+            audioSource = cameraScrollObject.AddComponent<AudioSource>();
             GameObject.DontDestroyOnLoad( cameraObject );
             eulerAngles.x = ( MIN_ANGLE + MAX_ANGLE ) / 2f;
             DistanceToPoint = scrollPosition.z;
@@ -94,6 +97,7 @@ namespace MyRPG {
 
         }
 
+        public static AudioSource GetAudioSource() { return audioSource; }
         public static void ResetRotation() { cameraObject.transform.rotation = Quaternion.identity; }
         public static bool IsMoving() { return isMovingPoint || isMovingPosition; }
         public static void AttachToPlayer() {

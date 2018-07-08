@@ -45,6 +45,7 @@
     <string index="36">Reproduction spell</string>
     <string index="37">Instant spell</string>
     <string index="38">Chest</string>
+    <string index="39">Money</string>
   </EntityNames>
   <WindowNames>
     <string index="0"></string>
@@ -66,4 +67,41 @@
   <KeyNames>
     <string index="0">Universal key</string>
   </KeyNames>
+  <CharacteristicNames>
+    <string index="0">Physical Attack Power</string>
+    <string index="1">Magic Power Of Nature</string>
+    <string index="2">Magic Power Of Fire</string>
+    <string index="3">Magic Power Of Water</string>
+    <string index="4">Magic Power Of Air</string>
+    <string index="5">Magic Power Of Earth</string>
+    <string index="6">Magic Power Of Darkness</string>
+    <string index="7">Magic Power Of Light</string>
+    <string index="8">Physical Defence Power</string>
+    <string index="9">Magic Defence Of Nature</string>
+    <string index="10">Magic Defence Of Fire</string>
+    <string index="11">Magic Defence Of Water</string>
+    <string index="12">Magic Defence Of Air</string>
+    <string index="13">Magic Defence Of Earth</string>
+    <string index="14">Magic Defence Of Darkness</string>
+    <string index="15">Magic Defence Of Light</string>
+    <string index="16">Max Health</string>
+    <string index="17">Max Mana</string>
+    <string index="18">Max Energy</string>
+    <string index="19">Health Regeneration</string>
+    <string index="20">Mana Regeneration</string>
+    <string index="21">Energy Regeneration</string>
+    <string index="22">Move Speed</string>
+    <string index="23">Critical Chance</string>
+    <string index="24">Critical Effect</string>
+    <string index="25">Cast Speed</string>
+    <string index="26">Chance Of Parrying</string>
+    <string index="27">Chance Of Blocking</string>
+  </CharacteristicNames>
+  <StatNames>
+    <string index="0">Name:</string>
+    <string index="1">Day:</string>
+    <string index="2">Money:</string>
+    <string index="3">Experience:</string>
+    <string index="4">Level:</string>
+  </StatNames>
 </Localization>

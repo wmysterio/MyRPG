@@ -45,6 +45,7 @@
     <string index="36">Відтворюване заклинання</string>
     <string index="37">Миттєве заклинання</string>
     <string index="38">Скриня</string>
+    <string index="39">Гроші</string>
   </EntityNames>
   <WindowNames>
     <string index="0"></string>
@@ -66,4 +67,43 @@
   <KeyNames>
     <string index="0">Універсальний ключ</string>
   </KeyNames>
+
+	<CharacteristicNames>
+	<string index="0">Сила фізичної атаки</string>
+	<string index="1">Сила магії природи</string>
+	<string index="2">Сила магії вогню</string>
+	<string index="3">Сила магії води</string>
+	<string index="4">Сила магії повітря</string>
+	<string index="5">Сила магії землі</string>
+	<string index="6">Сила темної магії</string>
+	<string index="7">Сила магії світла</string>
+	<string index="8">Захист від фізичної атаки</string>
+	<string index="9">Захист від магії природи</string>
+	<string index="10">Захист від магії вогню</string>
+	<string index="11">Захист від магії води</string>
+	<string index="12">Захист від магії повітря</string>
+	<string index="13">Захист від магії землі</string>
+	<string index="14">Захист від темної магії</string>
+	<string index="15">Захист від магії світла</string>
+	<string index="16">Максимальне здоров'я</string>
+	<string index="17">Максимальна мана</string>
+	<string index="18">Максимальна енергія</string>
+	<string index="19">Регенерація здоров'я</string>
+	<string index="20">Регенерація мани</string>
+	<string index="21">Регенерація енергії</string>
+	<string index="22">Швидкість руху</string>
+	<string index="23">Критичний шанс</string>
+	<string index="24">Критичний ефект</string>
+	<string index="25">Швидкість відтворення</string>
+	<string index="26">Шанс парирування</string>
+	<string index="27">Шанс блокування</string>
+	</CharacteristicNames>
+	<StatNames>
+	<string index="0">Ім'я:</string>
+	<string index="1">День:</string>
+	<string index="2">Гроші:</string>
+	<string index="3">Досвід:</string>
+	<string index="4">Рівень:</string>
+	</StatNames>
+
 </Localization>

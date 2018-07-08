@@ -23,6 +23,7 @@ namespace MyRPG {
         private string[] languages = null;
         private float timer = 0f;
         private int currentLanguagesIndex = -1, totalLanguagesIndex = -1, currentLightCircleIndex = 0;
+        private Coroutine tempCoroutine = null;
 
         public GameObject selectLanguagePanel, languageTextObject, lightsPanel;
 
@@ -135,17 +136,29 @@ namespace MyRPG {
 
 
                 case InitState.InitEntityListAndRooms:
-                var go = new GameObject( "EntityList" );
-                go.AddComponent<Entity.EntityList>();
+                var go = new GameObject( "Entitys" );
+                go.AddComponent<GameSync>();
                 go.AddComponent<Room>();
                 state = InitState.InitCamera;
                 break;
 
                 case InitState.InitCamera:
                 Camera.Init();
+                state = InitState.InitAudio;
+                break;
+
+                case InitState.InitAudio:
+                goto spawn_player; // ВИДАЛИТИ МІТКУ В РЕЛІЗІ
+
+                if( !Audio.IsInit ) {
+                    if( tempCoroutine == null )
+                        tempCoroutine = Coroutines.Start( Audio.Init( Camera.GetAudioSource() ) );
+                    return;
+                }
+                tempCoroutine = null;
+
                 // ----------------------------------------
-
-
+                spawn_player: // ВИДАЛИТИ МІТКУ В РЕЛІЗІ
                 var plane = GameObject.CreatePrimitive( PrimitiveType.Cube );
                 plane.transform.position = Vector3.zero;
                 plane.transform.rotation = Quaternion.identity;
@@ -163,8 +176,10 @@ namespace MyRPG {
 
                 new Player( "My Player", Personage.MIN_LEVEL, 0, Vector3.up );
                 var chest = new Chest( TypeOfChest.Quest, new Vector3( 0f, 0.05f, -5f ) );
+                var jhon = new Jhon();
 
 
+                Player.Current.Loot.Add( jhon.Loot );
 
 
                 Model.Unload();
@@ -223,9 +238,17 @@ namespace MyRPG {
             SwitchLanguage,
             InitEntityListAndRooms,
             InitCamera,
+            InitAudio,
             Stop
         }
 
     }
+    
+    class Jhon : Humanoid {
 
+        public Jhon() : base(1, RankOfPersonage.Normal, 0, Vector3.left * 4f ) {
+            Relationship = RelationshipOfPersonage.Friendly;
+        }
+
+    }
 }

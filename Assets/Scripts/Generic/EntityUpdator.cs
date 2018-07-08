@@ -13,81 +13,50 @@ using UnityEngine.SceneManagement;
 namespace MyRPG {
 
     public partial class Entity {
+ 
+        public sealed class EntityUpdator : MonoBehaviour {
 
-        public class EntityUpdator {
+            public static readonly Dictionary<Entity, Entity> AllEntitys = new Dictionary<Entity, Entity>();
+            public static GameObject Container { get; set; }
 
-            private const int MAX_SIZE = 192;
-            private const int LOOP_SIZE = 192;
+            private Entity targetUpdate = null;
 
-            private Entity[] entitys;
-            private int startFindIndex, findIndexIterator, updateStartIndex, updateStopIndex, updateIterator, fixedUpdateStartIndex, fixedUpdateStopIndex, fixedUpdateIterator;
+            public bool MouseHover { get; private set; }
 
-            public int Lenght { get; private set; }
-
-            public EntityUpdator() {
-                entitys = new Entity[ MAX_SIZE ];
-                Lenght = 0;
-                startFindIndex = 0;
-                findIndexIterator = 0;
-                resetUpdateIndex();
-                resetFixedUpdateIndex();
+            public void AddReference( Entity entity ) {
+                if( entity == null )
+                    return;
+                if( AllEntitys.ContainsKey( entity ) )
+                    return;
+                targetUpdate = entity;
+                AllEntitys.Add( entity, entity );
             }
 
-            private void resetUpdateIndex() {
-                updateStartIndex = 0;
-                updateStopIndex = LOOP_SIZE;
-            }
-            private void resetFixedUpdateIndex() {
-                fixedUpdateStartIndex = 0;
-                fixedUpdateStopIndex = LOOP_SIZE;
-            }
-            private int findFreeIndex() {
-                for( findIndexIterator = startFindIndex; findIndexIterator < MAX_SIZE; findIndexIterator++ ) {
-                    if( entitys[ findIndexIterator ] == null ) {
-                        startFindIndex = findIndexIterator;
-                        break;
-                    }
+            private void Awake() { MouseHover = false; }
+            private void Update() {
+                if( targetUpdate == null )
+                    return;
+                if( targetUpdate.NoLongerNeeded ) {
+                    Destroy( targetUpdate.gameObject );
+                    return;
                 }
-                return startFindIndex;
+                targetUpdate.update();
             }
-
-            public void Add( Entity entity ) {
-                Lenght += 1;
-                if( Lenght > MAX_SIZE )
-                    throw new Exception( "Кількість ігрових об'єктів перевищив максимум!" );
-                entitys[ findFreeIndex() ] = entity;
+            private void FixedUpdate() {
+                if( targetUpdate == null )
+                    return;
+                targetUpdate.physics();
             }
-
-            public void Update() {
-                for( updateIterator = updateStartIndex; updateIterator < updateStopIndex; updateIterator++ ) {
-                    if( entitys[ updateIterator ] != null ) {
-                        if( entitys[ updateIterator ].NoLongerNeeded ) {
-                            GameObject.Destroy( entitys[ updateIterator ].gameObject );
-                            entitys[ updateIterator ] = null;
-                            if( startFindIndex > updateIterator )
-                                startFindIndex = updateIterator;
-                            Lenght -= 1;
-                        } else {
-                            entitys[ updateIterator ].update();
-                        }
-                    }
-                }
-                updateStartIndex = updateStopIndex;
-                updateStopIndex += LOOP_SIZE;
-                if( updateStartIndex == MAX_SIZE )
-                    resetUpdateIndex();
+            private void OnDestroy() {
+                MouseHover = false;
+                if( !AllEntitys.ContainsKey( targetUpdate ) )
+                    return;
+                AllEntitys.Remove( targetUpdate );
+                targetUpdate = null;
             }
-
-            public void FixedUpdate() {
-                for( fixedUpdateIterator = fixedUpdateStartIndex; fixedUpdateIterator < fixedUpdateStopIndex; fixedUpdateIterator++ ) {
-                    if( entitys[ fixedUpdateIterator ] != null )
-                        entitys[ fixedUpdateIterator ].physics();
-                }
-                fixedUpdateStartIndex = fixedUpdateStopIndex;
-                fixedUpdateStopIndex += LOOP_SIZE;
-                if( fixedUpdateStartIndex == MAX_SIZE )
-                    resetFixedUpdateIndex();
-            }
+            private void OnMouseEnter() { MouseHover = false; }
+            private void OnMouseOver() { MouseHover = true; }
+            private void OnMouseExit() { MouseHover = false; }
 
         }
 

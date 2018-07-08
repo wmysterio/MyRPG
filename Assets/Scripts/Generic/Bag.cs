@@ -30,12 +30,19 @@ namespace MyRPG {
             }
         }
 
-        public Bag() {
+        public bool IsOnPlayer { get; private set; }
+
+        public Bag( bool isOnPlayer = false ) {
             items = new Dictionary<System.Type, Item>();
             iterator = 0;
+            IsOnPlayer = isOnPlayer;
         }
 
         public bool Add<T>( T item ) where T : Item {
+            if( IsOnPlayer && item is Money ) {
+                item.Use();
+                return true;
+            }
             if( items.ContainsKey( typeof( T ) ) ) {
                 items[ typeof( T ) ].Count += item.Count;
                 return true;
@@ -46,17 +53,17 @@ namespace MyRPG {
             return true;
         }
         public bool Add( Bag bag ) {
-            for( iterator = 0; iterator < bag.items.Count; iterator++ ) {
+            for( iterator = bag.items.Count - 1; iterator >= 0 ; iterator-- ) {
                 if( !Add( bag.items.ElementAt( iterator ).Value ) )
                     return false;
+                bag.Remove( iterator );
             }
             return true;
         }
         public void Clear() { items.Clear(); }
-        public void Remove<T>( T item = null ) where T : Item {
-            if( items.ContainsKey( typeof( T ) ) ) {
-                items.Remove( typeof( T ) );
-            }
+        public void Remove( int index ) {
+            if( this[ index ] != null )
+                items.Remove( this[ index ].GetType() );
         }
         public T Get<T>() where T : Item {
             if( !items.ContainsKey( typeof( T ) ) )
@@ -65,6 +72,10 @@ namespace MyRPG {
         }
         public void UpdateItems() {
             for( iterator = items.Count - 1; iterator >= 0; iterator-- ) {
+                if( items.ElementAt( iterator ).Value.Count == 0 ) {
+                    Remove( iterator );
+                    return;
+                }
                 items.ElementAt( iterator ).Value.Update();
             }
         }

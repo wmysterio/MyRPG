@@ -19,17 +19,17 @@ namespace MyRPG {
         public static Player Current { get; private set; }
         public static bool Exist() { return Current != null; }
 
+        public int Money { get; private set; }
         public int CurrentExperience { get; private set; }
         public int TotalExperience { get; private set; }
-        public int ExperienceToLevel {
-            get { return TotalExperience - CurrentExperience; }
-        }
+        public int ExperienceToLevel { get { return TotalExperience - CurrentExperience; } }
         public RingForKeys Keys { get; private set; }
 
         public Player( string name, int level, int modelId, Vector3 position ) : base( level, RankOfPersonage.Normal, modelId, position ) {
             nameId = -1;
             Name = name;
             Current = this;
+            Money = 0;
             CurrentExperience = 0;
             TotalExperience = calculateMaxExperience();
             Keys = new RingForKeys();
@@ -37,16 +37,6 @@ namespace MyRPG {
 
         protected override void update() {
             base.update();
-            //
-            if( Input.GetKeyDown( KeyCode.Q ) ) {
-                Calendar.Hour = 17;
-                Calendar.Minute = 55;
-            }
-            if( Input.GetKeyDown( KeyCode.E ) ) {
-                Calendar.Hour = 5;
-                Calendar.Minute = 55;
-            }
-            //
         }
 
         protected override void onCast( CastResult result, TypeOfResources resource = TypeOfResources.Nothing ) {
@@ -54,7 +44,17 @@ namespace MyRPG {
 
         }
 
-
+        public void AddMoney( int amount ) {
+            try {
+                var pMoney = Money;
+                checked { pMoney += amount; }
+                if( pMoney > 0 )
+                    Money = pMoney;
+            } catch {
+                if( amount > 0 )
+                    Money = int.MaxValue;
+            }
+        }
         public void AddExperience( int amount ) {
             if( MAX_LEVEL == Level )
                 return;

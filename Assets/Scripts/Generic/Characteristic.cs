@@ -41,8 +41,10 @@ namespace MyRPG {
 
         private static int length = ( typeof( Characteristic ) ).GetProperties().Length;
 
+        private int iterator = 0;
+        private StringBuilder stringBuilder = new StringBuilder();
         private PropertyInfo[] properties = ( typeof( Characteristic ) ).GetProperties();
-
+        
         /* характеристики атаки */
         public float PhysicalAttackPower { get; set; }
         public float MagicPowerOfNature { get; set; }
@@ -88,6 +90,19 @@ namespace MyRPG {
                 properties[ i ].SetValue( this, 0f, null );
             }
             return this;
+        }
+
+        public string GetNames() {
+            stringBuilder.Clear();
+            for( iterator = 0; iterator < Localization.Current.CharacteristicNames.Length; iterator++ )
+                stringBuilder.AppendLine( Localization.Current.CharacteristicNames[ iterator ] );
+            return stringBuilder.ToString();
+        }
+        public string GetValues() {
+            stringBuilder.Clear();
+            for( iterator = 0; iterator < properties.Length; iterator++ )
+                stringBuilder.AppendLine( Math.Round( ( ( float ) properties[ iterator ].GetValue( this, null ) ), 2 ).ToString() );
+            return stringBuilder.ToString();
         }
 
         public static Characteristic operator +( Characteristic c1, Characteristic c2 ) {

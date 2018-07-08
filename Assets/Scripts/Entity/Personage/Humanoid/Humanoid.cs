@@ -24,6 +24,22 @@ namespace MyRPG {
             Rase = ( RaseOfHumanoid ) ( modelId - ( byte ) Gender );
         }
 
+        protected override void generateLoot() {
+            base.generateLoot();
+            var range = 100f;
+            //if( Rank == RankOfPersonage.Normal )
+            //    range = UnityEngine.Random.Range( 0f, 100f );
+            if( range > 80f ) {
+                var money = UnityEngine.Random.Range( 1, 8 );
+                if( Rank != RankOfPersonage.Normal ) {
+                    money = ( ( int ) Rank ) * 10 + money * 10;
+                    if( Rank == RankOfPersonage.Boss )
+                        money += 2500;
+                }
+                Loot.Add( new Money( money ) );
+            }
+        }
+
     }
 
     public enum GenderOfHumanoid : byte {

@@ -62,6 +62,8 @@ namespace MyRPG {
         public string[] EntityNames { get; set; }
         public string[] DayNames { get; set; }
         public string[] KeyNames { get; set; }
+        public string[] CharacteristicNames { get; set; }
+        public string[] StatNames { get; set; }
 
     }
 

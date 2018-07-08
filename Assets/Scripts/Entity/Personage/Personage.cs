@@ -44,7 +44,6 @@ namespace MyRPG {
         public float CurrentCastTime { get; private set; }
         public float MaxCastTime { get; private set; }
         public Spell CurrentCastSpell { get; private set; }
-
         public float GlobalCoolDown { get; set; }
         public bool Immortal { get; set; }
         public bool EnableJumping { get; set; }
@@ -61,7 +60,6 @@ namespace MyRPG {
                 relationship = value;
             }
         }
-
 
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
             nameId = 3;
@@ -81,13 +79,15 @@ namespace MyRPG {
             rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             Effects = new EffectList();
             SpellBook = new SkillBook();
-            Loot = new Bag();
+            Loot = new Bag( this is Player );
             Equipments = new EquipmentList();
             Target = null;
             ClearTask();
             velocity = Vector3.zero;
             tempVector = Vector3.zero;
             StopCast();
+            if( !( this is Player ) )
+                generateLoot();
 
             // !!! Ініціалізацію об'єктів здійснювати до методу LevelUp
             LevelUp( level );
@@ -104,6 +104,7 @@ namespace MyRPG {
             SpellBook.Update();
         }
 
+        protected virtual void generateLoot() { }
         protected virtual void onCast( CastResult result, TypeOfResources resource = TypeOfResources.Nothing ) { }
 
         protected override void update() {
@@ -127,13 +128,13 @@ namespace MyRPG {
                     coolDownTimer = 0f;
                 }
             }
-            if( 0 > CurrentCharacteristic.MoveSpeed )
+            if( 0f > CurrentCharacteristic.MoveSpeed )
                 CurrentCharacteristic.MoveSpeed = 0f;
             if( !IsDead ) {
                 if( CanMove )
                     taskManager();
                 IsStopped = moveFlag;
-                if( 0 >= CurrentHealth && !Immortal ) {
+                if( 0f >= CurrentHealth && !Immortal ) {
                     Die();
                     return;
                 }

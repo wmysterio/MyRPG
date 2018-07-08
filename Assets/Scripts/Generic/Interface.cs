@@ -16,7 +16,7 @@ namespace MyRPG {
     public partial class Player {
 
         public static class Interface {
-
+            
             private const int DEFAULT_PADDING = 10;
 
             public const int MAX_ICON_COUNT = 10;
@@ -120,7 +120,7 @@ namespace MyRPG {
             private static GameObject playerUIObject;
 
             public static Sprite GetSprite( Sprites sprite ) { return spriteAtlas.GetSprite( sprite.ToString() ); }
-
+            
             #endregion
 
             public static IEnumerator Init() {
@@ -133,13 +133,10 @@ namespace MyRPG {
 
                 request = Resources.LoadAsync<GameObject>( "PlayerUI" );
                 yield return request;
-                //playerUIObject = request.asset as GameObject;
                 var uiPrefab = request.asset as GameObject;
                 playerUIObject = GameObject.Instantiate( uiPrefab, Vector3.zero, Quaternion.identity );
                 playerUIObject.name = uiPrefab.name;
                 GameObject.DontDestroyOnLoad( playerUIObject );
-                //
-
 
                 fadeColor = Color.black;
                 WindowName = string.Empty;

@@ -14,8 +14,6 @@ namespace MyRPG {
 
     public abstract partial class Entity : IDescription {
 
-        private static EntityUpdator updator = new EntityUpdator();
-
         private RaycastHit hit;
         private GameObject model;
 
@@ -23,7 +21,7 @@ namespace MyRPG {
         protected GameObject gameObject;
         protected Collider collider;
         protected Rigidbody rigidbody;
-        protected EventSystem eventSystemScript;
+        protected EntityUpdator eventSystemScript;
 
         public Texture2D Icon { get { return Player.Interface.Icons[ iconID ]; } }
         public virtual string Description { get { return string.Empty; } }
@@ -50,7 +48,7 @@ namespace MyRPG {
             NoLongerNeeded = false;
             nameId = 0;
             gameObject = new GameObject( Localization.Current.EntityNames[ nameId ] );
-            gameObject.transform.parent = EntityList.Container.transform;
+            gameObject.transform.parent = EntityUpdator.Container.transform;
             ModelID = modelID;
             model = GameObject.Instantiate<GameObject>( Model.Find( modelID ).Prefab );
             model.name = "Model";
@@ -61,8 +59,8 @@ namespace MyRPG {
             Position = position;
             collider = gameObject.GetComponentInChildren<Collider>();
             rigidbody = gameObject.AddComponent<Rigidbody>();
-            eventSystemScript = gameObject.AddComponent<EventSystem>();
-            updator.Add( this );
+            eventSystemScript = gameObject.AddComponent<EntityUpdator>();
+            eventSystemScript.AddReference( this );
         }
 
         public bool IsColliderExist() { return collider != null; }
