@@ -1,7 +1,7 @@
 ﻿/*
-	Ліцензія: CC-BY
-	Автор: Василь ( wmysterio )
-	Сайт: http://www.unity3d.tk/
+   Ліцензія: CC-BY
+   Автор: Василь ( wmysterio )
+   Сайт: http://www.unity3d.tk/
 */
 using System;
 using System.Collections;

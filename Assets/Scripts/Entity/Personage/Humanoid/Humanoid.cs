@@ -27,17 +27,18 @@ namespace MyRPG {
         protected override void generateLoot() {
             base.generateLoot();
             var range = 100f;
-            //if( Rank == RankOfPersonage.Normal )
-            //    range = UnityEngine.Random.Range( 0f, 100f );
-            if( range > 80f ) {
-                var money = UnityEngine.Random.Range( 1, 8 );
-                if( Rank != RankOfPersonage.Normal ) {
-                    money = ( ( int ) Rank ) * 10 + money * 10;
-                    if( Rank == RankOfPersonage.Boss )
-                        money += 2500;
-                }
-                Loot.Add( new Money( money ) );
+            if( Rank == RankOfPersonage.Normal )
+                range = UnityEngine.Random.Range( 0f, 100f );
+            if( 80f > range )
+                return;
+            var money = UnityEngine.Random.Range( 1, 8 );
+            if( Rank != RankOfPersonage.Normal ) {
+                money = ( ( int ) Rank ) * 10 + money * 10;
+                if( Rank == RankOfPersonage.Boss )
+                    money += 2500;
             }
+            Loot.Add( new Money( money ) );
+
         }
 
     }
@@ -53,4 +54,5 @@ namespace MyRPG {
         Elf = 4,      // Ельф
         Goblіn = 6,   // Гоблін
     }
+
 }

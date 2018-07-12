@@ -729,8 +729,7 @@ namespace MyRPG {
         _6,
         _7,
         _8,
-        _9,
-        PlayerUI
+        _9
     }
 
 }

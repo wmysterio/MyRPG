@@ -35,7 +35,7 @@ namespace MyRPG {
 
         private void OnGUI() {
             if( Player.Interface.IsInit ) {
-                Player.Interface.Draw();
+                //Player.Interface.Draw();
             }
         }
 

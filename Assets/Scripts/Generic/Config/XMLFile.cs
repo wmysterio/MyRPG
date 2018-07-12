@@ -1,7 +1,7 @@
 ﻿/*
-	Ліцензія: CC-BY
-	Автор: Василь ( wmysterio )
-	Сайт: http://www.unity3d.tk/
+   Ліцензія: CC-BY
+   Автор: Василь ( wmysterio )
+   Сайт: http://www.unity3d.tk/
 */
 using System;
 using System.Collections;
@@ -17,7 +17,7 @@ namespace MyRPG {
     public sealed class XMLFile<T> where T : class {
 
         public static XMLFile<T> Create( string path ) { return new XMLFile<T>( path ); }
-        
+
         private string path;
         private XmlSerializer serializer;
 

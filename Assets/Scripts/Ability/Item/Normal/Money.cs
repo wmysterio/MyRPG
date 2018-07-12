@@ -17,7 +17,7 @@ namespace MyRPG {
         public Money( int amount = 1 ) : base( 1, TypeOfItemRarity.Normal ) {
             nameId = 39;
             if( 1 > amount )
-                amount = 0;
+                amount = 1;
             Count = amount;
             price = 0;
         }

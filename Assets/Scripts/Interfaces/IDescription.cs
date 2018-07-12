@@ -12,8 +12,8 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-	public interface IDescription {
-        
+    public interface IDescription {
+
         Texture2D Icon { get; }
         string Name { get; }
         string Description { get; }

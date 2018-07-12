@@ -22,7 +22,7 @@ namespace MyRPG {
         private Vector3 velocity, tempVector;
         private Path currentPath;
         private Path.Node currentNode;
-        private bool moveFlag;
+        private bool moveFlag, isPlayer;
 
         private Personage castTarget;
         private float coolDownTimer;
@@ -64,6 +64,7 @@ namespace MyRPG {
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
             nameId = 3;
             Name = Localization.Current.EntityNames[ nameId ];
+            isPlayer = this is Player;
             IsDead = false;
             IsStopped = false;
             Immortal = false;
@@ -79,14 +80,14 @@ namespace MyRPG {
             rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             Effects = new EffectList();
             SpellBook = new SkillBook();
-            Loot = new Bag( this is Player );
+            Loot = new Bag( isPlayer );
             Equipments = new EquipmentList();
             Target = null;
             ClearTask();
             velocity = Vector3.zero;
             tempVector = Vector3.zero;
             StopCast();
-            if( !( this is Player ) )
+            if( !isPlayer )
                 generateLoot();
 
             // !!! Ініціалізацію об'єктів здійснювати до методу LevelUp

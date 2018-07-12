@@ -121,6 +121,7 @@
     <Compile Include="Assets\Scripts\Generic\RingForKeys.cs" />
     <Compile Include="Assets\Scripts\Generic\Room.cs" />
     <Compile Include="Assets\Scripts\Generic\SkillBook.cs" />
+    <Compile Include="Assets\Scripts\Generic\Sync\ConsoleSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\GameSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\PersonageWindowSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\Sky.cs" />
