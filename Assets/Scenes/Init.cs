@@ -35,6 +35,7 @@ namespace MyRPG {
         }
 
         private IEnumerator Start() {
+            yield return Audio.Init();
             yield return Player.Interface.Init();
             if( !Player.Interface.IsInit ) {
                 state = InitState.Stop;
@@ -148,17 +149,8 @@ namespace MyRPG {
                 break;
 
                 case InitState.InitAudio:
-                goto spawn_player; // ВИДАЛИТИ МІТКУ В РЕЛІЗІ
-
-                if( !Audio.IsInit ) {
-                    if( tempCoroutine == null )
-                        tempCoroutine = Coroutines.Start( Audio.Init( Camera.GetAudioSource() ) );
-                    return;
-                }
-                tempCoroutine = null;
-
-                // ----------------------------------------
-                spawn_player: // ВИДАЛИТИ МІТКУ В РЕЛІЗІ
+                Audio.SyncCamara();
+                
                 var plane = GameObject.CreatePrimitive( PrimitiveType.Cube );
                 plane.transform.position = Vector3.zero;
                 plane.transform.rotation = Quaternion.identity;

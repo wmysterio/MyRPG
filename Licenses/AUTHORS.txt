@@ -1,12 +1,23 @@
 
 >>>>>>>>>> PROMAMMING:
 
-	Vasyl (wmysterio) Bezdityi			http://www.unity3d.tk/
+	Vasyl (wmysterio) Bezdityi
 	
 >>>>>>>>>> MUSIC:
 
-	Jason Shaw@							http://www.audionautix.com/
-				
+	Jason Shaw@
+	Dustyroom
+
+>>>>>>>>>> MODELS:
+
+
+
+
+
+
+
+	ВИДАЛИТИ:
+
 	Vincent Akkermans					https://freesound.org/
 	Bram De Jong						https://freesound.org/
 	Andres Ferraro						https://freesound.org/
@@ -16,7 +27,3 @@
 	Gerard Roma							https://freesound.org/
 	Philip Tovstogan					https://freesound.org/
 	Stelios Togias						https://freesound.org/
-
->>>>>>>>>> MODELS:
-
-

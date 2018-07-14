@@ -59,9 +59,9 @@ namespace MyRPG {
 
         private void clear() { commandInput.text = string.Empty; commandInput.ActivateInputField(); }
 
-        private void playOpenTune() { }
-        private void playErrorTune() { }
-        private void playSuccessTune() { }
+        private void playOpenTune() { Audio.PlayTune( Audio.TuneID.CONSOLE_OPEN ); }
+        private void playErrorTune() { Audio.PlayTune( Audio.TuneID.CONSOLE_ERROR ); }
+        private void playSuccessTune() { Audio.PlayTune( Audio.TuneID.CONSOLE_SECCESS ); }
 
         #region СПИСОК КОМАНД
         private void PUT_AT( string[] args ) {

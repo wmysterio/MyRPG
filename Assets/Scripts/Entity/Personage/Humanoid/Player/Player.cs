@@ -28,6 +28,8 @@ namespace MyRPG {
         public Player( string name, int level, int modelId, Vector3 position ) : base( level, RankOfPersonage.Normal, modelId, position ) {
             nameId = -1;
             Name = name;
+            if( Current != null )
+                throw new System.Exception( "Гравець може бути тільки один!" );
             Current = this;
             Money = 0;
             CurrentExperience = 0;
@@ -83,6 +85,7 @@ namespace MyRPG {
             base.Destroy();
             Camera.Detach();
             Interface.ToggleWindow( Window.None );
+            Current = null;
         }
 
         private int calculateMaxExperience() { return ( int ) ( 795 + 250 * Mathf.Pow( 1.08f, Level ) ); }

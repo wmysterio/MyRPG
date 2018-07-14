@@ -22,7 +22,9 @@ namespace MyRPG {
         private Vector3 velocity, tempVector;
         private Path currentPath;
         private Path.Node currentNode;
-        private bool moveFlag, isPlayer;
+        private bool moveFlag;
+
+        protected readonly bool isPlayer = false;
 
         private Personage castTarget;
         private float coolDownTimer;
