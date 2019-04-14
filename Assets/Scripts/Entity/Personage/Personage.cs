@@ -1,14 +1,10 @@
 ﻿/*
 	Ліцензія: CC-BY
 	Автор: Василь ( wmysterio )
-	Сайт: http://www.unity3d.tk/
+	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using MyRPG.Patterns.Strategy.PersonageTasks;
 
 namespace MyRPG {
 
@@ -19,16 +15,15 @@ namespace MyRPG {
 
         private Characteristic baseCharacteristic;
         private RelationshipOfPersonage relationship = RelationshipOfPersonage.Friendly;
-        private Vector3 velocity, tempVector;
-        private Path currentPath;
-        private Path.Node currentNode;
+        private Vector3 velocity;//, tempVector;
+        //private Path currentPath;
+        //private Path.Node currentNode;
         private bool moveFlag;
-
-        protected readonly bool isPlayer = false;
-
+        private IPersonageTask currentTask, defaultTask;
         private Personage castTarget;
         private float coolDownTimer;
 
+        public bool IsPlayer { get; private set; }
         public TypeOfPersonage Type { get; private set; }
         public RankOfPersonage Rank { get; private set; }
         public bool IsDead { get; private set; }
@@ -40,12 +35,13 @@ namespace MyRPG {
         public Bag Loot { get; private set; }
         public EquipmentList Equipments { get; private set; }
         public SkillBook SpellBook { get; private set; }
-        public Task CurrentTask { get; private set; }
+        //public Task CurrentTask { get; private set; }
         public int Level { get; private set; }
         public Characteristic CurrentCharacteristic { get; private set; }
         public float CurrentCastTime { get; private set; }
         public float MaxCastTime { get; private set; }
         public Spell CurrentCastSpell { get; private set; }
+
         public float GlobalCoolDown { get; set; }
         public bool Immortal { get; set; }
         public bool EnableJumping { get; set; }
@@ -53,11 +49,10 @@ namespace MyRPG {
         public bool Targetable { get; set; }
         public bool EnableWalking { get; set; }
         public Personage Target { get; set; }
-
         public RelationshipOfPersonage Relationship {
             get { return relationship; }
             set {
-                if( this is Player )
+                if( IsPlayer )
                     return;
                 relationship = value;
             }
@@ -66,7 +61,15 @@ namespace MyRPG {
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
             nameId = 3;
             Name = Localization.Current.EntityNames[ nameId ];
-            isPlayer = this is Player;
+            IsPlayer = this is Player;
+
+            if( IsPlayer ) {
+                defaultTask = new PlayerMovementTask();
+            } else {
+                defaultTask = new WalkToSpawnPointTask();
+            }
+
+
             IsDead = false;
             IsStopped = false;
             Immortal = false;
@@ -82,14 +85,14 @@ namespace MyRPG {
             rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             Effects = new EffectList();
             SpellBook = new SkillBook();
-            Loot = new Bag( isPlayer );
+            Loot = new Bag( IsPlayer );
             Equipments = new EquipmentList();
             Target = null;
             ClearTask();
             velocity = Vector3.zero;
-            tempVector = Vector3.zero;
+            //tempVector = Vector3.zero;
             StopCast();
-            if( !isPlayer )
+            if( !IsPlayer )
                 generateLoot();
 
             // !!! Ініціалізацію об'єктів здійснювати до методу LevelUp
@@ -114,6 +117,7 @@ namespace MyRPG {
             base.update();
             updateCharacteristic();
             moveFlag = true;
+
             if( eventSystemScript.MouseHover ) {
                 if( Player.Exist() && InputManager.IsMouseDown( MouseKeyName.Left ) ) {
                     if( !Player.Current.NoLongerNeeded && !Player.Current.IsDead )
@@ -134,8 +138,10 @@ namespace MyRPG {
             if( 0f > CurrentCharacteristic.MoveSpeed )
                 CurrentCharacteristic.MoveSpeed = 0f;
             if( !IsDead ) {
-                if( CanMove )
-                    taskManager();
+                if( CanMove ) {
+                    if( !currentTask.Execute( this ) )
+                        ClearTask();
+                }
                 IsStopped = moveFlag;
                 if( 0f >= CurrentHealth && !Immortal ) {
                     Die();
@@ -248,8 +254,6 @@ namespace MyRPG {
             velocity = Vector3.zero;
         }
 
-        protected virtual void move() { }
-
         public bool IsFriendlyOf( Personage personage ) { return relationship == personage.relationship; }
         public void MoveForward() {
             if( !EnableWalking )
@@ -329,24 +333,14 @@ namespace MyRPG {
             }
             Restore();
         }
-        public void ClearTask() {
-            CurrentTask = Task.STAY_IDLE;
-            currentNode = null;
-            currentPath = null;
-        }
-        public void WalkToPoint( Path.Node node ) {
-            CurrentTask = Task.WALK_TO_NODE;
-            currentNode = node;
-        }
-        public void AssignToPath( Path path ) {
-            currentPath = path;
-            if( !currentPath.NextNode( out currentNode ) ) {
-                currentNode = null;
-                currentPath = null;
-                return;
-            }
-            WalkToPoint( currentNode );
-        }
+        //
+        public void ClearTask() { currentTask = defaultTask; }
+        public void WalkToPoint( float x, float y, float z, float radius = 1f ) { currentTask = new WalkToPointTask( x, y, z, radius ); }
+        public void WalkToPoint( Vector3 position, float radius = 1f ) { currentTask = new WalkToPointTask( position, radius ); }
+        public void WalkToPoint( Path.Node node ) { currentTask = new WalkToPointTask( node ); }
+        public void AssignToPath( Path path ) { currentTask = new FollowPathTask( path ); }
+        //
+
         public bool IsTargetItYourself() {
             if( Target == null )
                 return true;

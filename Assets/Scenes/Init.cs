@@ -1,15 +1,10 @@
 ﻿/*
 	Ліцензія: CC-BY
 	Автор: Василь ( wmysterio )
-	Сайт: http://www.unity3d.tk/
+	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.IO;
 
 namespace MyRPG {
 
@@ -169,6 +164,19 @@ namespace MyRPG {
                 new Player( "My Player", Personage.MIN_LEVEL, 0, Vector3.up );
                 var chest = new Chest( TypeOfChest.Quest, new Vector3( 0f, 0.05f, -5f ) );
                 var jhon = new Jhon();
+
+                //jhon.WalkToPoint( Player.Current.Position );
+
+                Path p = Path.Create( true );
+                p.AddNode( 5f, 1f, 5f );
+                p.AddNode( 10f, 1f, 5f );
+                p.AddNode( 0f, 1f, 5f );
+                p.AddNode( jhon.Position );
+
+
+
+                jhon.AssignToPath( p );
+
 
 
                 Player.Current.Loot.Add( jhon.Loot );

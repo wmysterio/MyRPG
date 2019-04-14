@@ -1,14 +1,9 @@
 ﻿/*
 	Ліцензія: CC-BY
 	Автор: Василь ( wmysterio )
-	Сайт: http://www.unity3d.tk/
+	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -89,44 +84,6 @@ namespace MyRPG {
         }
 
         private int calculateMaxExperience() { return ( int ) ( 795 + 250 * Mathf.Pow( 1.08f, Level ) ); }
-
-        protected override void move() {
-            base.move();
-
-            if( InputManager.IsKeyDown( KeyName.VIEW_BAG ) )
-                Interface.ToggleWindow( Window.Bag );
-            if( InputManager.IsKeyDown( KeyName.VIEW_EFFECTS ) )
-                Interface.ToggleWindow( Window.Effects );
-            if( InputManager.IsKeyDown( KeyName.VIEW_PERSONAGE ) )
-                Interface.ToggleWindow( Window.Personage );
-            if( InputManager.IsKeyDown( KeyName.VIEW_QUESTS ) )
-                Interface.ToggleWindow( Window.Quests );
-            if( InputManager.IsKeyDown( KeyName.VIEW_SPELLS ) )
-                Interface.ToggleWindow( Window.Spells );
-
-            if( !InputManager.GetMouse( MouseKeyName.Right ) ) {
-                if( InputManager.GetKey( KeyName.TURN_LEFT ) ) {
-                    Turn( -TURN_SPEED );
-                } else if( InputManager.GetKey( KeyName.TURN_RIGHT ) ) {
-                    Turn( TURN_SPEED );
-                }
-                if( InputManager.GetKey( KeyName.LEFT ) ) {
-                    MoveLeft();
-                } else if( InputManager.GetKey( KeyName.RIGHT ) ) {
-                    MoveRight();
-                }
-            }
-
-            if( InputManager.GetKey( KeyName.FORWARD ) ) {
-                MoveForward();
-            } else if( InputManager.GetKey( KeyName.BACK ) ) {
-                MoveBack();
-            }
-            if( InputManager.IsKeyDown( KeyName.JUMP ) ) {
-                Jump();
-            }
-
-        }
 
     }
 
