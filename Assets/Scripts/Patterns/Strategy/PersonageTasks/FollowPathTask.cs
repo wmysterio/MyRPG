@@ -16,8 +16,7 @@ using UnityEngine.SceneManagement;
 namespace MyRPG.Patterns.Strategy.PersonageTasks {
 
     public sealed class FollowPathTask : IPersonageTask {
-
-        private Vector3 tempVector;
+        
         private Path currentPath;
         private Path.Node currentNode;
 

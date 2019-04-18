@@ -1,7 +1,7 @@
 ﻿/*
 	Ліцензія: CC-BY
 	Автор: Василь ( wmysterio )
-	Сайт: http://www.unity3d.tk/
+	Сайт: http://metal-prog.zzz.com.ua/
 */
 using System;
 using System.Collections;
@@ -12,71 +12,42 @@ using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
-    public sealed class Room : MonoBehaviour {
+    public static class Room {
 
         private static int unloadIndex = -1, currentIndex = -1;
+        private static Coroutine coroutine;
 
         public static bool Loading { get; private set; }
 
-        public static void Load( All room ) {
-            var lvl = ( int ) room;
-            if( currentIndex == lvl )
+        public static void Switch( int sceneID ) {
+            if( currentIndex == sceneID )
                 return;
             unloadIndex = currentIndex;
-            currentIndex = lvl;
-            Player.Interface.Fade( FadeMode.Out );
-            Loading = true;
+            currentIndex = sceneID;
+            coroutine = Coroutines.Start( load_level( unloadIndex, currentIndex ) );
         }
-
-        private AsyncOperation asyncOperation = null;
-
-        private void Awake() { Loading = false; }
-
-        private void Start() { }
-
-        private void Update() {
-            if( !Loading )
-                return;
-            if( Player.Interface.Fadind )
-                return;
-            if( unloadIndex != -1 ) {
-                if( asyncOperation == null )
-                    StartCoroutine( unloadLevel( unloadIndex ) );
-                if( !asyncOperation.isDone )
-                    return;
-                asyncOperation = null;
-                unloadIndex = -1;
-            }
-            if( asyncOperation == null )
-                StartCoroutine( loadLevel( currentIndex ) );
-            if( !asyncOperation.isDone )
-                return;
-            asyncOperation = null;
-            Player.Interface.Fade( FadeMode.In );
+        public static void Switch( Special sceneID ) { Switch( ( int ) sceneID ); }
+        public static void Switch( Levels sceneID ) { Switch( ( int ) sceneID ); }
+        
+        private static IEnumerator load_level( int lastID, int currentID ) {
+            Loading = true;
+            if( lastID != -1 )
+                yield return SceneManager.UnloadSceneAsync( lastID );
+            if( currentID != -1 )
+                yield return SceneManager.LoadSceneAsync( currentID );
+            Coroutines.Stop( coroutine );
             Loading = false;
         }
 
-
-        private void OnGUI() {
-            // ... 
-        }
-
-        private IEnumerator loadLevel( int index ) {
-            asyncOperation = SceneManager.LoadSceneAsync( index );
-            yield return asyncOperation;
-        }
-
-        private IEnumerator unloadLevel( int index ) {
-            asyncOperation = SceneManager.UnloadSceneAsync( index );
-            yield return asyncOperation;
-        }
-
-
-        public enum All : int {
+        public enum Special : int {
             SelectProfile = 1,
             CreateProfile = 2,
-            MainMenu = 3,
-            Level_1 = 4
+            MainMenu = 3
+        }
+
+        public enum Levels : int {
+            TrainingLevel = 4,
+            Level_1 = 5
         }
 
     }

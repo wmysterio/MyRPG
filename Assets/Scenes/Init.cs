@@ -134,7 +134,6 @@ namespace MyRPG {
                 case InitState.InitEntityListAndRooms:
                 var go = new GameObject( "Entitys" );
                 go.AddComponent<GameSync>();
-                go.AddComponent<Room>();
                 state = InitState.InitCamera;
                 break;
 
@@ -145,51 +144,8 @@ namespace MyRPG {
 
                 case InitState.InitAudio:
                 Audio.SyncCamara();
-                
-                var plane = GameObject.CreatePrimitive( PrimitiveType.Cube );
-                plane.transform.position = Vector3.zero;
-                plane.transform.rotation = Quaternion.identity;
-                plane.transform.localScale = new Vector3( 25f, 0.001f, 25f );
-                GameObject.DontDestroyOnLoad( plane );
-
-
-                
-
-                Model.Request( Chest.GetModelByType( TypeOfChest.Quest ) );
-                Model.Request( 0 );
-                Model.LoadRequestedNow();
-
-
-
-                new Player( "My Player", Personage.MIN_LEVEL, 0, Vector3.up );
-                var chest = new Chest( TypeOfChest.Quest, new Vector3( 0f, 0.05f, -5f ) );
-                var jhon = new Jhon();
-
-                //jhon.WalkToPoint( Player.Current.Position );
-
-                Path p = Path.Create( true );
-                p.AddNode( 5f, 1f, 5f );
-                p.AddNode( 10f, 1f, 5f );
-                p.AddNode( 0f, 1f, 5f );
-                p.AddNode( jhon.Position );
-
-
-
-                jhon.AssignToPath( p );
-
-
-
-                Player.Current.Loot.Add( jhon.Loot );
-
-
-                Model.Unload();
-                Camera.AttachToPlayer();
-
-
-
-                // ----------------------------------------
                 state = InitState.Stop;
-                Room.Load( Room.All.SelectProfile );
+                Room.Switch( Room.Levels.TrainingLevel );
                 break;
             }
 
@@ -244,11 +200,4 @@ namespace MyRPG {
 
     }
     
-    class Jhon : Humanoid {
-
-        public Jhon() : base(1, RankOfPersonage.Normal, 0, Vector3.left * 4f ) {
-            Relationship = RelationshipOfPersonage.Friendly;
-        }
-
-    }
 }

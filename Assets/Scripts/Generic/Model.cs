@@ -38,7 +38,7 @@ namespace MyRPG {
             }
             loadModels.Clear();
         }
-        public static IEnumerator LoadRequestedNowAsync() {
+        public static IEnumerator LoadRequestedAsync() {
             if( loadModels.Count == 0 )
                 yield return null;
             for( int i = 0; i < loadModels.Count; i++ ) {

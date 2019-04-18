@@ -8,16 +8,14 @@ using MyRPG.Patterns.Strategy.PersonageTasks;
 
 namespace MyRPG {
 
-    public abstract partial class Personage : Entity {
+    public abstract class Personage : Entity {
 
         public const int MIN_LEVEL = 1;
         public const int MAX_LEVEL = 100;
 
         private Characteristic baseCharacteristic;
         private RelationshipOfPersonage relationship = RelationshipOfPersonage.Friendly;
-        private Vector3 velocity;//, tempVector;
-        //private Path currentPath;
-        //private Path.Node currentNode;
+        private Vector3 velocity;
         private bool moveFlag;
         private IPersonageTask currentTask, defaultTask;
         private Personage castTarget;
@@ -35,7 +33,6 @@ namespace MyRPG {
         public Bag Loot { get; private set; }
         public EquipmentList Equipments { get; private set; }
         public SkillBook SpellBook { get; private set; }
-        //public Task CurrentTask { get; private set; }
         public int Level { get; private set; }
         public Characteristic CurrentCharacteristic { get; private set; }
         public float CurrentCastTime { get; private set; }
@@ -90,7 +87,6 @@ namespace MyRPG {
             Target = null;
             ClearTask();
             velocity = Vector3.zero;
-            //tempVector = Vector3.zero;
             StopCast();
             if( !IsPlayer )
                 generateLoot();
@@ -333,14 +329,11 @@ namespace MyRPG {
             }
             Restore();
         }
-        //
         public void ClearTask() { currentTask = defaultTask; }
         public void WalkToPoint( float x, float y, float z, float radius = 1f ) { currentTask = new WalkToPointTask( x, y, z, radius ); }
         public void WalkToPoint( Vector3 position, float radius = 1f ) { currentTask = new WalkToPointTask( position, radius ); }
         public void WalkToPoint( Path.Node node ) { currentTask = new WalkToPointTask( node ); }
         public void AssignToPath( Path path ) { currentTask = new FollowPathTask( path ); }
-        //
-
         public bool IsTargetItYourself() {
             if( Target == null )
                 return true;
@@ -571,10 +564,7 @@ namespace MyRPG {
             MaxCastTime = 0f;
             CurrentCastTime = 0f;
         }
-
-        partial void taskManager();
-
-
+        
     }
 
     public enum RankOfPersonage : int {
