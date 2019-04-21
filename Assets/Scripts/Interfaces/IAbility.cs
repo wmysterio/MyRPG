@@ -1,7 +1,7 @@
 ﻿/*
    Ліцензія: CC-BY
    Автор: Василь ( wmysterio )
-   Сайт: http://www.unity3d.tk/
+   Сайт: http://metal-prog.zzz.com.ua/
 */
 using System;
 using System.Collections;
