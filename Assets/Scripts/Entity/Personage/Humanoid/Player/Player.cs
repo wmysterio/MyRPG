@@ -10,6 +10,7 @@ namespace MyRPG {
     public partial class Player : Humanoid {
 
         public const float TURN_SPEED = 100f;
+        public const string TAG = "Player";
 
         public static Player Current { get; private set; }
         public static bool Exist() { return Current != null; }
@@ -25,6 +26,7 @@ namespace MyRPG {
             Name = name;
             if( Current != null )
                 throw new System.Exception( "Гравець може бути тільки один!" );
+            gameObject.tag = TAG;
             Current = this;
             Money = 0;
             CurrentExperience = 0;
