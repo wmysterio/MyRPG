@@ -61,7 +61,7 @@ namespace MyRPG {
 
         private void playOpenTune() { Audio.PlayTune( Audio.TuneID.CONSOLE_OPEN ); }
         private void playErrorTune() { Audio.PlayTune( Audio.TuneID.CONSOLE_ERROR ); }
-        private void playSuccessTune() { Audio.PlayTune( Audio.TuneID.CONSOLE_SECCESS ); }
+        private void playSuccessTune() { Audio.PlayTune( Audio.TuneID.CONSOLE_SUCCESS ); }
 
         #region СПИСОК КОМАНД
         private void PUT_AT( string[] args ) {

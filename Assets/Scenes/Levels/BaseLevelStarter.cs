@@ -27,6 +27,21 @@ namespace MyRPG.Levels {
 
         IEnumerator Start() {
 
+            //Player.Profile.Select( "Василь" );
+            //Player.Profile.WriteInt( 1, 23 );
+            //if( !Player.Profile.Save() )
+            //    Debug.Log( "Файл не збережено!" );
+
+            //if( Player.Profile.Load() ) {
+            //    Debug.Log( Player.Profile.ReadInt( 1 ) );
+            //} else { Debug.Log( "Файл не завантажено!" ); }
+
+
+
+
+            
+
+
             while( Room.Loading ) { yield return null; }
 
             Model.Request( 0 );
@@ -41,7 +56,7 @@ namespace MyRPG.Levels {
             }
             overridePosition = false;
 
-            SpawnEnities();
+            SpawnEntities();
 
             Audio.PlayBackground( Background, BackgroundLoop );
             Player.Interface.Fade( FadeMode.Out );
@@ -52,7 +67,7 @@ namespace MyRPG.Levels {
         }
 
         protected abstract int[] GetUsedModels();
-        protected abstract void SpawnEnities();
+        protected abstract void SpawnEntities();
 
     }
 

@@ -19,7 +19,7 @@ namespace MyRPG.Levels {
             return new int[ 0 ];
         }
 
-        protected override void SpawnEnities() {
+        protected override void SpawnEntities() {
 
         }
 

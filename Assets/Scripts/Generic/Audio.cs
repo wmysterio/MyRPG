@@ -136,7 +136,7 @@ namespace MyRPG {
         public enum TuneID {
             OFF = 0,
             CONSOLE_OPEN = 1,
-            CONSOLE_SECCESS = 2,
+            CONSOLE_SUCCESS = 2,
             CONSOLE_ERROR = 3
         }
 
