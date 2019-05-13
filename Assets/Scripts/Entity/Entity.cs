@@ -3,12 +3,7 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -47,7 +42,7 @@ namespace MyRPG {
             iconID = 0;
             NoLongerNeeded = false;
             nameId = 0;
-            gameObject = new GameObject( Localization.Current.EntityNames[ nameId ] );
+            gameObject = new GameObject( Localization.Current.EntityDescriptions[ nameId ] );
             gameObject.transform.parent = EntityUpdator.Container.transform;
             ModelID = modelID;
             model = GameObject.Instantiate<GameObject>( Model.Find( modelID ).Prefab );

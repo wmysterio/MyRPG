@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace MyRPG {
 
-    public class Init : MonoBehaviour {
+    public sealed class Init : MonoBehaviour {
 
         private UnityEngine.UI.Text languageTextComponent = null;
         private UnityEngine.UI.Image[] lights = null;
@@ -129,8 +129,7 @@ namespace MyRPG {
                 }
                 state = InitState.InitEntityListAndRooms;
                 break;
-
-
+                
                 case InitState.InitEntityListAndRooms:
                 var go = new GameObject( "Entitys" );
                 go.AddComponent<GameSync>();

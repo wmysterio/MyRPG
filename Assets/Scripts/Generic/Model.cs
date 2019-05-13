@@ -3,12 +3,9 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -25,9 +22,8 @@ namespace MyRPG {
                 loadModels.Add( id );
         }
         public static void Request( params int[] idS ) {
-            for( int i = 0; i < idS.Length; i++ ) {
+            for( int i = 0; i < idS.Length; i++ )
                 Request( idS[ i ] );
-            }
         }
         public static void LoadRequestedNow() {
             if( loadModels.Count == 0 )

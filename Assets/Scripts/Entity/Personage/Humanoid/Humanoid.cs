@@ -3,12 +3,7 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -19,7 +14,7 @@ namespace MyRPG {
 
         public Humanoid( int level, RankOfPersonage rank, int modelId, Vector3 position ) : base( level, rank, TypeOfPersonage.Humanoid, modelId, position ) {
             nameId = 4;
-            Name = Localization.Current.EntityNames[ nameId ];
+            Name = Localization.Current.EntityDescriptions[ nameId ];
             Gender = modelId % 2 == 0 ? GenderOfHumanoid.Male : GenderOfHumanoid.Female;
             Rase = ( RaseOfHumanoid ) ( modelId - ( byte ) Gender );
         }

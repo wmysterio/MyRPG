@@ -6,10 +6,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.U2D;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -17,6 +15,17 @@ namespace MyRPG {
 
         public static class Interface {
             
+            #region New Version
+            private static SpriteAtlas spriteAtlas;
+            private static GameObject playerUIObject;
+
+            public static Sprite GetSprite( Sprites sprite ) { return spriteAtlas.GetSprite( sprite.ToString() ); }
+
+            #endregion
+
+
+
+
             private const int DEFAULT_PADDING = 10;
 
             public const int MAX_ICON_COUNT = 10;
@@ -114,16 +123,8 @@ namespace MyRPG {
 
 
 
-
-            #region New Version
-            private static SpriteAtlas spriteAtlas;
-            private static GameObject playerUIObject;
-
-            public static Sprite GetSprite( Sprites sprite ) { return spriteAtlas.GetSprite( sprite.ToString() ); }
-            
-            #endregion
-
             public static IEnumerator Init() {
+                #region New Version
                 if( IsInit )
                     yield return null;
 
@@ -137,6 +138,17 @@ namespace MyRPG {
                 playerUIObject = GameObject.Instantiate( uiPrefab, Vector3.zero, Quaternion.identity );
                 playerUIObject.name = uiPrefab.name;
                 GameObject.DontDestroyOnLoad( playerUIObject );
+
+
+
+                #endregion
+
+
+
+
+
+
+
 
                 fadeColor = Color.black;
                 WindowName = string.Empty;
@@ -260,6 +272,15 @@ namespace MyRPG {
 
                 IsInit = true;
             }
+
+
+
+
+
+
+
+
+
             public static void InitStyles() {
                 if( isInitStyles )
                     return;

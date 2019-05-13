@@ -3,12 +3,7 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -22,7 +17,7 @@ namespace MyRPG {
         public Texture2D Icon { get { return Player.Interface.Icons[ iconID ]; } }
 
         public string Name {
-            get { return Localization.Current.EntityNames[ nameId ]; }
+            get { return Localization.Current.EntityDescriptions[ nameId ]; }
         }
         public virtual string Description { get { return string.Empty; } }
 

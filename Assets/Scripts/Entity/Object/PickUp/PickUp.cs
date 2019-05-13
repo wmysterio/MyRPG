@@ -3,12 +3,7 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -25,7 +20,7 @@ namespace MyRPG {
 
         public PickUp( TypeOfPickUp type, int modelId, Vector3 position ) : base( modelId, position ) {
             nameId = 2;
-            Name = Localization.Current.EntityNames[ nameId ];
+            Name = Localization.Current.EntityDescriptions[ nameId ];
             EnableRotation = true;
             IsVisible = true;
             Type = type;

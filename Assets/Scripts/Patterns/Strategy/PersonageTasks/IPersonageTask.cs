@@ -10,13 +10,13 @@ namespace MyRPG.Patterns.Strategy.PersonageTasks {
         bool Execute( Personage personage );
 
     }
-    /*
-    
-    public enum Task {
-        STAY_IDLE,
-        WALK_AROUND,
-        WALK_TO_NODE
-    }
 
-    */
 }
+
+/*
+public enum Task {
+    STAY_IDLE,
+    WALK_AROUND,
+    WALK_TO_NODE
+}
+*/

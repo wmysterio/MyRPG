@@ -3,8 +3,6 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using UnityEngine;
-
 namespace MyRPG.Patterns.Strategy.PersonageTasks {
 
     public sealed class PlayerMovementTask : IPersonageTask {

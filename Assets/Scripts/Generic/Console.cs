@@ -3,17 +3,16 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
     public partial class Player {
 
+        //[System.Obsolete( "Застаріло! ВИДАЛИТИ!", true )]
         public static class Console {
 
             private const int MAX_COMMAND_LENGTH = 30;

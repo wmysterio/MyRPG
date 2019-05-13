@@ -5,15 +5,21 @@
 	Web: http://metal-prog.zzz.com.ua/
 -->
 <Localization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <EntityNames>
+  <EntityDescriptions>
     <string index="0">Entity</string>
     <string index="1">Object</string>
     <string index="2">PickUp</string>
     <string index="3">Personage</string>
     <string index="4">Humanoid</string>
+    
+    
+    
     <string index="5">Effect</string>
     <string index="6">Active effect</string>
     <string index="7">Passive effect</string>
+    
+    
+    
     <string index="8">Item</string>
     <string index="9">Trash</string>
     <string index="10">Reagent</string>
@@ -40,13 +46,22 @@
     <string index="31">Staff</string>
     <string index="32">Sword</string>
     <string index="33">Wand</string>
+    
+    
+    
     <string index="34">Spell</string>
     <string index="35">Streaming spell</string>
     <string index="36">Reproduction spell</string>
     <string index="37">Instant spell</string>
+    
+    
+    
     <string index="38">Chest</string>
+    
+    
+    
     <string index="39">Money</string>
-  </EntityNames>
+  </EntityDescriptions>
   <WindowNames>
     <string index="0"></string>
     <string index="1">Bag</string>
@@ -104,4 +119,23 @@
     <string index="3">Experience:</string>
     <string index="4">Level:</string>
   </StatNames>
+  <ItemRarityNames>
+    <string index="0">Junk</string>
+    <string index="1">Normal</string>
+    <string index="2">Unusual</string>
+    <string index="3">Rare</string>
+    <string index="4">Epic</string>
+    <string index="5">Legendary</string>
+  </ItemRarityNames>
+  <ItemClassNames>
+    <string index="0">Other</string>
+    <string index="1">Quest</string>
+    <string index="2">Trash</string>
+    <string index="3">Normal</string>
+    <string index="4">Reagent</string>
+    <string index="5">Equipment</string>
+  </ItemClassNames>
+  <ItemNames>
+    <string index="0">Gold</string>
+  </ItemNames>
 </Localization>

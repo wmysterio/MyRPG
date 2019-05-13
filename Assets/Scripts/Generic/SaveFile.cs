@@ -4,17 +4,9 @@
 	Сайт: http://metal-prog.zzz.com.ua/
 */
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using System.IO;
 using System.Text.RegularExpressions;
-
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -23,8 +15,8 @@ namespace MyRPG {
         public static readonly SaveFile Profile = new SaveFile();
 
         public sealed class SaveFile {
-            
-            private const int SIZE = 65536;
+
+            private const int SIZE = 65536; // ( 1024 * 64 ) bytes
             private const string EXTENSION = "SAV";
             private const string DIRECTORY = "Saves";
             private const byte VERSION = 1;
@@ -64,7 +56,7 @@ namespace MyRPG {
                         return false;
                     Array.Copy( data, lastData, SIZE );
                     Reset();
-                } catch { }
+                } catch { return false; }
                 return true;
             }
             public bool Save() {
@@ -74,13 +66,13 @@ namespace MyRPG {
                 try {
                     File.WriteAllBytes( path, currentData );
                     Refresh();
-                } catch { }
+                } catch { return false; }
                 return true;
             }
 
             public void WriteByte( int offset, byte val ) { currentData[ offset ] = val; }
             public byte ReadByte( int offset ) { return currentData[ offset ]; }
-            public void WriteInt( int offset, int val ) { Array.Copy( BitConverter.GetBytes( val ), 0, currentData, offset, 4 );  }
+            public void WriteInt( int offset, int val ) { Array.Copy( BitConverter.GetBytes( val ), 0, currentData, offset, 4 ); }
             public int ReadInt( int offset ) { return BitConverter.ToInt32( currentData, offset ); }
             public void WriteFloat( int offset, float val ) { Array.Copy( BitConverter.GetBytes( val ), 0, currentData, offset, 4 ); }
             public float ReadFloat( int offset ) { return BitConverter.ToSingle( currentData, offset ); }
@@ -105,7 +97,16 @@ namespace MyRPG {
             }
 
         }
-
+        
     }
 
 }
+
+/* МАПА СЕЙВ-ФАЙЛУ
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
+ЗМІЩЕННЯ          ТИП               ОПИС
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
+0                 BYTE              Версія                                                                                        
+
+----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- 
+*/

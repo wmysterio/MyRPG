@@ -57,7 +57,7 @@ namespace MyRPG {
 
         public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
             nameId = 3;
-            Name = Localization.Current.EntityNames[ nameId ];
+            Name = Localization.Current.EntityDescriptions[ nameId ];
             IsPlayer = this is Player;
 
             if( IsPlayer ) {

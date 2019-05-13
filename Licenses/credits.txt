@@ -1,27 +1,32 @@
+MY RPG
 
-Vasyl (wmysterio) Bezdityi ( unity3d.tk )
 
-***
+
+PROGRAMMING
+
+Vasyl (wmysterio) Bezdityi
+http://metal-prog.zzz.com.ua
+
+
+SOUND
 
 music by Jason Shaw@ audionautix.com
 
-***
-
-"Volatile Reaction"
-Kevin MacLeod (incompetech.com)
-Licensed under Creative Commons: By Attribution 3.0
-http://creativecommons.org/licenses/by/3.0/
-
-***
-
-Music: «Instinct» from https://Bensound.com
-Music: «Relaxing» from https://Bensound.com
-Music: «Extreme Action» from https://Bensound.com
-Music: «Epic» from https://Bensound.com
+"success-low" by grunz of Freesound.org
+"cork-2" by FrankyBoomer of Freesound.org
+"error-sound" by KorGround of Freesound.org
+"menu-button" by Leszek_Szary of Freesound.org
 
 
-***
+IMAGES
 
-***
 
-***
+MODELS
+
+
+ANIMATIONS
+
+
+THANKS
+
+Cr0c, Peter Laliberte

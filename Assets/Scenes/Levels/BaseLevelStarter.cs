@@ -3,13 +3,8 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG.Levels {
 
@@ -26,21 +21,6 @@ namespace MyRPG.Levels {
         public bool BackgroundLoop = false;
 
         IEnumerator Start() {
-
-            //Player.Profile.Select( "Василь" );
-            //Player.Profile.WriteInt( 1, 23 );
-            //if( !Player.Profile.Save() )
-            //    Debug.Log( "Файл не збережено!" );
-
-            //if( Player.Profile.Load() ) {
-            //    Debug.Log( Player.Profile.ReadInt( 1 ) );
-            //} else { Debug.Log( "Файл не завантажено!" ); }
-
-
-
-
-            
-
 
             while( Room.Loading ) { yield return null; }
 

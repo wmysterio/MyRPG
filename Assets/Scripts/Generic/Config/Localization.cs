@@ -3,12 +3,9 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.IO;
 
 namespace MyRPG {
@@ -59,12 +56,15 @@ namespace MyRPG {
         public static int GetLanguageIndex( string language ) { return all.Keys.ToList().IndexOf( language ); }
 
         public string[] WindowNames { get; set; }
-        public string[] EntityNames { get; set; }
         public string[] DayNames { get; set; }
         public string[] KeyNames { get; set; }
         public string[] CharacteristicNames { get; set; }
         public string[] StatNames { get; set; }
-
+        public string[] EntityDescriptions { get; set; }
+        public string[] ItemNames { get; set; }
+        public string[] ItemRarityNames { get; set; }
+        public string[] ItemClassNames { get; set; }
+        
     }
 
 }

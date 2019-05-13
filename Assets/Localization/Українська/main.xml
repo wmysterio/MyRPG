@@ -5,7 +5,7 @@
 	Сайт: http://metal-prog.zzz.com.ua/
 -->
 <Localization xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <EntityNames>
+  <EntityDescriptions>
     <string index="0">Сутність</string>
     <string index="1">Об'єкт</string>
     <string index="2">Пікап</string>
@@ -14,11 +14,22 @@
     <string index="5">Ефект</string>
     <string index="6">Активний ефект</string>
     <string index="7">Пасивний ефект</string>
-    <string index="8">Предмет</string>
-    <string index="9">Сміття</string>
-    <string index="10">Реагент</string>
-    <string index="11">Квестовий предмет</string>
+
+
+
+
+    <string index="8">Сміття</string>
+    <string index="9">Реагент</string>
+    <string index="10">Квестовий предмет</string>
+    <string index="11">Інший предмет</string>
     <string index="12">Звичайний предмет</string>
+
+
+
+
+
+
+
     <string index="13">Обладунок</string>
     <string index="14">Аксесуар</string>
     <string index="15">Пояс</string>
@@ -39,14 +50,23 @@
     <string index="30">Молот</string>
     <string index="31">Посох</string>
     <string index="32">Меч</string>
-    <string index="33">Жезл</string>і
+    <string index="33">Жезл</string>
+
+
+
     <string index="34">Заклинання</string>
     <string index="35">Потокове заклинання</string>
     <string index="36">Відтворюване заклинання</string>
     <string index="37">Миттєве заклинання</string>
+
+
+
     <string index="38">Скриня</string>
+
+
+
     <string index="39">Гроші</string>
-  </EntityNames>
+  </EntityDescriptions>
   <WindowNames>
     <string index="0"></string>
     <string index="1">Сумка</string>
@@ -67,43 +87,82 @@
   <KeyNames>
     <string index="0">Універсальний ключ</string>
   </KeyNames>
+  <CharacteristicNames>
+    <string index="0">Сила фізичної атаки</string>
+    <string index="1">Сила магії природи</string>
+    <string index="2">Сила магії вогню</string>
+    <string index="3">Сила магії води</string>
+    <string index="4">Сила магії повітря</string>
+    <string index="5">Сила магії землі</string>
+    <string index="6">Сила темної магії</string>
+    <string index="7">Сила магії світла</string>
+    <string index="8">Захист від фізичної атаки</string>
+    <string index="9">Захист від магії природи</string>
+    <string index="10">Захист від магії вогню</string>
+    <string index="11">Захист від магії води</string>
+    <string index="12">Захист від магії повітря</string>
+    <string index="13">Захист від магії землі</string>
+    <string index="14">Захист від темної магії</string>
+    <string index="15">Захист від магії світла</string>
+    <string index="16">Максимальне здоров'я</string>
+    <string index="17">Максимальна мана</string>
+    <string index="18">Максимальна енергія</string>
+    <string index="19">Регенерація здоров'я</string>
+    <string index="20">Регенерація мани</string>
+    <string index="21">Регенерація енергії</string>
+    <string index="22">Швидкість руху</string>
+    <string index="23">Критичний шанс</string>
+    <string index="24">Критичний ефект</string>
+    <string index="25">Швидкість відтворення</string>
+    <string index="26">Шанс парирування</string>
+    <string index="27">Шанс блокування</string>
+  </CharacteristicNames>
+  <StatNames>
+    <string index="0">Ім'я:</string>
+    <string index="1">День:</string>
+    <string index="2">Гроші:</string>
+    <string index="3">Досвід:</string>
+    <string index="4">Рівень:</string>
+  </StatNames>
+  <ItemRarityNames>
+    <string index="0">Мотлох</string>
+    <string index="1">Звичайний</string>
+    <string index="2">Незвичайний</string>
+    <string index="3">Рідкісний</string>
+    <string index="4">Епічний</string>
+    <string index="5">Легендарний</string>
+  </ItemRarityNames>
+  <ItemClassNames>
+    <string index="0">Інше</string>
+    <string index="1">Квестовий</string>
+    <string index="2">Сміття</string>
+    <string index="3">Звичайний</string>
+    <string index="4">Реагент</string>
+    <string index="5">Обладунок</string>
+  </ItemClassNames>
+  <EquipmentPartNames>
+    <string index="0">Зап'ястя</string>
+    <string index="1">Шия</string>
+    <string index="2">Палець</string>
+    <string index="3">Пояс</string>
+    <string index="4">Спина</string>
+    <string index="5">Аксесуар</string>
+    <string index="6">Взуття</string>
+    <string index="7">Плечі</string>
+    <string index="8">Ноги</string>
+    <string index="9">Груди</string>
+    <string index="10">Голова</string>
+    <string index="11">Зброя</string>
+  </EquipmentPartNames>
+  <EquipmentMaterialNames>
+    <string index="0">Тканина</string>
+    <string index="1">Шкіра</string>
+    <string index="2">Кольчуга</string>
+    <string index="3">Лати</string>
+    <string index="4">Різне</string>
+  </EquipmentMaterialNames>
 
-	<CharacteristicNames>
-	<string index="0">Сила фізичної атаки</string>
-	<string index="1">Сила магії природи</string>
-	<string index="2">Сила магії вогню</string>
-	<string index="3">Сила магії води</string>
-	<string index="4">Сила магії повітря</string>
-	<string index="5">Сила магії землі</string>
-	<string index="6">Сила темної магії</string>
-	<string index="7">Сила магії світла</string>
-	<string index="8">Захист від фізичної атаки</string>
-	<string index="9">Захист від магії природи</string>
-	<string index="10">Захист від магії вогню</string>
-	<string index="11">Захист від магії води</string>
-	<string index="12">Захист від магії повітря</string>
-	<string index="13">Захист від магії землі</string>
-	<string index="14">Захист від темної магії</string>
-	<string index="15">Захист від магії світла</string>
-	<string index="16">Максимальне здоров'я</string>
-	<string index="17">Максимальна мана</string>
-	<string index="18">Максимальна енергія</string>
-	<string index="19">Регенерація здоров'я</string>
-	<string index="20">Регенерація мани</string>
-	<string index="21">Регенерація енергії</string>
-	<string index="22">Швидкість руху</string>
-	<string index="23">Критичний шанс</string>
-	<string index="24">Критичний ефект</string>
-	<string index="25">Швидкість відтворення</string>
-	<string index="26">Шанс парирування</string>
-	<string index="27">Шанс блокування</string>
-	</CharacteristicNames>
-	<StatNames>
-	<string index="0">Ім'я:</string>
-	<string index="1">День:</string>
-	<string index="2">Гроші:</string>
-	<string index="3">Досвід:</string>
-	<string index="4">Рівень:</string>
-	</StatNames>
-
+  <ItemNames>
+    <string index="0">Золото</string>
+  </ItemNames>
 </Localization>

@@ -3,12 +3,7 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -26,7 +21,7 @@ namespace MyRPG {
         public Chest( TypeOfChest type, Vector3 position, KeysForChest key = KeysForChest.Universal, byte maxItems = 8 ) : base( GetModelByType( type ), position ) {
             Freeze( true );
             nameId = 38;
-            Name = Localization.Current.EntityNames[ nameId ];
+            Name = Localization.Current.EntityDescriptions[ nameId ];
             Type = type;
             Key = key;
             totalItems = maxItems;

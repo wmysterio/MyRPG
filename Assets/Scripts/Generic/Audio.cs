@@ -6,9 +6,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
  
 namespace MyRPG {
  
@@ -89,11 +87,11 @@ namespace MyRPG {
                 yield return request;
                 clipsTune.Add( ( AudioClip ) request.asset );
             }
-            for( var i = 1; i < ids.Length; i++ ) {
-                request = Resources.LoadAsync<AudioClip>( string.Format( "Audio/Background/{0}", i ) );
-                yield return request;
-                clips.Add( ( AudioClip ) request.asset );
-            }
+            //for( var i = 1; i < ids.Length; i++ ) {
+            //    request = Resources.LoadAsync<AudioClip>( string.Format( "Audio/Background/{0}", i ) );
+            //    yield return request;
+            //    clips.Add( ( AudioClip ) request.asset );
+            //}
             backgroundTracks = clips.ToArray();
             tuneTracks = clipsTune.ToArray();
             IsInit = true;

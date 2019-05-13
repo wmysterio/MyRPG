@@ -3,12 +3,7 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -20,7 +15,7 @@ namespace MyRPG {
         protected float minDamage, minRange, maxRange;
 
         public TypeOfAbility AbilityType { get { return TypeOfAbility.Spell; } }
-        public string Name { get { return Localization.Current.EntityNames[ nameId ]; } }
+        public string Name { get { return Localization.Current.EntityDescriptions[ nameId ]; } }
         public virtual string Description { get { return string.Empty; } }
         public Texture2D Icon { get { return Player.Interface.Icons[ iconID ]; } }
         public float MinDamage { get { return minDamage; } }

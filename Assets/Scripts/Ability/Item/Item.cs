@@ -3,36 +3,96 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
 	public abstract class Item : IAbility {
 
-        protected int iconID, price, nameId;
+        #region V2.0
+
+        private static int getPriceByRarity( TypeOfItemRarity rarity ) {
+            switch( rarity ) {
+                case TypeOfItemRarity.Legendary:
+                return 25;
+                case TypeOfItemRarity.Epic:
+                return 18;
+                case TypeOfItemRarity.Rare:
+                return 12;
+                case TypeOfItemRarity.Unusual:
+                return 7;
+            }
+            return 1;
+        }
+        private static int getPriceByClass( ClassOfItem itemClass ) {
+            switch( itemClass ) {
+                case ClassOfItem.Equipment:
+                return 10;
+                case ClassOfItem.Reagent:
+                return 2;
+            }
+            return 1;
+        }
 
         public TypeOfAbility AbilityType { get { return TypeOfAbility.Item; } }
-        public string Name { get { return Localization.Current.EntityNames[ nameId ]; } }
-        public virtual string Description { get { return string.Empty; } }
-        public Texture2D Icon { get { return Player.Interface.Icons[ iconID ]; } }
         public int Price { get { return price; } }
         public int TotalPrice { get { return price * Count; } }
 
-        public float Timer { get; protected set; }
-        public bool ForSelling { get; protected set; }
+        public int Count { get; set; }
 
+        public int Id { get; private set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public Sprite SpriteIcon { get; private set; }
         public ClassOfItem Class { get; private set; }
         public TypeOfItemRarity Rarity { get; private set; }
         public int Level { get; private set; }
+        public string ClassName { get; private set; }
+        public string RarityName { get; private set; }
 
-        public int Count { get; set; }
+        public bool ForSelling { get; protected set; }
 
-        public Item( int level, ClassOfItem itemClass, TypeOfItemRarity rarity ) {
+        public float Timer { get; protected set; }
+
+        private int algorithmCreateId = -1, algorithmUsedId = -1;
+
+        private Item() { }
+        public Item( int id, int nameId, int level, Sprites spite, TypeOfItemRarity rarity, ClassOfItem itemClass, int count = 1, int algorithmCreateId = -1, int algorithmUsedId = -1 ) {
+            Id = id;
+            Name = Localization.Current.ItemNames[ nameId ];
+            Description = Localization.Current.EntityDescriptions[ 8 ];
+            SpriteIcon = Player.Interface.GetSprite( spite );
+            Count = Mathf.Clamp( count, 1, int.MaxValue );
+            Class = itemClass;
+            Rarity = rarity;
+            Level = Mathf.Clamp( level, Personage.MIN_LEVEL, Personage.MAX_LEVEL );
+            price = Level * getPriceByClass( itemClass ) * getPriceByRarity( rarity );
+            ForSelling = !( itemClass == ClassOfItem.Quest || itemClass == ClassOfItem.Other );
+            ClassName = Localization.Current.ItemClassNames[ ( int ) itemClass ];
+            RarityName = Localization.Current.ItemClassNames[ ( int ) rarity ];
+            Timer = 0f;
+            this.algorithmCreateId = algorithmCreateId;
+            this.algorithmUsedId = algorithmUsedId;
+        }
+
+
+        public virtual void Use( Personage target = null ) { }
+        public virtual void Update() { }
+
+        public override string ToString() { return Name; }
+        #endregion
+
+        protected int iconID, price, nameId;
+        public Texture2D Icon { get { return Player.Interface.Icons[ iconID ]; } }
+
+
+
+        
+
+
+
+
+        private Item( int level, ClassOfItem itemClass, TypeOfItemRarity rarity ) {
             nameId = 8;
             iconID = 0;
             Timer = 0f;
@@ -44,29 +104,25 @@ namespace MyRPG {
             ForSelling = itemClass != ClassOfItem.Quest;
         }
 
-        public virtual void Use( Personage target = null ) { }
-
-        public virtual void Update() { }
-
-        public override string ToString() { return Name; }
 
     }
 
     public enum ClassOfItem : int {
-        Quest = 0,      // Квестовий
-        Trash = 1,      // Сміття
+        Other = 0,      // Інше
+        Quest = 1,      // Квестовий
+        Trash = 2,      // Сміття
         Normal = 3,     // Звичайний
-        Reagent = 5,    // Реагент
-        Equipment = 10  // Обладунок
+        Reagent = 4,    // Реагент
+        Equipment = 5   // Обладунок
     }
 
     public enum TypeOfItemRarity : int {
-        Junk = 1,        // Мотлох
-        Normal = 3,      // Звичайний
-        Unusual = 7,     // Незвичайний
-        Rare = 12,       // Рідкісний
-        Epic = 18,       // Епічний
-        Legendary = 25   // Легендарний
+        Junk = 0,        // Мотлох
+        Normal = 1,      // Звичайний
+        Unusual = 2,     // Незвичайний
+        Rare = 3,        // Рідкісний
+        Epic = 4,        // Епічний
+        Legendary = 5    // Легендарний
     }
 
 }

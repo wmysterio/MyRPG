@@ -4,13 +4,8 @@
 	Сайт: http://metal-prog.zzz.com.ua/
 */
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MyRPG {
 
@@ -86,9 +81,8 @@ namespace MyRPG {
         private Characteristic() { Clear(); }
 
         public Characteristic Clear() {
-            for( int i = 0; i < length; i++ ) {
+            for( int i = 0; i < length; i++ )
                 properties[ i ].SetValue( this, 0f, null );
-            }
             return this;
         }
 
