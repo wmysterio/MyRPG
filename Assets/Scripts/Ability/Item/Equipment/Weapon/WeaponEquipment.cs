@@ -51,14 +51,14 @@ namespace MyRPG {
     }
 
     public enum TypeOfWeapon : int {
-        Staff,          // Посох
-        Wand,			// Жезл
-        Dagger,         // Кинджал
-        Sword,          // Меч
-        Bow,            // Лук
-        Hammer,         // Молот
-        Ax,             // Сокира
-        BrassKnuckles   // Кастет
+        Staff = 0,          // Посох
+        Wand = 1,			// Жезл
+        Dagger = 2,         // Кинджал
+        Sword = 3,          // Меч
+        Bow = 4,            // Лук
+        Hammer = 5,         // Молот
+        Ax = 6,             // Сокира
+        BrassKnuckles = 7   // Кастет
     }
 
 }

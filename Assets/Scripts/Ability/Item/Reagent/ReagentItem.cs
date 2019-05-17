@@ -6,12 +6,10 @@
 
 namespace MyRPG {
 
-    public abstract class ReagentItem : Item {
+    public sealed class ReagentItem : Item {
 
-        public ReagentItem( int level, TypeOfItemRarity rarity ) : base( level, ClassOfItem.Reagent, rarity ) {
-            nameId = 10;
-        }
-
+        public ReagentItem( int id, int nameId, Sprites sprite, int count = 1 ) : base( id, nameId, Personage.MIN_LEVEL, sprite, TypeOfItemRarity.Normal, 10, ClassOfItem.Reagent, count, -1 ) { }
+        
     }
 
 }

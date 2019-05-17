@@ -6,11 +6,9 @@
 
 namespace MyRPG {
 
-    public abstract class ShouldersEquipment : EquipmentItem {
+    public sealed class ShouldersEquipment : EquipmentItem {
 
-        public ShouldersEquipment( int level, TypeOfItemRarity rarity, MaterialOfEquipment material, int modelID ) : base( level, rarity, material, PartOfEquipment.Shoulders, modelID ) {
-            nameId = 22;
-        }
+        public ShouldersEquipment( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int modelId, MaterialOfEquipment material, int count = 1 ) : base( id, nameId, level, sprite, rarity, 22, modelId, material, PartOfEquipment.Shoulders, count, -1 ) { }
 
     }
 

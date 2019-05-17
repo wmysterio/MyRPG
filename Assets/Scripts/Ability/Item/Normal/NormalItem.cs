@@ -8,9 +8,7 @@ namespace MyRPG {
 
     public abstract class NormalItem : Item {
 
-        public NormalItem( int level, TypeOfItemRarity rarity ) : base( level, ClassOfItem.Normal, rarity ) {
-            nameId = 12;
-        }
+        protected NormalItem( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int descriptionId, int count = 1, int algorithmUseId = -1 ) : base( id, nameId, level, sprite, rarity, descriptionId, ClassOfItem.Normal, count, algorithmUseId ) { }
 
     }
 

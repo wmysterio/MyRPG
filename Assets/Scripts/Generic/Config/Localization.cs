@@ -64,7 +64,10 @@ namespace MyRPG {
         public string[] ItemNames { get; set; }
         public string[] ItemRarityNames { get; set; }
         public string[] ItemClassNames { get; set; }
-        
+        public string[] EquipmentPartNames { get; set; }
+        public string[] EquipmentMaterialNames { get; set; }
+        public string[] SpineEquipmentModeNames { get; set; }
+
     }
 
 }

@@ -14,23 +14,15 @@
     <string index="5">Ефект</string>
     <string index="6">Активний ефект</string>
     <string index="7">Пасивний ефект</string>
-
-
-
-
     <string index="8">Сміття</string>
-    <string index="9">Реагент</string>
-    <string index="10">Квестовий предмет</string>
+    <string index="9">Квестовий предмет</string>
+    <string index="10">Реагент</string>
     <string index="11">Інший предмет</string>
-    <string index="12">Звичайний предмет</string>
 
 
 
-
-
-
-
-    <string index="13">Обладунок</string>
+                       <string index="12">Звичайний предмет</string>
+                       <string index="13">Обладунок</string>
     <string index="14">Аксесуар</string>
     <string index="15">Пояс</string>
     <string index="16">Ноги</string>
@@ -40,9 +32,10 @@
     <string index="20">Шия</string>
     <string index="21">Перстень</string>
     <string index="22">Плечі</string>
-    <string index="23">Спина</string>
+                       <string index="23">Спина</string>
     <string index="24">Груди</string>
-    <string index="25">Зброя</string>
+                       <string index="25">Зброя</string>
+
     <string index="26">Сокира</string>
     <string index="27">Лук</string>
     <string index="28">Кастет</string>
@@ -67,6 +60,18 @@
 
     <string index="39">Гроші</string>
   </EntityDescriptions>
+
+
+
+
+
+
+
+
+
+  <KeyNames>
+    <string index="0">Універсальний ключ</string>
+  </KeyNames>
   <WindowNames>
     <string index="0"></string>
     <string index="1">Сумка</string>
@@ -84,9 +89,6 @@
     <string index="5">Субота</string>
     <string index="6">Неділя</string>
   </DayNames>
-  <KeyNames>
-    <string index="0">Універсальний ключ</string>
-  </KeyNames>
   <CharacteristicNames>
     <string index="0">Сила фізичної атаки</string>
     <string index="1">Сила магії природи</string>
@@ -133,10 +135,10 @@
     <string index="5">Легендарний</string>
   </ItemRarityNames>
   <ItemClassNames>
-    <string index="0">Інше</string>
-    <string index="1">Квестовий</string>
+    <string index="0">Інший предмет</string>
+    <string index="1">Квестовий предмет</string>
     <string index="2">Сміття</string>
-    <string index="3">Звичайний</string>
+    <string index="3">Звичайний предмет</string>
     <string index="4">Реагент</string>
     <string index="5">Обладунок</string>
   </ItemClassNames>
@@ -161,6 +163,11 @@
     <string index="3">Лати</string>
     <string index="4">Різне</string>
   </EquipmentMaterialNames>
+  <SpineEquipmentModeNames>
+    <string index="0">Щит</string>
+    <string index="1">Плащ</string>
+  </SpineEquipmentModeNames>
+
 
   <ItemNames>
     <string index="0">Золото</string>

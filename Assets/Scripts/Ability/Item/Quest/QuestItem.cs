@@ -6,12 +6,10 @@
 
 namespace MyRPG {
 
-    public abstract class QuestItem : Item {
+    public sealed class QuestItem : Item {
 
-        public QuestItem( int level, TypeOfItemRarity rarity ) : base( level, ClassOfItem.Quest, rarity ) {
-            nameId = 11;
-        }
-
+        public QuestItem( int id, int nameId, Sprites sprite, int count = 1 ) : base( id, nameId, Personage.MIN_LEVEL, sprite, TypeOfItemRarity.Normal, 9, ClassOfItem.Quest, count, -1 ) { }
+        
     }
 
 }

@@ -79,6 +79,8 @@
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\Neck\NeckEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\Ring\RingEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\Shoulders\ShouldersEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Spine\Cloak\CloakSpine.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Spine\Shield\ShieldSpine.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\Spine\SpineEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\Torso\TorsoEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Ax\AxWeapon.cs" />
@@ -144,8 +146,12 @@
     <Compile Include="Assets\Scripts\Patterns\Strategy\PersonageTasks\WalkAroundTask.cs" />
     <Compile Include="Assets\Scripts\Patterns\Strategy\PersonageTasks\WalkToPointTask.cs" />
     <Compile Include="Assets\Scripts\Patterns\Strategy\PersonageTasks\WalkToSpawnPointTask.cs" />
-    <None Include="Assets\Localization\Українська\main.xml" />
-    <None Include="Assets\Localization\English\main.xml" />
+    <None Include="Assets\Localization\Українська\main.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Assets\Localization\English\main.xml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Assets\config.xml" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Projects/MyRPG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
