@@ -4,6 +4,7 @@
 	Сайт: http://metal-prog.zzz.com.ua/
 */
 using UnityEngine;
+using MyRPG.Configuration;
 
 namespace MyRPG {
 

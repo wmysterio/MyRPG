@@ -5,8 +5,9 @@
 */
 using UnityEngine;
 using UnityEngine.UI;
- 
-namespace MyRPG {
+using MyRPG.Configuration;
+
+namespace MyRPG.Sync {
  
 	public sealed class PersonageWindowSync : MonoBehaviour {
 

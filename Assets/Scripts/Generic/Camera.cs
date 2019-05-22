@@ -5,6 +5,7 @@
 */
 using System.Collections;
 using UnityEngine;
+using MyRPG.Sync;
 
 namespace MyRPG {
 

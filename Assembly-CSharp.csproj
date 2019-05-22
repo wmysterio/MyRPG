@@ -114,9 +114,10 @@
     <Compile Include="Assets\Scripts\Generic\Calendar.cs" />
     <Compile Include="Assets\Scripts\Generic\Camera.cs" />
     <Compile Include="Assets\Scripts\Generic\Characteristic.cs" />
-    <Compile Include="Assets\Scripts\Generic\Config\Config.cs" />
-    <Compile Include="Assets\Scripts\Generic\Config\Localization.cs" />
-    <Compile Include="Assets\Scripts\Generic\Config\XMLFile.cs" />
+    <Compile Include="Assets\Scripts\Generic\Configuration\Config.cs" />
+    <Compile Include="Assets\Scripts\Generic\Configuration\Localization.cs" />
+    <Compile Include="Assets\Scripts\Generic\Configuration\SaveFile.cs" />
+    <Compile Include="Assets\Scripts\Generic\Configuration\XMLFile.cs" />
     <Compile Include="Assets\Scripts\Generic\Console.cs" />
     <Compile Include="Assets\Scripts\Generic\Coroutines.cs" />
     <Compile Include="Assets\Scripts\Generic\EffectList.cs" />
@@ -129,7 +130,6 @@
     <Compile Include="Assets\Scripts\Generic\Path.cs" />
     <Compile Include="Assets\Scripts\Generic\RingForKeys.cs" />
     <Compile Include="Assets\Scripts\Generic\Room.cs" />
-    <Compile Include="Assets\Scripts\Generic\SaveFile.cs" />
     <Compile Include="Assets\Scripts\Generic\SkillBook.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\ConsoleSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\GameSync.cs" />

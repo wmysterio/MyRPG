@@ -8,7 +8,7 @@ using System.Linq;
 using UnityEngine;
 using System.IO;
 
-namespace MyRPG {
+namespace MyRPG.Configuration {
 
     public sealed class Localization {
         

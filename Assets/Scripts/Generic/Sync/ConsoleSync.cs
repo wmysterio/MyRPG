@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System.Text.RegularExpressions;
  
-namespace MyRPG {
+namespace MyRPG.Sync {
  
 	public sealed class ConsoleSync : MonoBehaviour {
 

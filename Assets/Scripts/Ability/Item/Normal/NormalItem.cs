@@ -4,7 +4,7 @@
 	Сайт: http://metal-prog.zzz.com.ua/
 */
 
-namespace MyRPG {
+namespace MyRPG.Items {
 
     public abstract class NormalItem : Item {
 

@@ -6,7 +6,7 @@
 using System.IO;
 using UnityEngine;
 
-namespace MyRPG {
+namespace MyRPG.Configuration {
 
     public sealed class Config {
 

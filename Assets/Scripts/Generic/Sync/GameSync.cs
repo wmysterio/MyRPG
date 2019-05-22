@@ -5,7 +5,7 @@
 */
 using UnityEngine;
 
-namespace MyRPG {
+namespace MyRPG.Sync {
 
     public sealed class GameSync : MonoBehaviour {
 

@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Xml.Serialization;
 using System.IO;
 
-namespace MyRPG {
+namespace MyRPG.Configuration {
 
     public sealed class XMLFile<T> where T : class {
 

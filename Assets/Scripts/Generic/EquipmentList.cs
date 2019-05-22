@@ -4,6 +4,7 @@
 	Сайт: http://metal-prog.zzz.com.ua/
 */
 using System;
+using MyRPG.Items;
 
 namespace MyRPG {
 

@@ -3,7 +3,7 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-namespace MyRPG {
+namespace MyRPG.Items {
 
     public sealed class ShieldSpine : SpineEquipment {
 

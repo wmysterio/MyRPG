@@ -8,6 +8,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
+using MyRPG.Configuration;
+using MyRPG.Items;
 
 namespace MyRPG {
 

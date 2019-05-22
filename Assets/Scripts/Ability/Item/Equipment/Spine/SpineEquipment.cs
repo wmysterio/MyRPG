@@ -3,8 +3,9 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
+using MyRPG.Configuration;
 
-namespace MyRPG {
+namespace MyRPG.Items {
 
     public abstract class SpineEquipment : EquipmentItem {
 

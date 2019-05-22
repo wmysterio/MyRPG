@@ -6,6 +6,7 @@
 using System;
 using System.Reflection;
 using System.Text;
+using MyRPG.Configuration;
 
 namespace MyRPG {
 

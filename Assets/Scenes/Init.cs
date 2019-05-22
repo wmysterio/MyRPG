@@ -5,6 +5,8 @@
 */
 using System.Collections;
 using UnityEngine;
+using MyRPG.Sync;
+using MyRPG.Configuration;
 
 namespace MyRPG {
 
@@ -131,7 +133,7 @@ namespace MyRPG {
                 break;
                 
                 case InitState.InitEntityListAndRooms:
-                var go = new GameObject( "Entitys" );
+                var go = new GameObject( "Entities" );
                 go.AddComponent<GameSync>();
                 state = InitState.InitCamera;
                 break;
