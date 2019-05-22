@@ -30,7 +30,7 @@ namespace MyRPG {
         public string MaterialName { get; private set; }
         public string EquipmentPartName { get; private set; }
 
-        protected EquipmentItem( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int descriptionId, int modelId, MaterialOfEquipment material, PartOfEquipment part, int count = 1, int algorithmUseId = -1 ) : base( id, nameId, level, sprite, rarity, descriptionId, ClassOfItem.Equipment, count, algorithmUseId ) {
+        protected EquipmentItem( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int descriptionId, int modelId, MaterialOfEquipment material, PartOfEquipment part, int count = 1 ) : base( id, nameId, level, sprite, rarity, descriptionId, ClassOfItem.Equipment, count, -1 ) {
             EquipmentPart = part;
             Material = material;
             ModelID = modelId;

@@ -47,54 +47,70 @@ namespace MyRPG {
         protected static int getPriceByPartOfEquipment( PartOfEquipment part ) {
             switch( part ) {
                 case PartOfEquipment.Weapon: // Зброя
-                return 20;
-                case PartOfEquipment.Spine: // Спина
-                return 13;
+                return 35;
                 case PartOfEquipment.Head: // Голова
-                return 10;
+                return 15;
                 case PartOfEquipment.Torso: // Груди
-                return 10;
+                return 15;
                 case PartOfEquipment.Shoulders: // Плечі
-                return 10;
+                return 15;
                 case PartOfEquipment.Feet: // Ноги
-                return 10;
+                return 15;
                 case PartOfEquipment.Footwear: // Взуття
-                return 10;
+                return 15;
                 case PartOfEquipment.Belt: // Пояс
-                return 6;
+                return 12;
                 case PartOfEquipment.Hands: // Зап'ястя
-                return 6;
+                return 12;
                 case PartOfEquipment.Neck: // Шия
-                return 4;
+                return 8;
                 case PartOfEquipment.Ring: // Палець
-                return 4;
+                return 8;
+                case PartOfEquipment.Accessory: // Аксесуар
+                return 8;
             }
-            return 1; // Аксесуар
+            return 3; // Спина
         }
+        protected static int getPriceByTypeOfWeapon( TypeOfWeapon type ) {
+            switch( type ) {
+                case TypeOfWeapon.Hammer: // Молот
+                return 25;
+                case TypeOfWeapon.Ax: // Сокира
+                return 25;
+                case TypeOfWeapon.Sword: // Меч
+                return 25;
+                case TypeOfWeapon.Dagger: // Кинджал
+                return 25;
+                case TypeOfWeapon.BrassKnuckles: // Кастет
+                return 15;
+            }
+            return 12; // Лук, посох і жезл
+        }
+
 
         private Sprites spriteId;
         protected readonly int algorithmUseId = -1;
-
         protected int price = 0;
 
-        public int Count { get; set; }
 
         public TypeOfAbility AbilityType { get { return TypeOfAbility.Item; } }
         public int Price { get { return price; } }
         public int TotalPrice { get { return price * Count; } }
+        public Sprite SpriteIcon { get { return Player.Interface.GetSprite( spriteId ); } }
+
+        public float Timer { get; protected set; }
 
         public int Id { get; private set; }
+        public int Level { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public Sprite SpriteIcon { get { return Player.Interface.GetSprite( spriteId ); } }
         public ClassOfItem Class { get; private set; }
         public TypeOfItemRarity Rarity { get; private set; }
-        public int Level { get; private set; }
         public string ClassName { get; private set; }
         public string RarityName { get; private set; }
         public bool ForSelling { get; private set; }
-
-        public float Timer { get; protected set; }
+        
+        public int Count { get; set; }
 
         private Item() { }
         protected Item( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int descriptionId, ClassOfItem itemClass, int count = 1, int algorithmUseId = -1 ) {

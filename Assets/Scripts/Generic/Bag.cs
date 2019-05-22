@@ -36,10 +36,10 @@ namespace MyRPG {
         }
 
         public bool Add<T>( T item ) where T : Item {
-            if( IsOnPlayer && item is Money ) {
-                item.Use();
-                return true;
-            }
+            //if( IsOnPlayer && item is Money ) {
+            //    item.Use();
+            //    return true;
+            //}
             if( items.ContainsKey( typeof( T ) ) ) {
                 items[ typeof( T ) ].Count += item.Count;
                 return true;

@@ -14,15 +14,13 @@
     <string index="5">Effect</string>
     <string index="6">Active effect</string>
     <string index="7">Passive effect</string>
+    
     <string index="8">Trash</string>
     <string index="9">Quest item</string>
     <string index="10">Reagent</string>
     <string index="11">Other item</string>
-
-
-
-                       <string index="12">Normal item</string>
-                       <string index="13">Equipment</string>
+    <string index="12">Shield</string>
+    <string index="13">Cloak</string>
     <string index="14">Accessory</string>
     <string index="15">Belt</string>
     <string index="16">Feet</string>
@@ -35,7 +33,6 @@
                        <string index="23">Spine</string>
     <string index="24">Torso</string>
                        <string index="25">Weapon</string>
-    
     <string index="26">Ax</string>
     <string index="27">Bow</string>
     <string index="28">Brass Knuckles</string>
@@ -44,8 +41,6 @@
     <string index="31">Staff</string>
     <string index="32">Sword</string>
     <string index="33">Wand</string>
-
-
 
     <string index="34">Spell</string>
     <string index="35">Streaming spell</string>
@@ -58,7 +53,7 @@
 
 
 
-    <string index="39">Money</string>
+                       <string index="39">Money</string>
   </EntityDescriptions>
 
 
@@ -167,8 +162,18 @@
     <string index="0">Shield</string>
     <string index="1">Cloak</string>
   </SpineEquipmentModeNames>
+  <WeaponEquipmentTypeNames>
+    <string index="0">Staff</string>
+    <string index="1">Wand</string>
+    <string index="2">Dagger</string>
+    <string index="3">Sword</string>
+    <string index="4">Bow</string>
+    <string index="5">Hammer</string>
+    <string index="6">Ax</string>
+    <string index="7">Brass Knuckles</string>
+  </WeaponEquipmentTypeNames>
 
-
+  
   <ItemNames>
     <string index="0">Gold</string>
   </ItemNames>

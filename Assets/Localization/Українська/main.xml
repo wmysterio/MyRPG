@@ -14,15 +14,13 @@
     <string index="5">Ефект</string>
     <string index="6">Активний ефект</string>
     <string index="7">Пасивний ефект</string>
+    
     <string index="8">Сміття</string>
     <string index="9">Квестовий предмет</string>
     <string index="10">Реагент</string>
     <string index="11">Інший предмет</string>
-
-
-
-                       <string index="12">Звичайний предмет</string>
-                       <string index="13">Обладунок</string>
+    <string index="12">Щит</string>
+    <string index="13">Плащ</string>
     <string index="14">Аксесуар</string>
     <string index="15">Пояс</string>
     <string index="16">Ноги</string>
@@ -35,7 +33,6 @@
                        <string index="23">Спина</string>
     <string index="24">Груди</string>
                        <string index="25">Зброя</string>
-
     <string index="26">Сокира</string>
     <string index="27">Лук</string>
     <string index="28">Кастет</string>
@@ -44,8 +41,6 @@
     <string index="31">Посох</string>
     <string index="32">Меч</string>
     <string index="33">Жезл</string>
-
-
 
     <string index="34">Заклинання</string>
     <string index="35">Потокове заклинання</string>
@@ -58,7 +53,7 @@
 
 
 
-    <string index="39">Гроші</string>
+                       <string index="39">Гроші</string>
   </EntityDescriptions>
 
 
@@ -167,6 +162,16 @@
     <string index="0">Щит</string>
     <string index="1">Плащ</string>
   </SpineEquipmentModeNames>
+  <WeaponEquipmentTypeNames>
+    <string index="0">Посох</string>
+    <string index="1">Жезл</string>
+    <string index="2">Кинджал</string>
+    <string index="3">Меч</string>
+    <string index="4">Лук</string>
+    <string index="5">Молот</string>
+    <string index="6">Сокира</string>
+    <string index="7">Кастет</string>
+  </WeaponEquipmentTypeNames>
 
 
   <ItemNames>

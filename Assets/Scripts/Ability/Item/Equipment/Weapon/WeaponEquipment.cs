@@ -18,19 +18,21 @@ namespace MyRPG {
         public float MaxRange { get { return maxRange; } }
 
         public TypeOfWeapon Type { get; private set; }
+        public string TypeName { get; private set; }
 
         public float Delay { get; protected set; }
 
-        public WeaponEquipment( int level, TypeOfWeapon type, TypeOfItemRarity rarity, int modelID ) : base( level, rarity, MaterialOfEquipment.Other, PartOfEquipment.Weapon, modelID ) {
-            nameId = 25;
+        protected WeaponEquipment( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int descriptionId, int modelId, TypeOfWeapon type, int count = 1 ) : base( id, nameId, level, sprite, rarity, descriptionId, modelId, MaterialOfEquipment.Other, PartOfEquipment.Weapon, count ) {
             Type = type;
             Delay = 4f;
             delayTimer = 0f;
             minDamage = 1f;
             minRange = 1f;
             maxRange = 2f;
+            price = price + getPriceByTypeOfWeapon( type );
+            TypeName = Localization.Current.WeaponEquipmentTypeNames[ ( int ) type ];
         }
-
+        
         public bool ReadyToUse() { return Timer == 0f; }
 
         public override void Update() {

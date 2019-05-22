@@ -69,36 +69,35 @@
     <Compile Include="Assets\Scripts\Ability\Effect\ActiveEffect\ActiveEffect.cs" />
     <Compile Include="Assets\Scripts\Ability\Effect\Effect.cs" />
     <Compile Include="Assets\Scripts\Ability\Effect\PassiveEffect\PassiveEffect.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Accessory\AccessoryEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Belt\BeltEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\AccessoryEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\BeltEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\EquipmentItem.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Feet\FeetEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Footwear\FootwearEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Hands\HandsEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Head\HeadEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Neck\NeckEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Ring\RingEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Shoulders\ShouldersEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Spine\Cloak\CloakSpine.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Spine\Shield\ShieldSpine.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\FeetEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\FootwearEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\HandsEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\HeadEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\NeckEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\RingEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\ShouldersEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Spine\CloakSpine.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Spine\ShieldSpine.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\Spine\SpineEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Torso\TorsoEquipment.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Ax\AxWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Bow\BowWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Brass Knuckles\BrassKnucklesWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Dagger\DaggerWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Hammer\HammerWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Staff\StaffWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Sword\SwordWeapon.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\Wand\WandWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\TorsoEquipment.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\AxWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\BowWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\BrassKnucklesWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\DaggerWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\HammerWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\StaffWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\SwordWeapon.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\WandWeapon.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Equipment\Weapon\WeaponEquipment.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Item.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Normal\Money.cs" />
     <Compile Include="Assets\Scripts\Ability\Item\Normal\NormalItem.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Other\OtherItem.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Quest\QuestItem.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Reagent\ReagentItem.cs" />
-    <Compile Include="Assets\Scripts\Ability\Item\Trash\TrashItem.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\OtherItem.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\QuestItem.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\ReagentItem.cs" />
+    <Compile Include="Assets\Scripts\Ability\Item\TrashItem.cs" />
     <Compile Include="Assets\Scripts\Ability\Spell\Instant\InstantSpell.cs" />
     <Compile Include="Assets\Scripts\Ability\Spell\Reproduction\ReproductionSpell.cs" />
     <Compile Include="Assets\Scripts\Ability\Spell\Spell.cs" />
@@ -146,12 +145,8 @@
     <Compile Include="Assets\Scripts\Patterns\Strategy\PersonageTasks\WalkAroundTask.cs" />
     <Compile Include="Assets\Scripts\Patterns\Strategy\PersonageTasks\WalkToPointTask.cs" />
     <Compile Include="Assets\Scripts\Patterns\Strategy\PersonageTasks\WalkToSpawnPointTask.cs" />
-    <None Include="Assets\Localization\Українська\main.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Assets\Localization\English\main.xml">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Assets\Localization\Українська\main.xml" />
+    <None Include="Assets\Localization\English\main.xml" />
     <None Include="Assets\config.xml" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Projects/MyRPG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
