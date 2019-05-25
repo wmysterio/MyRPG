@@ -123,6 +123,7 @@
     <Compile Include="Assets\Scripts\Generic\EffectList.cs" />
     <Compile Include="Assets\Scripts\Generic\EntityUpdator.cs" />
     <Compile Include="Assets\Scripts\Generic\EquipmentList.cs" />
+    <Compile Include="Assets\Scripts\Generic\Generator.cs" />
     <Compile Include="Assets\Scripts\Generic\InputManager.cs" />
     <Compile Include="Assets\Scripts\Generic\Interface.cs" />
     <Compile Include="Assets\Scripts\Generic\Model.cs" />

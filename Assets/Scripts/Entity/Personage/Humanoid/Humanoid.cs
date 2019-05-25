@@ -33,7 +33,7 @@ namespace MyRPG {
                 if( Rank == RankOfPersonage.Boss )
                     money += 2500;
             }
-            //Loot.Add( new Money( money ) );
+            Loot.Add( Generator.CreateMoney( money ) );
         }
 
     }

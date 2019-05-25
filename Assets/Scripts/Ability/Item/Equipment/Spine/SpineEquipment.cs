@@ -12,7 +12,7 @@ namespace MyRPG.Items {
         public SpineMode Mode { get; private set; }
         public string ModeName { get; private set; }
 
-        protected SpineEquipment( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int descriptionId, int modelId, SpineMode mode, int count = 1 ) : base( id, nameId, level, sprite, rarity, descriptionId, modelId, MaterialOfEquipment.Other, PartOfEquipment.Spine, count, -1 ) {
+        protected SpineEquipment( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int descriptionId, int modelId, SpineMode mode, int count = 1 ) : base( id, nameId, level, sprite, rarity, descriptionId, modelId, MaterialOfEquipment.Other, PartOfEquipment.Spine, count ) {
             Mode = mode;
             ModeName = Localization.Current.SpineEquipmentModeNames[ ( int ) mode ];
         }

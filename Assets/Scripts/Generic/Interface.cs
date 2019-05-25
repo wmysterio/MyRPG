@@ -743,16 +743,8 @@ namespace MyRPG {
     public enum FadeMode { In, Out }
 
     public enum Sprites {
-        _0,
-        _1,
-        _2,
-        _3,
-        _4,
-        _5,
-        _6,
-        _7,
-        _8,
-        _9
+        TRANSPARENT,    // 0
+        ITEM_GOLD		// 1
     }
 
 }
