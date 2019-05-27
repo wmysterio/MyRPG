@@ -3,16 +3,7 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
 using MyRPG.Items;
 
 namespace MyRPG {
@@ -20,8 +11,8 @@ namespace MyRPG {
     public static class Generator {
 
 /*
-0   1     2      3       4       5      6         7              8
-ID, NAME, LEVEL, SPRITE, RARITY, MODEL, MATERIAL, ALGORITHM_USE, ALGORITHM_CREATE
+0   1     2      3       4       5      6         7              8                       
+id, name, level, sprite, rarity, model, material, algorithm_use, algorithm_create
 */
 
         public static OtherItem CreateMoney( int count ) { return new OtherItem( 0, 0, Sprites.ITEM_GOLD, count, 0 ); }

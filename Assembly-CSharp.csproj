@@ -115,6 +115,7 @@
     <Compile Include="Assets\Scripts\Generic\Camera.cs" />
     <Compile Include="Assets\Scripts\Generic\Characteristic.cs" />
     <Compile Include="Assets\Scripts\Generic\Configuration\Config.cs" />
+    <Compile Include="Assets\Scripts\Generic\Configuration\DB.cs" />
     <Compile Include="Assets\Scripts\Generic\Configuration\Localization.cs" />
     <Compile Include="Assets\Scripts\Generic\Configuration\SaveFile.cs" />
     <Compile Include="Assets\Scripts\Generic\Configuration\XMLFile.cs" />
@@ -388,6 +389,9 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>D:/Projects/MyRPG/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite">
+      <HintPath>D:/Projects/MyRPG/Assets/Plugins/Managed/System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:/Programm/Unity/2019.1.1f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
