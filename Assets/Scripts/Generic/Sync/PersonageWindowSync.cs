@@ -57,9 +57,7 @@ namespace MyRPG.Sync {
                 statPlayerName = statsTexts[ 5 ];
                 statCalendarDate = statsTexts[ 6 ];
                 statPlayerMoney = statsTexts[ 7 ];
-                CloseButtonObject.GetComponent<Button>().onClick.AddListener( delegate {
-                    gameObject.SetActive( false );
-                } );
+                CloseButtonObject.GetComponent<Button>().onClick.AddListener( delegate { gameObject.SetActive( false ); } );
                 isNotReady = false;
             }
             statPlayerName.text = Player.Current.Name;
