@@ -5,6 +5,7 @@
 */
 using System.Data.SQLite;
 using UnityEngine;
+using System.IO;
 
 namespace MyRPG.Configuration {
 
@@ -17,9 +18,8 @@ namespace MyRPG.Configuration {
         public static bool Connect() {
             if( connection != null )
                 return true;
-
-            //
-
+            if( !File.Exists( $"{Application.dataPath}/data.db" ) )
+                return false;
             connection = new SQLiteConnection( ConnectionString );
             connection.Open();
             return true;

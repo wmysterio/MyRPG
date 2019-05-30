@@ -62,7 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\demo.cs" />
     <Compile Include="Assets\Scenes\Init.cs" />
     <Compile Include="Assets\Scenes\Levels\BaseLevelStarter.cs" />
     <Compile Include="Assets\Scenes\Levels\LevelSwitcher.cs" />

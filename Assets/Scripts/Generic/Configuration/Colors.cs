@@ -53,8 +53,6 @@ namespace MyRPG.Configuration {
             { RelationshipOfPersonage.Neutral, "#f5ab35ff" },
             { RelationshipOfPersonage.Enemy, "#d91e18ff" },
         };
-        
-        /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
         private static Dictionary<Mode, Color> baseColorsByMode = new Dictionary<Mode, Color>() {
             { Mode.WINDOW_BACKGROUND, new Color32( 222, 237, 252, 255 ) },
@@ -84,8 +82,6 @@ namespace MyRPG.Configuration {
             { RelationshipOfPersonage.Neutral, new Color32( 245, 171, 53, 255 ) },
             { RelationshipOfPersonage.Enemy, new Color32( 217, 30, 24, 255 ) }
         };
-
-        /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
         public enum Mode {
             WINDOW_BACKGROUND,

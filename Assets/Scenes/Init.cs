@@ -134,20 +134,18 @@ namespace MyRPG {
                 
                 case InitState.InitEntityListAndRooms:
                 var go = new GameObject( "Entities" );
-                go.AddComponent<GameSync>();
-                state = InitState.InitCamera;
-                break;
-
-                case InitState.InitCamera:
+                var gs = go.AddComponent<GameSync>();
+                if( !gs.ConnectionReady ) {
+                    state = InitState.Stop;
+                    Application.Quit();
+                    return;
+                }
                 Camera.Init();
-                state = InitState.InitAudio;
-                break;
-
-                case InitState.InitAudio:
                 Audio.SyncCamara();
                 state = InitState.Stop;
                 Room.Switch( Room.Levels.TrainingLevel );
                 break;
+
             }
 
         }
@@ -194,8 +192,6 @@ namespace MyRPG {
             SelectLanguage,
             SwitchLanguage,
             InitEntityListAndRooms,
-            InitCamera,
-            InitAudio,
             Stop
         }
 
