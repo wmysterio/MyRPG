@@ -595,7 +595,7 @@ namespace MyRPG {
                     }
                     abilityButtonRect.x += 36f;
                 }
-                for( ; iterator < Bag.MAX_ITEM_COUNT; iterator++ ) {
+                for( ; iterator < Bag.MAX_ITEMS_COUNT; iterator++ ) {
                     if( iterator % Bag.ItemsInRow == 0 ) {
                         abilityButtonRect.x = 4f;
                         abilityButtonRect.y += 36f;
