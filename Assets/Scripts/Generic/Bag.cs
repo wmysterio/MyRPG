@@ -12,25 +12,23 @@ namespace MyRPG {
 
     public sealed class Bag {
 
-        public delegate void BagHandler( Item item, int index );
+        public delegate void BagCallbackHandler( Item item, int index );
 
-        public const int MAX_ITEMS_COUNT = 100;
+        public const int SLOT_COUNT = 100;
 
         [System.Obsolete( "DELETE" )]
-        public static readonly int ItemsInRow = ( int ) Mathf.Sqrt( MAX_ITEMS_COUNT );
+        public static readonly int ItemsInRow = ( int ) Mathf.Sqrt( SLOT_COUNT );
 
         private Dictionary<int, Item> items = new Dictionary<int, Item>();
         private int iterator = 0;
 
-        [System.Obsolete( "DELETE" )]
-        public Item this[ int slot ] {
+        public Item this[ int id ] {
             get {
-                if( 0 > slot || slot >= items.Count )
+                if( !items.ContainsKey( id ) )
                     return null;
-                return items.ElementAt( slot ).Value;
+                return items[ id ];
             }
         }
-
         public int Count { get { return items.Count; } }
         public bool IsOnPlayer { get; private set; }
 
@@ -52,13 +50,12 @@ namespace MyRPG {
                 // play sound
                 return true;
             }
-            if( items.Count == MAX_ITEMS_COUNT )
+            if( items.Count == SLOT_COUNT )
                 return false;
             items.Add( item.Id, item );
             // play sound
             return true;
         }
-
         public bool Add( Bag bag, bool playSound = false ) {
             if( bag == this )
                 return false;
@@ -66,16 +63,6 @@ namespace MyRPG {
                 Add( item );
             // play sound
             return true;
-        }
-
-        public void ForEach( BagHandler callback ) {
-            if( callback == null )
-                return;
-            int counter = 0;
-            foreach( var item in items.Values ) {
-                callback.Invoke( item, counter );
-                counter += 1;
-            }
         }
         public bool Remove( Item item, bool playSound = false ) {
             if( item == null )
@@ -89,9 +76,9 @@ namespace MyRPG {
         public bool Remove( Item item, int count, bool playSound = false ) {
             if( item == null )
                 return false;
-            if( !items.ContainsKey( item.Id ) )
-                return false;
             if( 1 > count )
+                return false;
+            if( !items.ContainsKey( item.Id ) )
                 return false;
             if( count > items[ item.Id ].Count )
                 count = items[ item.Id ].Count;
@@ -101,12 +88,41 @@ namespace MyRPG {
             // play sound
             return true;
         }
+        public bool Remove( int id, bool playSound = false ) {
+            if( !items.ContainsKey( id ) )
+                return false;
+            items.Remove( id );
+            // play sound
+            return true;
+        }
+        public bool Remove( int id, int count, bool playSound = false ) {
+            if( 1 > count )
+                return false;
+            if( !items.ContainsKey( id ) )
+                return false;
+            if( count > items[ id ].Count )
+                count = items[ id ].Count;
+            items[ id ].Count -= count;
+            if( items[ id ].Count == 0 )
+                items.Remove( id );
+            // play sound
+            return true;
+        }
         public bool HasItem( Item item ) {
             if( item == null )
                 return false;
             return items.ContainsKey( item.Id );
         }
         public bool HasItem( int id ) { return items.ContainsKey( id ); }
+        public void Each( BagCallbackHandler callback ) {
+            if( callback == null )
+                return;
+            int counter = 0;
+            foreach( var item in items.Values ) {
+                callback.Invoke( item, counter );
+                counter += 1;
+            }
+        }
         public void UpdateItems() {
             for( iterator = items.Count - 1; iterator >= 0; iterator-- ) {
                 var item = items.ElementAt( iterator ).Value;
@@ -116,6 +132,12 @@ namespace MyRPG {
                 }
                 item.Update();
             }
+        }
+
+        public Item Get( int slot ) {
+            if( 0 > slot || slot >= items.Count )
+                return null;
+            return items.ElementAt( slot ).Value;
         }
 
         /*

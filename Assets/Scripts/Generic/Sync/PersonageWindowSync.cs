@@ -23,6 +23,18 @@ namespace MyRPG.Sync {
         private void Update() {
             if( isNotReady )
                 return;
+            if( !Player.Exist() ) {
+                gameObject.SetActive( false );
+                return;
+            }
+            if( Player.Current.NoLongerNeeded ) {
+                gameObject.SetActive( false );
+                return;
+            }
+            if( !Player.Current.IsActive || Player.Current.IsDead ) {
+                gameObject.SetActive( false );
+                return;
+            }
             characteristicValuesText.text = Player.Current.CurrentCharacteristic.GetValues();
             statCalendarDate.text = Calendar.GetCalendarInfo();
             if( Personage.MAX_LEVEL == Player.Current.Level ) {

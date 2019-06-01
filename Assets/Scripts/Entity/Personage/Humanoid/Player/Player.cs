@@ -32,6 +32,16 @@ namespace MyRPG {
             CurrentExperience = 0;
             TotalExperience = calculateMaxExperience();
             Keys = new RingForKeys();
+
+            //
+            Loot.Add( new Items.BeltEquipment( 1, 0, 4, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Junk, 0, Items.MaterialOfEquipment.Cloth, 1 ) );
+            Loot.Add( new Items.ShouldersEquipment( 2, 0, 3, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Normal, 0, Items.MaterialOfEquipment.Cloth, 10 ) );
+            Loot.Add( new Items.BeltEquipment( 3, 0, 4, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Unusual, 0, Items.MaterialOfEquipment.Hauberk, 16 ) );
+            Loot.Add( new Items.HeadEquipment( 4, 0, 12, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Rare, 0, Items.MaterialOfEquipment.Leather, 3 ) );
+            Loot.Add( new Items.FeetEquipment( 5, 0, 44, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Epic, 0, Items.MaterialOfEquipment.Other, 12 ) );
+            Loot.Add( new Items.TorsoEquipment( 6, 0, 33, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Legendary, 0, Items.MaterialOfEquipment.Cloth, 1 ) );
+            //
+
         }
 
         protected override void update() {
