@@ -114,14 +114,15 @@ namespace MyRPG {
             return items.ContainsKey( item.Id );
         }
         public bool HasItem( int id ) { return items.ContainsKey( id ); }
-        public void Each( BagCallbackHandler callback ) {
+        public int Each( BagCallbackHandler callback ) {
             if( callback == null )
-                return;
-            int counter = 0;
+                return 0;
+            int counter = -1;
             foreach( var item in items.Values ) {
-                callback.Invoke( item, counter );
                 counter += 1;
+                callback.Invoke( item, counter );
             }
+            return counter + 1;
         }
         public void UpdateItems() {
             for( iterator = items.Count - 1; iterator >= 0; iterator-- ) {

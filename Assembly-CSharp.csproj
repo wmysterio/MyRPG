@@ -134,6 +134,7 @@
     <Compile Include="Assets\Scripts\Generic\RingForKeys.cs" />
     <Compile Include="Assets\Scripts\Generic\Room.cs" />
     <Compile Include="Assets\Scripts\Generic\SkillBook.cs" />
+    <Compile Include="Assets\Scripts\Generic\Sync\BagSlotSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\BagWindowSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\ConsoleSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\GameSync.cs" />

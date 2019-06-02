@@ -7,20 +7,21 @@ using MyRPG.Configuration;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace MyRPG {
+namespace MyRPG.Sync {
 
 	public sealed class BagWindowSync : MonoBehaviour {
 
-        private static GameObject instance = null;
-        public static GameObject GetWindowGameObject() { return instance; }
+        public static BagWindowSync Current { get; private set; }
 
         public GameObject TitleTextObject, QuestionButtonObject, CloseButtonObject, ButtonsObject;
 
         private Button[] buttons;
         private Text[] counters;
         private Outline[] borders;
+        private BagSlotSync[] slots;
         private bool isNotReady = true;
 
+        private void Awake() { Current = this; }
 
         private void Update() {
             if( isNotReady )
@@ -41,32 +42,34 @@ namespace MyRPG {
 
         private void OnEnable() {
             if( isNotReady ) {
-                instance = gameObject;
                 buttons = ButtonsObject.GetComponentsInChildren<Button>();
                 counters = ButtonsObject.GetComponentsInChildren<Text>();
                 borders = ButtonsObject.GetComponentsInChildren<Outline>();
+                slots = ButtonsObject.GetComponentsInChildren<BagSlotSync>();
                 TitleTextObject.GetComponent<Text>().text = Localization.Current.WindowNames[ 1 ];
-                CloseButtonObject.GetComponent<Button>().onClick.AddListener( delegate {
-                    gameObject.SetActive( false );
-                } );
+                CloseButtonObject.GetComponent<Button>().onClick.AddListener( delegate { gameObject.SetActive( false ); } );
                 QuestionButtonObject.GetComponent<Button>().onClick.AddListener( delegate {
                     // to do
                 } );
                 isNotReady = false;
             }
-            int iterator = 0;
-            Player.Current.Loot.Each( ( item, i ) => {
+            int iterator = Player.Current.Loot.Each( ( item, i ) => {
                 buttons[ i ].image.sprite = item.SpriteIcon;
                 counters[ i ].text = item.Count.ToString();
                 borders[ i ].effectColor = Colors.BaseColor( item.Rarity );
-                iterator = i;
+                slots[ i ].Number = i;
+                slots[ i ].Id = item.Id;
             } );
-            iterator += 1;
-            for( ; iterator < Bag.SLOT_COUNT; iterator++ ) {
-                buttons[ iterator ].image.sprite = null;
-                counters[ iterator ].text = string.Empty;
-                borders[ iterator ].effectColor = Colors.BaseColor( Colors.Mode.WINDOW_BORDER );
-            }
+            for( ; iterator < Bag.SLOT_COUNT; iterator++ )
+                Hide( iterator );
+        }
+
+        public void Hide( int slot ) {
+            buttons[ slot ].image.sprite = null;
+            counters[ slot ].text = string.Empty;
+            borders[ slot ].effectColor = Colors.BaseColor( Colors.Mode.WINDOW_BORDER );
+            slots[ slot ].Number = -1;
+            slots[ slot ].Id = -1;
         }
 
     }

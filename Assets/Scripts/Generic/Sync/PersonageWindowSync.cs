@@ -11,14 +11,15 @@ namespace MyRPG.Sync {
  
 	public sealed class PersonageWindowSync : MonoBehaviour {
 
-        private static GameObject instance = null;
-        public static GameObject GetWindowGameObject() { return instance; }
+        public static PersonageWindowSync Current { get; private set; }
 
         public GameObject CharacteristicKeysObject, CharacteristicValuesObject, WindowTitleObject, StatsObject, CloseButtonObject;
 
         private Text characteristicValuesText, statPlayerName, statPlayerMoney, statCalendarDate;
         private Slider expSlider, levelSlider;
         private bool isNotReady = true;
+
+        private void Awake() { Current = this; }
 
         private void Update() {
             if( isNotReady )
@@ -56,7 +57,6 @@ namespace MyRPG.Sync {
 
         private void OnEnable() {
             if( isNotReady ) {
-                instance = gameObject;
                 characteristicValuesText = CharacteristicValuesObject.GetComponent<Text>();
                 WindowTitleObject.GetComponent<Text>().text = Localization.Current.WindowNames[ 3 ].ToUpper();
                 CharacteristicKeysObject.GetComponent<Text>().text = Player.Current.CurrentCharacteristic.GetNames();
