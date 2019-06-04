@@ -31,7 +31,7 @@ namespace MyRPG.Levels {
             if( Player.Exist() ) {
                 Player.Current.Position = overridePosition ? overrideStartPoint : transform.position;
             } else {
-                new Player( "Player", Player.MAX_LEVEL, 0, transform.position );
+                new Player( "Player", Personage.MAX_LEVEL / 2, 0, transform.position );
                 Camera.AttachToPlayer();
             }
             overridePosition = false;

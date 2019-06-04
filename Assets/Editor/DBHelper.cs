@@ -3,6 +3,8 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
+using System.Collections.Generic;
+using UnityEngine.UI;
 using System.Data.SQLite;
 using MyRPG.Configuration;
 using UnityEngine;
@@ -13,7 +15,7 @@ namespace MyRPG.Tools {
 
     public static class DBHelper {
 
-        [MenuItem( "MyRPG/Execute custom request to DB" )]
+        [MenuItem( "MyRPG/DBHelper/Execute custom request" )]
         public static void ExecuteCustomRequestToDB() {
             using( var connection = new SQLiteConnection( DB.ConnectionString ) ) {
 

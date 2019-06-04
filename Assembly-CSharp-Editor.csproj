@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\DBHelper.cs" />
+    <Compile Include="Assets\Editor\Styling.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Projects/MyRPG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

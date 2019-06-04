@@ -67,7 +67,7 @@ namespace MyRPG.Sync {
         public void Hide( int slot ) {
             buttons[ slot ].image.sprite = null;
             counters[ slot ].text = string.Empty;
-            borders[ slot ].effectColor = Colors.BaseColor( Colors.Mode.WINDOW_BORDER );
+            borders[ slot ].effectColor = Colors.BaseColor( Colors.Mode.WINDOW_BORDER_COLOR );
             slots[ slot ].Number = -1;
             slots[ slot ].Id = -1;
         }

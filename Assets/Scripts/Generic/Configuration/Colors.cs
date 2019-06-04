@@ -26,17 +26,16 @@ namespace MyRPG.Configuration {
         /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
         private static Dictionary<Mode, string> richColorsByMode = new Dictionary<Mode, string>() {
-            { Mode.WINDOW_BACKGROUND, "#deedfcff" },
-            { Mode.WINDOW_BORDER, "#a8b4c6ff" },
-            { Mode.PANEL_BACKGROUND, "#bfd3e9ff" },
-            { Mode.PANEL_BORDER, "#95a2b4ff" },
-            { Mode.MAIN_TEXT, "#03091bff" },
-            { Mode.RED_LIGHT, "#b4191dff" },
-            { Mode.RED_DARK, "#5a0c0eff" },
-            { Mode.BLUE_LIGHT, "#52b3d9ff" },
-            { Mode.BLUE_DARK, "#013243ff" },
-            { Mode.YELLOW_LIGHT, "#ffff7eff" },
-            { Mode.YELLOW_DARK, "#f7ca18ff" }
+            { Mode.WINDOW_BACKGROUND_COLOR, "#ffffffff" },
+            { Mode.WINDOW_BORDER_COLOR, "#1bd88eff" },
+            { Mode.WINDOW_TEXT_COLOR, "#000000ff" },
+            { Mode.WINDOW_TITLE_TEXT_COLOR, "#daede5ff" },
+            { Mode.RESOURCE_HEALTH_LIGHT, "#b4191dff" },
+            { Mode.RESOURCE_HEALTH_DARK, "#5a0c0eff" },
+            { Mode.RESOURCE_MANA_LIGHT, "#52b3d9ff" },
+            { Mode.RESOURCE_MANA_DARK, "#013243ff" },
+            { Mode.RESOURCE_ENERGY_LIGHT, "#ffff7eff" },
+            { Mode.RESOURCE_ENERGY_DARK, "#f7ca18ff" }
         };
 
         private static Dictionary<TypeOfItemRarity, string> richColorsByRarity = new Dictionary<TypeOfItemRarity, string>() {
@@ -54,18 +53,19 @@ namespace MyRPG.Configuration {
             { RelationshipOfPersonage.Enemy, "#d91e18ff" },
         };
 
+        /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
+
         private static Dictionary<Mode, Color> baseColorsByMode = new Dictionary<Mode, Color>() {
-            { Mode.WINDOW_BACKGROUND, new Color32( 222, 237, 252, 255 ) },
-            { Mode.WINDOW_BORDER, new Color32( 168, 180, 198, 255 ) },
-            { Mode.PANEL_BACKGROUND, new Color32( 191, 211, 233, 255 ) },
-            { Mode.PANEL_BORDER, new Color32( 149, 162, 180, 255 ) },
-            { Mode.MAIN_TEXT, new Color32( 3, 9, 27, 255 ) },
-            { Mode.RED_LIGHT, new Color32( 180, 25, 29, 255 ) },
-            { Mode.RED_DARK, new Color32( 90, 12, 14, 255 ) },
-            { Mode.BLUE_LIGHT, new Color32( 82, 179, 217, 255 ) },
-            { Mode.BLUE_DARK, new Color32( 1, 50, 67, 255 ) },
-            { Mode.YELLOW_LIGHT, new Color32( 255, 255, 126, 255 ) },
-            { Mode.YELLOW_DARK, new Color32( 247, 202, 24, 255 ) }
+            { Mode.WINDOW_BACKGROUND_COLOR, new Color32( 255, 255, 255, 255 ) },
+            { Mode.WINDOW_BORDER_COLOR, new Color32( 111, 185, 156, 255 ) },
+            { Mode.WINDOW_TEXT_COLOR, new Color32( 0, 0, 0, 255 ) },
+            { Mode.WINDOW_TITLE_TEXT_COLOR, new Color32( 218, 237, 229, 255 ) },
+            { Mode.RESOURCE_HEALTH_LIGHT, new Color32( 180, 25, 29, 255 ) },
+            { Mode.RESOURCE_HEALTH_DARK, new Color32( 90, 12, 14, 255 ) },
+            { Mode.RESOURCE_MANA_LIGHT, new Color32( 82, 179, 217, 255 ) },
+            { Mode.RESOURCE_MANA_DARK, new Color32( 1, 50, 67, 255 ) },
+            { Mode.RESOURCE_ENERGY_LIGHT, new Color32( 255, 255, 126, 255 ) },
+            { Mode.RESOURCE_ENERGY_DARK, new Color32( 247, 202, 24, 255 ) }
         };
 
         private static Dictionary<TypeOfItemRarity, Color> baseColorsByRarity = new Dictionary<TypeOfItemRarity, Color>() {
@@ -84,17 +84,16 @@ namespace MyRPG.Configuration {
         };
 
         public enum Mode {
-            WINDOW_BACKGROUND,
-            WINDOW_BORDER,
-            PANEL_BACKGROUND,
-            PANEL_BORDER,
-            MAIN_TEXT,
-            RED_LIGHT,
-            RED_DARK,
-            BLUE_LIGHT,
-            BLUE_DARK,
-            YELLOW_LIGHT,
-            YELLOW_DARK
+            WINDOW_BACKGROUND_COLOR,
+            WINDOW_BORDER_COLOR,
+            WINDOW_TEXT_COLOR,
+            WINDOW_TITLE_TEXT_COLOR,
+            RESOURCE_HEALTH_LIGHT,
+            RESOURCE_HEALTH_DARK,
+            RESOURCE_MANA_LIGHT,
+            RESOURCE_MANA_DARK,
+            RESOURCE_ENERGY_LIGHT,
+            RESOURCE_ENERGY_DARK
         }
 
     }
