@@ -46,7 +46,7 @@ namespace MyRPG.Sync {
                 counters = ButtonsObject.GetComponentsInChildren<Text>();
                 borders = ButtonsObject.GetComponentsInChildren<Outline>();
                 slots = ButtonsObject.GetComponentsInChildren<BagSlotSync>();
-                TitleTextObject.GetComponent<Text>().text = Localization.Current.WindowNames[ 1 ];
+                TitleTextObject.GetComponent<Text>().text = Localization.Current.WindowNames[ 1 ].ToUpper();
                 CloseButtonObject.GetComponent<Button>().onClick.AddListener( delegate { gameObject.SetActive( false ); } );
                 QuestionButtonObject.GetComponent<Button>().onClick.AddListener( delegate {
                     // to do

@@ -759,6 +759,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4070583311913980}
+  - component: {fileID: 4202194727261960603}
   m_Layer: 5
   m_Name: PlayerUI
   m_TagString: Untagged
@@ -782,6 +783,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4202194727261960603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1279953427503360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b9a229c0ad21e74c80e84d0acfa593a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PersonageWindowObject: {fileID: 1929517441399980}
+  BagWindowObject: {fileID: 7521620168708125399}
+  TooltipOject: {fileID: 4644876027585346535}
+  MessageBoxObject: {fileID: 567719981589192041}
+  ConsoleObject: {fileID: 1402815671544514}
+  CinematicObject: {fileID: 0}
+  FadeObject: {fileID: 0}
 --- !u!1 &1287907715240504
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,11 +1607,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_HighlightedColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_PressedColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_SelectedColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_DisabledColor: {r: 0.57254905, g: 0.61960787, b: 0.69411767, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4544,6 +4564,7 @@ GameObject:
   - component: {fileID: 5402308576596299195}
   - component: {fileID: 507973022513266030}
   - component: {fileID: 5066171101053556449}
+  - component: {fileID: 3865925631205063422}
   m_Layer: 5
   m_Name: MessageBox
   m_TagString: Untagged
@@ -4621,7 +4642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.7490196}
-  m_EffectDistance: {x: 1, y: -1}
+  m_EffectDistance: {x: 1, y: 1}
   m_UseGraphicAlpha: 1
 --- !u!114 &507973022513266030
 MonoBehaviour:
@@ -4662,6 +4683,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &3865925631205063422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567719981589192041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1a185584ca2534981dca1f67b5e962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &575498616907328729
 GameObject:
   m_ObjectHideFlags: 0
@@ -12744,11 +12777,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_HighlightedColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_PressedColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_SelectedColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_DisabledColor: {r: 0.57254905, g: 0.61960787, b: 0.69411767, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -14357,11 +14390,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_HighlightedColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_PressedColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_SelectedColor: {r: 0.011764706, g: 0.03529412, b: 0.105882354, a: 1}
-    m_DisabledColor: {r: 0.57254905, g: 0.61960787, b: 0.69411767, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -23105,7 +23138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.7490196}
-  m_EffectDistance: {x: 1, y: -1}
+  m_EffectDistance: {x: 1, y: 1}
   m_UseGraphicAlpha: 1
 --- !u!114 &1298800821047552856
 MonoBehaviour:

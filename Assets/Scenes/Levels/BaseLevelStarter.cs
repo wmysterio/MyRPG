@@ -43,7 +43,6 @@ namespace MyRPG.Levels {
 
             Player.Current.CanMove = true;
             Player.Current.Immortal = false;
-
         }
 
         protected abstract int[] GetUsedModels();

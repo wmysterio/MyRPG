@@ -138,6 +138,8 @@
     <Compile Include="Assets\Scripts\Generic\Sync\BagWindowSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\ConsoleSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\GameSync.cs" />
+    <Compile Include="Assets\Scripts\Generic\Sync\InterfaceSync.cs" />
+    <Compile Include="Assets\Scripts\Generic\Sync\MessageBoxSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\PersonageWindowSync.cs" />
     <Compile Include="Assets\Scripts\Generic\Sync\Sky.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IAbility.cs" />

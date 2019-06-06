@@ -10,20 +10,44 @@ using UnityEngine;
 using UnityEngine.U2D;
 using MyRPG.Configuration;
 using MyRPG.Items;
+using MyRPG.Sync;
+using UnityEngine.UI;
 
 namespace MyRPG {
 
     public partial class Player {
 
         public static class Interface {
-            
+
             #region New Version
             private static SpriteAtlas spriteAtlas;
             private static GameObject playerUIObject;
+            private static InterfaceSync interfaceSync;
+            private static MessageBoxSync messageBoxSync;
+            private static Text tooltipText;
 
             public static Sprite GetSprite( Sprites sprite ) { return spriteAtlas.GetSprite( sprite.ToString() ); }
-
+            public static bool IsMessageBoxDisplayed() { return interfaceSync.MessageBoxObject.activeSelf; }
+            public static bool IsTooltipDisplayed() { return interfaceSync.TooltipOject.activeSelf; }
+            public static void ShowMessageBox( string content, int duration = 6 ) {
+                HideMessageBox();
+                messageBoxSync.Setup( content, duration );
+                interfaceSync.MessageBoxObject.SetActive( true );
+            }
+            public static void HideMessageBox() { interfaceSync.MessageBoxObject.SetActive( false ); }
+            public static void ShowTooltip( string content ) {
+                tooltipText.text = content;
+                interfaceSync.TooltipOject.SetActive( true );
+            }
+            public static void HideTooltip() {
+                interfaceSync.TooltipOject.SetActive( false );
+                tooltipText.text = string.Empty;
+            }
             #endregion
+
+
+
+
 
 
 
@@ -67,7 +91,7 @@ namespace MyRPG {
                 get { return enableСinematicView; }
                 set {
                     if( value ) {
-                        HideMessageBox();
+                        HideMessageBoxOld();
                     } else {
                         ClearSubtitles();
                     }
@@ -94,13 +118,13 @@ namespace MyRPG {
                 PrintSubtitles( duration, string.Format( format, args ) );
             }
             public static void SetMessageBoxWidth( float width ) { messageBoxWidth = width; }
-            public static void HideMessageBox() {
+            public static void HideMessageBoxOld() {
                 messageBoxTimer = 0f;
                 messageBoxDuration = 0f;
                 messageBoxContent.text = string.Empty;
                 MessageBoxDisplayed = false;
             }
-            public static void ShowMessageBox( float duration, string text ) {
+            public static void ShowMessageBoxOld( float duration, string text ) {
                 if( EnableСinematicView || Fadind || Console.Enable )
                     return;
                 messageBoxTimer = 0f;
@@ -108,8 +132,8 @@ namespace MyRPG {
                 messageBoxContent.text = text;
                 playSound( messageBoxPlay );
             }
-            public static void ShowMessageBox( float duration, string format, params object[] args ) {
-                ShowMessageBox( duration, string.Format( format, args ) );
+            public static void ShowMessageBoxOld( float duration, string format, params object[] args ) {
+                ShowMessageBoxOld( duration, string.Format( format, args ) );
             }
             public static void Fade( FadeMode mode, float fadeSpeed = 0.01f ) {
                 if( mode == FadeMode.In ) {
@@ -126,6 +150,7 @@ namespace MyRPG {
 
 
             public static IEnumerator Init() {
+
                 #region New Version
                 if( IsInit )
                     yield return null;
@@ -139,17 +164,16 @@ namespace MyRPG {
                 var uiPrefab = request.asset as GameObject;
                 playerUIObject = GameObject.Instantiate( uiPrefab, Vector3.zero, Quaternion.identity );
                 playerUIObject.name = uiPrefab.name;
+
+                interfaceSync = playerUIObject.GetComponent<InterfaceSync>();
+                messageBoxSync = interfaceSync.MessageBoxObject.GetComponent<MessageBoxSync>();
+                tooltipText = interfaceSync.TooltipOject.GetComponentInChildren<Text>( true );
+
+
+
+
                 GameObject.DontDestroyOnLoad( playerUIObject );
-
-
-
                 #endregion
-
-
-
-
-
-
 
 
                 fadeColor = Color.black;
@@ -170,7 +194,7 @@ namespace MyRPG {
 
                 messageBoxRect = new Rect( 10f, 10f, 0f, 0f );
                 messageBoxContent = new GUIContent( string.Empty );
-                HideMessageBox();
+                HideMessageBoxOld();
 
                 subtitlesUpRect = new Rect( 0, 0, Screen.width, 76 );
                 subtitlesBottomRect = new Rect( 0, Screen.height - 76, Screen.width, 76 );
@@ -429,7 +453,7 @@ namespace MyRPG {
                     MessageBoxDisplayed = true;
                     messageBoxTimer += 1f * Time.deltaTime;
                     if( messageBoxTimer > messageBoxDuration )
-                        HideMessageBox();
+                        HideMessageBoxOld();
                 }
             }
             public static void Draw() {

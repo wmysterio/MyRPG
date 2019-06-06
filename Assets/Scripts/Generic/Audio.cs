@@ -135,7 +135,8 @@ namespace MyRPG {
             OFF = 0,
             CONSOLE_OPEN = 1,
             CONSOLE_SUCCESS = 2,
-            CONSOLE_ERROR = 3
+            CONSOLE_ERROR = 3,
+            MESSAGE_BOX = 4
         }
 
     }

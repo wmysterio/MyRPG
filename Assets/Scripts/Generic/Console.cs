@@ -45,7 +45,7 @@ namespace MyRPG {
                 get { return enable; }
                 set {
                     if( value )
-                        Interface.HideMessageBox();
+                        Interface.HideMessageBoxOld();
                     enable = value;
                 }
             }
