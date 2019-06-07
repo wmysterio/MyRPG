@@ -8,10 +8,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 using MyRPG.Configuration;
 using MyRPG.Items;
 using MyRPG.Sync;
-using UnityEngine.UI;
 
 namespace MyRPG {
 
@@ -28,7 +28,7 @@ namespace MyRPG {
 
             public static Sprite GetSprite( Sprites sprite ) { return spriteAtlas.GetSprite( sprite.ToString() ); }
             public static bool IsMessageBoxDisplayed() { return interfaceSync.MessageBoxObject.activeSelf; }
-            public static bool IsTooltipDisplayed() { return interfaceSync.TooltipOject.activeSelf; }
+            public static bool IsTooltipDisplayed() { return interfaceSync.TooltipObject.activeSelf; }
             public static void ShowMessageBox( string content, int duration = 6 ) {
                 HideMessageBox();
                 messageBoxSync.Setup( content, duration );
@@ -37,10 +37,10 @@ namespace MyRPG {
             public static void HideMessageBox() { interfaceSync.MessageBoxObject.SetActive( false ); }
             public static void ShowTooltip( string content ) {
                 tooltipText.text = content;
-                interfaceSync.TooltipOject.SetActive( true );
+                interfaceSync.TooltipObject.SetActive( true );
             }
             public static void HideTooltip() {
-                interfaceSync.TooltipOject.SetActive( false );
+                interfaceSync.TooltipObject.SetActive( false );
                 tooltipText.text = string.Empty;
             }
             #endregion
@@ -167,7 +167,7 @@ namespace MyRPG {
 
                 interfaceSync = playerUIObject.GetComponent<InterfaceSync>();
                 messageBoxSync = interfaceSync.MessageBoxObject.GetComponent<MessageBoxSync>();
-                tooltipText = interfaceSync.TooltipOject.GetComponentInChildren<Text>( true );
+                tooltipText = interfaceSync.TooltipObject.GetComponentInChildren<Text>( true );
 
 
 

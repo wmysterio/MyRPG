@@ -11,7 +11,7 @@ namespace MyRPG.Sync {
 
         public GameObject PersonageWindowObject, 
                           BagWindowObject, 
-                          TooltipOject, 
+                          TooltipObject, 
                           MessageBoxObject, 
                           ConsoleObject, 
 

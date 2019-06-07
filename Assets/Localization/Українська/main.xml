@@ -172,7 +172,12 @@
     <string index="6">Сокира</string>
     <string index="7">Кастет</string>
   </WeaponEquipmentTypeNames>
-
+  <ItemInfo>
+    <string index="0">Ціна:</string>
+    <string index="1">не для продажу</string>
+    <string index="2">Дистанція:</string>
+    <string index="3">Пошкодження:</string>
+  </ItemInfo>
 
   <ItemNames>
     <string index="0">Золото</string>

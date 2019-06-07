@@ -68,7 +68,8 @@ namespace MyRPG.Configuration {
         public string[] EquipmentMaterialNames { get; set; }
         public string[] SpineEquipmentModeNames { get; set; }
         public string[] WeaponEquipmentTypeNames { get; set; }
-
+        public string[] ItemInfo { get; set; }
+        
     }
 
 }

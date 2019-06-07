@@ -172,7 +172,12 @@
     <string index="6">Ax</string>
     <string index="7">Brass Knuckles</string>
   </WeaponEquipmentTypeNames>
-
+  <ItemInfo>
+    <string index="0">Price:</string>
+    <string index="1">not for sale</string>
+    <string index="2">Range:</string>
+    <string index="3">Damage:</string>
+  </ItemInfo>
   
   <ItemNames>
     <string index="0">Gold</string>

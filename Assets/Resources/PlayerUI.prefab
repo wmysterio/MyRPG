@@ -797,7 +797,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PersonageWindowObject: {fileID: 1929517441399980}
   BagWindowObject: {fileID: 7521620168708125399}
-  TooltipOject: {fileID: 4644876027585346535}
+  TooltipObject: {fileID: 4644876027585346535}
   MessageBoxObject: {fileID: 567719981589192041}
   ConsoleObject: {fileID: 1402815671544514}
   CinematicObject: {fileID: 0}

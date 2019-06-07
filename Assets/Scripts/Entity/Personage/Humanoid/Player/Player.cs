@@ -34,12 +34,30 @@ namespace MyRPG {
             Keys = new RingForKeys();
 
             //
-            Loot.Add( new Items.BeltEquipment( 1, 0, 4, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Junk, 0, Items.MaterialOfEquipment.Cloth, 1 ) );
-            Loot.Add( new Items.ShouldersEquipment( 2, 0, 3, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Normal, 0, Items.MaterialOfEquipment.Cloth, 10 ) );
-            Loot.Add( new Items.BeltEquipment( 3, 0, 4, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Unusual, 0, Items.MaterialOfEquipment.Hauberk, 16 ) );
-            Loot.Add( new Items.HeadEquipment( 4, 0, 12, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Rare, 0, Items.MaterialOfEquipment.Leather, 3 ) );
-            Loot.Add( new Items.FeetEquipment( 5, 0, 44, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Epic, 0, Items.MaterialOfEquipment.Other, 12 ) );
-            Loot.Add( new Items.TorsoEquipment( 6, 0, 33, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Legendary, 0, Items.MaterialOfEquipment.Cloth, 1 ) );
+            Loot.Add( new Items.TrashItem( 1, 0, Sprites.ITEM_GOLD, 1 ) );
+            Loot.Add( new Items.ReagentItem( 2, 0, Sprites.ITEM_GOLD, 1 ) );
+            Loot.Add( new Items.QuestItem( 3, 0, Sprites.ITEM_GOLD, 1 ) );
+            Loot.Add( new Items.OtherItem( 4, 0, Sprites.ITEM_GOLD, 1, -1 ) );
+            Loot.Add( new Items.AccessoryEquipment( 5, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Junk, 0, 1 ) );
+            Loot.Add( new Items.NeckEquipment( 6, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Normal, 0, 1 ) );
+            Loot.Add( new Items.RingEquipment( 7, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Unusual, 0, 1 ) );
+            Loot.Add( new Items.BeltEquipment( 8, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Rare, 0, Items.MaterialOfEquipment.Cloth, 1 ) );
+            Loot.Add( new Items.FeetEquipment( 9, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Epic, 0, Items.MaterialOfEquipment.Hauberk, 1 ) );
+            Loot.Add( new Items.FootwearEquipment( 10, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Legendary, 0, Items.MaterialOfEquipment.Leather, 1 ) );
+            Loot.Add( new Items.HandsEquipment( 11, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Junk, 0, Items.MaterialOfEquipment.PlateArmour, 1 ) );
+            Loot.Add( new Items.HeadEquipment( 12, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Normal, 0, Items.MaterialOfEquipment.Cloth, 1 ) );
+            Loot.Add( new Items.ShouldersEquipment( 13, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Unusual, 0, Items.MaterialOfEquipment.Hauberk, 1 ) );
+            Loot.Add( new Items.TorsoEquipment( 14, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Rare, 0, Items.MaterialOfEquipment.Leather, 1 ) );
+            Loot.Add( new Items.ShieldSpine( 15, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Epic, 0, 1 ) );
+            Loot.Add( new Items.CloakSpine( 16, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Legendary, 0, 1 ) );
+            Loot.Add( new Items.AxWeapon( 17, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Junk, 0, 1 ) );
+            Loot.Add( new Items.BowWeapon( 18, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Normal, 0, 1 ) );
+            Loot.Add( new Items.BrassKnucklesWeapon( 19, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Unusual, 0, 1 ) );
+            Loot.Add( new Items.DaggerWeapon( 20, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Rare, 0, 1 ) );
+            Loot.Add( new Items.HammerWeapon( 21, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Epic, 0, 1 ) );
+            Loot.Add( new Items.StaffWeapon( 22, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Legendary, 0, 1 ) );
+            Loot.Add( new Items.SwordWeapon( 23, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Junk, 0, 1 ) );
+            Loot.Add( new Items.WandWeapon( 24, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Normal, 0, 1 ) );
             //
 
         }
