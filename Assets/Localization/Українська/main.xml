@@ -110,7 +110,7 @@
     <string index="22">Швидкість руху</string>
     <string index="23">Критичний шанс</string>
     <string index="24">Критичний ефект</string>
-    <string index="25">Швидкість відтворення</string>
+    <string index="25">Швидкість</string>
     <string index="26">Шанс парирування</string>
     <string index="27">Шанс блокування</string>
   </CharacteristicNames>

@@ -8,7 +8,11 @@ namespace MyRPG.Items {
 
     public sealed class BrassKnucklesWeapon : WeaponEquipment {
 
-        public BrassKnucklesWeapon( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int modelId, int count = 1 ) : base( id, nameId, level, sprite, rarity, 28, modelId, TypeOfWeapon.BrassKnuckles, count ) { }
+        public BrassKnucklesWeapon( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int modelId, int count = 1 ) : base( id, nameId, level, sprite, rarity, 28, modelId, TypeOfWeapon.BrassKnuckles, count ) {
+            baseCharacteristic.PhysicalAttackPower = 5;
+            baseCharacteristic.ChanceOfParrying = 25;
+            baseCharacteristic.Speed = 50;
+        }
         
     }
 

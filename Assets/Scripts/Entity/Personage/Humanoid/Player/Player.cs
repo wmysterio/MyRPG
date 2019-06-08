@@ -58,6 +58,12 @@ namespace MyRPG {
             Loot.Add( new Items.StaffWeapon( 22, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Legendary, 0, 1 ) );
             Loot.Add( new Items.SwordWeapon( 23, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Junk, 0, 1 ) );
             Loot.Add( new Items.WandWeapon( 24, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Normal, 0, 1 ) );
+
+            Equipments.Set( ( Items.EquipmentItem ) Loot[ 20 ] );
+            Equipments.Set( ( Items.EquipmentItem ) Loot[ 16 ] );
+            Equipments.Set( ( Items.EquipmentItem ) Loot[ 7 ] );
+            Equipments.Set( ( Items.EquipmentItem ) Loot[ 10 ] );
+
             //
 
         }

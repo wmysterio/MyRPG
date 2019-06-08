@@ -110,7 +110,7 @@
     <string index="22">Move Speed</string>
     <string index="23">Critical Chance</string>
     <string index="24">Critical Effect</string>
-    <string index="25">Cast Speed</string>
+    <string index="25">Speed</string>
     <string index="26">Chance Of Parrying</string>
     <string index="27">Chance Of Blocking</string>
   </CharacteristicNames>

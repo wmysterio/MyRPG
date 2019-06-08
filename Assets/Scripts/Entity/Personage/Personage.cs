@@ -158,7 +158,7 @@ namespace MyRPG {
                         StopCast();
                         return;
                     }
-                    CurrentCastTime += CurrentCharacteristic.CastSpeed * Time.deltaTime;
+                    CurrentCastTime += CurrentCharacteristic.Speed * Time.deltaTime;
                     var takeAmount = CurrentCastSpell.TakeResourcesAmount;
                     if( CurrentCastSpell.Type == TypeOfSpell.Reproduction && CurrentCastSpell.TakeResources != TypeOfResources.Nothing && CurrentCastSpell.TakeResourcesAmount > 0 ) {
                         switch( CurrentCastSpell.TakeResources ) {

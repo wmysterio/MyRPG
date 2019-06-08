@@ -34,7 +34,7 @@ namespace MyRPG {
                 return true;
             }
             if( HasTick ) {
-                tickTimer += Sender.CurrentCharacteristic.CastSpeed * Time.deltaTime;
+                tickTimer += Sender.CurrentCharacteristic.Speed * Time.deltaTime;
                 if( tickTimer > tickTimerLimit ) {
                     if( MaxCount > 0 && MaxCount > Count )
                         Count++;

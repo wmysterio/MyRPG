@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEditor;
 using MyRPG.Configuration;
+using MyRPG.Sync;
 
 #if UNITY_EDITOR
 namespace MyRPG.Tools {
@@ -34,27 +35,7 @@ namespace MyRPG.Tools {
             var playerUI = GameObject.Find( "PlayerUI" );
             if( playerUI == null )
                 return;
-            var rootObject = playerUI.transform.GetChild( 0 );
-            if( rootObject == null )
-                return;
-            var peronageWindow = rootObject.transform.GetChild( 0 );
-            if( peronageWindow == null )
-                return;
-            var bagWindow = rootObject.transform.GetChild( 1 );
-            if( bagWindow == null )
-                return;
-            var tooltipBox = rootObject.transform.GetChild( 2 );
-            if( tooltipBox == null )
-                return;
-            var messageBox = rootObject.transform.GetChild( 3 );
-            if( messageBox == null )
-                return;
-            var consoleWindow = rootObject.transform.GetChild( 4 );
-            if( consoleWindow == null )
-                return;
-            var cinematicView = rootObject.transform.GetChild( 5 );
-            if( cinematicView == null )
-                return;
+            var interfaceSync = playerUI.GetComponent<InterfaceSync>();
 
             List<Image> windowBackgrounds = new List<Image>();
             List<Outline> windowBorders = new List<Outline>();
@@ -80,26 +61,26 @@ namespace MyRPG.Tools {
                 allTexts.Add( uiText[ i ] );
 
             #region PERSONAGE WINDOW SETTING
-            windowBackgrounds.Add( peronageWindow.GetComponent<Image>() );
-            windowBorders.Add( peronageWindow.GetComponent<Outline>() );
-            var personageTitle = peronageWindow.transform.GetChild( 0 );
+            windowBackgrounds.Add( interfaceSync.PersonageWindowObject.GetComponent<Image>() );
+            windowBorders.Add( interfaceSync.PersonageWindowObject.GetComponent<Outline>() );
+            var personageTitle = interfaceSync.PersonageWindowObject.transform.GetChild( 0 );
             windowTitleBackgrounds.Add( personageTitle.GetComponent<Image>() );
             windowTitleTexts.Add( personageTitle.GetChild( 1 ).GetComponent<Text>() );
-            var сharacteristicTitle = peronageWindow.transform.GetChild( 1 );
+            var сharacteristicTitle = interfaceSync.PersonageWindowObject.transform.GetChild( 1 );
             var сharacteristicScrollbarVertical = сharacteristicTitle.transform.GetChild( 2 );
             allScrollBarBackgrounds.Add( сharacteristicScrollbarVertical.GetComponent<Image>() );
             allScrollBarColors.Add( сharacteristicScrollbarVertical.GetComponent<Scrollbar>() );
-            var StatsTitle = peronageWindow.transform.GetChild( 2 );
+            var StatsTitle = interfaceSync.PersonageWindowObject.transform.GetChild( 2 );
             windowBorders.Add( StatsTitle.GetComponent<Outline>() );
             #endregion
 
             #region BAG SETTING
-            windowBackgrounds.Add( bagWindow.GetComponent<Image>() );
-            windowBorders.Add( bagWindow.GetComponent<Outline>() );
-            var bagTitle = bagWindow.transform.GetChild( 0 );
+            windowBackgrounds.Add( interfaceSync.BagWindowObject.GetComponent<Image>() );
+            windowBorders.Add( interfaceSync.BagWindowObject.GetComponent<Outline>() );
+            var bagTitle = interfaceSync.BagWindowObject.transform.GetChild( 0 );
             windowTitleBackgrounds.Add( bagTitle.GetComponent<Image>() );
             windowTitleTexts.Add( bagTitle.GetChild( 2 ).GetComponent<Text>() );
-            var bagButtonsTransform = bagWindow.transform.GetChild( 1 );
+            var bagButtonsTransform = interfaceSync.BagWindowObject.transform.GetChild( 1 );
             var bagButtonComponents = bagButtonsTransform.GetComponentsInChildren<Button>( true );
             var bagTextComponents = bagButtonsTransform.GetComponentsInChildren<Text>( true );
             var bagBorderComponents = bagButtonsTransform.GetComponentsInChildren<Outline>( true );
@@ -114,10 +95,10 @@ namespace MyRPG.Tools {
             #endregion
 
             #region CONSOLE SETTING
-            windowBackgrounds.Add( consoleWindow.GetComponent<Image>() );
-            windowBorders.Add( consoleWindow.GetComponent<Outline>() );
-            var consoleInputField = consoleWindow.GetComponent<InputField>();
-            var consoleText = consoleWindow.GetComponentsInChildren<Text>( true );
+            windowBackgrounds.Add( interfaceSync.ConsoleObject.GetComponent<Image>() );
+            windowBorders.Add( interfaceSync.ConsoleObject.GetComponent<Outline>() );
+            var consoleInputField = interfaceSync.ConsoleObject.GetComponent<InputField>();
+            var consoleText = interfaceSync.ConsoleObject.GetComponentsInChildren<Text>( true );
             #endregion
 
             // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
@@ -156,13 +137,16 @@ namespace MyRPG.Tools {
                 consoleText[ i ].color = windowTextColor;
             }
 
-            messageBox.GetComponent<Image>().color = new Color32( 0, 0, 0, 191 );
-            messageBox.GetComponent<Outline>().effectColor = new Color32( 255, 255, 255, 191 );
-            messageBox.GetComponentInChildren<Text>().color = new Color32( 255, 255, 255, 255 );
-            tooltipBox.GetComponent<Image>().color = new Color32( 0, 0, 0, 191 );
-            tooltipBox.GetComponent<Outline>().effectColor = new Color32( 255, 255, 255, 191 );
-            tooltipBox.GetComponentInChildren<Text>().color = new Color32( 255, 255, 255, 255 );
-            cinematicView.GetComponentInChildren<Text>().color = Color.white;
+            interfaceSync.MessageBoxObject.GetComponent<Image>().color = new Color32( 0, 0, 0, 191 );
+            interfaceSync.MessageBoxObject.GetComponent<Outline>().effectColor = new Color32( 255, 255, 255, 191 );
+            interfaceSync.MessageBoxObject.GetComponentInChildren<Text>().color = new Color32( 255, 255, 255, 255 );
+            interfaceSync.TooltipObject.GetComponent<Image>().color = new Color32( 0, 0, 0, 191 );
+            interfaceSync.TooltipObject.GetComponent<Outline>().effectColor = new Color32( 255, 255, 255, 191 );
+            var tooltipTexts = interfaceSync.TooltipObject.GetComponentsInChildren<Text>();
+            for( int i = 0; i < tooltipTexts.Length; i++ )
+                tooltipTexts[ i ].color = new Color32( 255, 255, 255, 255 );
+
+            //interfaceSync.CinematicObject.GetComponentInChildren<Text>().color = Color.white;
 
             for( int i = 0; i < allScrollBarBackgrounds.Count; i++ )
                 allScrollBarBackgrounds[ i ].color = scrollBarBackgroundColor;

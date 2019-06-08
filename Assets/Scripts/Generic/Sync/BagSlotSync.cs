@@ -58,7 +58,10 @@ namespace MyRPG.Sync {
                     stringBuilder.Append( $")\r\n" );
                 }
 
-                // ...
+                equipmentItem.CurrentCharacteristic.Each( ( slot, value, slotName ) => {
+                    if( value > 0f )
+                        stringBuilder.AppendLine( $"+{value} {slotName}" );
+                } );
 
             } else { stringBuilder.AppendLine( $"{item.Description}" ); }
             stringBuilder.Append( $"\r\n{( item.ForSelling ? $"{Localization.Current.ItemInfo[ 0 ]} {item.Price}" : Localization.Current.ItemInfo[ 1 ] )}" );
