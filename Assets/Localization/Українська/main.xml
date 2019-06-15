@@ -176,7 +176,7 @@
     <string index="0">Ціна:</string>
     <string index="1">не для продажу</string>
     <string index="2">Дистанція:</string>
-    <string index="3">Пошкодження:</string>
+    <string index="3">Пошкодження: {0} за {1} с.</string>
   </ItemInfo>
 
   <ItemNames>

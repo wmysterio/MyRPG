@@ -176,7 +176,7 @@
     <string index="0">Price:</string>
     <string index="1">not for sale</string>
     <string index="2">Range:</string>
-    <string index="3">Damage:</string>
+    <string index="3">Damage: {0} per {1} s.</string>
   </ItemInfo>
   
   <ItemNames>

@@ -4,6 +4,7 @@
 	Сайт: http://metal-prog.zzz.com.ua/
 */
 using UnityEngine;
+using System.Text;
 using MyRPG.Configuration;
 
 namespace MyRPG.Items {
@@ -130,7 +131,54 @@ namespace MyRPG.Items {
             Timer = 0f;
             this.algorithmUseId = algorithmUseId;
         }
-        
+
+        public string GetTooltipText() {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine( $"<size=36>{Colors.WrapString( Name, Rarity ).ToUpper()}</size>" );
+            sb.AppendLine( $"{Localization.Current.StatNames[ 4 ]} {Level}" );
+            if( Class == ClassOfItem.Equipment ) {
+                var equipmentItem = ( EquipmentItem ) this;
+                if( equipmentItem.EquipmentPart == PartOfEquipment.Weapon ) {
+                    var weaponEquipment = ( WeaponEquipment ) equipmentItem;
+                    sb.AppendLine( $"{weaponEquipment.EquipmentPartName} ({equipmentItem.Description})" );
+                    sb.AppendLine( $"{Localization.Current.ItemInfo[ 2 ]} {weaponEquipment.MinRange}-{weaponEquipment.MaxRange}" );
+                    sb.AppendFormat( Localization.Current.ItemInfo[ 3 ], weaponEquipment.MinDamage, weaponEquipment.Timer );
+                    sb.Append( "\r\n" );
+                } else {
+                    sb.Append( $"{equipmentItem.ClassName} ({equipmentItem.Description}" );
+                    if( equipmentItem.Material != MaterialOfEquipment.Other )
+                        sb.Append( $", {equipmentItem.MaterialName}" );
+                    sb.Append( ")\r\n" );
+                }
+                if( Player.Current.Equipments.IsSlotFree( equipmentItem.EquipmentPart ) ) {
+                    equipmentItem.CurrentCharacteristic.Each( ( slot, value, slotName ) => {
+                        if( value > 0f )
+                            sb.AppendLine( Colors.WrapString( $"+{value} {slotName}", Colors.Mode.POSITIV_VALUE ) );
+                    } );
+                } else {
+                    var playerEquipment = Player.Current.Equipments[ equipmentItem.EquipmentPart ];
+                    if( equipmentItem.Id == playerEquipment.Id ) {
+                        playerEquipment.CurrentCharacteristic.Each( ( slot, value, slotName ) => {
+                            if( value > 0f )
+                                sb.AppendLine( $"+{value} {slotName}" );
+                        } );
+                    } else {
+                        var comparedCharacteristic = equipmentItem.CurrentCharacteristic.Compare( playerEquipment.CurrentCharacteristic );
+                        comparedCharacteristic.Each( ( slot, value, slotName ) => {
+                            if( value == 0f )
+                                return;
+                            if( value > 0f )
+                                sb.AppendLine( Colors.WrapString( $"+{value} {slotName}", Colors.Mode.POSITIV_VALUE ) );
+                            if( 0f > value )
+                                sb.AppendLine( Colors.WrapString( $"{value} {slotName}", Colors.Mode.NEGATIVE_VALUE ) );
+                        } );
+                    }
+                }
+            } else { sb.AppendLine( Description ); }
+            sb.Append( $"\r\n{( ForSelling ? $"{Localization.Current.ItemInfo[ 0 ]} {Price}" : Localization.Current.ItemInfo[ 1 ] )}" );
+            return sb.ToString();
+        }
+
         public virtual void Use( Personage target = null ) { }
         public virtual void Update() { }
 

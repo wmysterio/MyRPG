@@ -8,22 +8,7 @@ using MyRPG.Configuration;
 namespace MyRPG.Items {
 
     public abstract class EquipmentItem : Item {
-        
-        private float strength;
 
-        protected Characteristic baseCharacteristic;
-        
-        public float Strength {
-            get { return strength; }
-            set {
-                if( 0 > value )
-                    value = 0;
-                if( value > 100 )
-                    value = 100;
-                strength = value;
-            }
-        }
-        
         public Characteristic CurrentCharacteristic { get; private set; }
         public PartOfEquipment EquipmentPart { get; private set; }
         public MaterialOfEquipment Material { get; private set; }
@@ -36,15 +21,9 @@ namespace MyRPG.Items {
             Material = material;
             ModelID = modelId;
             price = price + getPriceByMaterial( material ) + getPriceByPartOfEquipment( part );
-            baseCharacteristic = Characteristic.CreateEmpty();
             CurrentCharacteristic = Characteristic.CreateEmpty();
             MaterialName = Localization.Current.EquipmentMaterialNames[ ( int ) material ];
             EquipmentPartName = Localization.Current.EquipmentPartNames[ ( int ) part ];
-        }
-        
-        public override void Update() {
-            base.Update();
-            CurrentCharacteristic = ( CurrentCharacteristic.Clear() + baseCharacteristic ) / ( 100f - Strength );
         }
         
     }

@@ -17,11 +17,11 @@ namespace MyRPG.Items {
             ModeName = Localization.Current.SpineEquipmentModeNames[ ( int ) mode ];
         }
         
-        public enum SpineMode : int {
-            Shield = 0,
-            Cloak = 1
-        }
+    }
 
+    public enum SpineMode : int {
+        Shield = 0,
+        Cloak = 1
     }
 
 }

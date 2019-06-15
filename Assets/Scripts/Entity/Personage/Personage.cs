@@ -32,13 +32,13 @@ namespace MyRPG {
         public float CurrentEnergy { get; private set; }
         public EffectList Effects { get; private set; }
         public Bag Loot { get; private set; }
-        public EquipmentList Equipments { get; private set; }
         public SkillBook SpellBook { get; private set; }
         public int Level { get; private set; }
-        public Characteristic CurrentCharacteristic { get; private set; }
         public float CurrentCastTime { get; private set; }
         public float MaxCastTime { get; private set; }
         public Spell CurrentCastSpell { get; private set; }
+
+        public Characteristic CurrentCharacteristic { get; protected set; }
 
         public float GlobalCoolDown { get; set; }
         public bool Immortal { get; set; }
@@ -67,7 +67,6 @@ namespace MyRPG {
                 defaultTask = new WalkToSpawnPointTask();
             }
 
-
             IsDead = false;
             IsStopped = false;
             Immortal = false;
@@ -84,7 +83,6 @@ namespace MyRPG {
             Effects = new EffectList();
             SpellBook = new SkillBook();
             Loot = new Bag( IsPlayer );
-            Equipments = new EquipmentList();
             Target = null;
             ClearTask();
             velocity = Vector3.zero;
@@ -101,9 +99,9 @@ namespace MyRPG {
             CurrentCharacteristic = Characteristic.CreateEmpty();
             updateCharacteristic();
         }
-        private void updateCharacteristic() {
+        protected virtual void updateCharacteristic() {
             Loot.UpdateItems();
-            CurrentCharacteristic = ( ( ( CurrentCharacteristic.Clear() + baseCharacteristic ) + Equipments.CurrentCharacteristic ) + Effects.Update() );
+            CurrentCharacteristic = ( ( CurrentCharacteristic.Clear() + baseCharacteristic ) + Effects.Update() );
             SpellBook.Update();
         }
 
@@ -565,7 +563,7 @@ namespace MyRPG {
             MaxCastTime = 0f;
             CurrentCastTime = 0f;
         }
-        
+
     }
 
     public enum RankOfPersonage : int {

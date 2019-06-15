@@ -15,6 +15,14 @@ namespace MyRPG {
         public static Player Current { get; private set; }
         public static bool Exist() { return Current != null; }
 
+        private float strength;
+
+        public float Strength {
+            get { return strength; }
+            set { strength = Mathf.Clamp( value, 0f, 100f ); }
+        }
+
+        public EquipmentList Equipments { get; private set; }
         public int Money { get; private set; }
         public int CurrentExperience { get; private set; }
         public int TotalExperience { get; private set; }
@@ -27,11 +35,14 @@ namespace MyRPG {
             if( Current != null )
                 throw new System.Exception( "Гравець може бути тільки один!" );
             gameObject.tag = TAG;
+            strength = 100f;
             Current = this;
             Money = 0;
             CurrentExperience = 0;
             TotalExperience = calculateMaxExperience();
             Keys = new RingForKeys();
+            Equipments = new EquipmentList();
+
 
             //
             Loot.Add( new Items.TrashItem( 1, 0, Sprites.ITEM_GOLD, 1 ) );
@@ -53,19 +64,25 @@ namespace MyRPG {
             Loot.Add( new Items.AxWeapon( 17, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Junk, 0, 1 ) );
             Loot.Add( new Items.BowWeapon( 18, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Normal, 0, 1 ) );
             Loot.Add( new Items.BrassKnucklesWeapon( 19, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Unusual, 0, 1 ) );
-            Loot.Add( new Items.DaggerWeapon( 20, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Rare, 0, 1 ) );
+            Loot.Add( new Items.DaggerWeapon( 20, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Rare, 0, 10 ) );
             Loot.Add( new Items.HammerWeapon( 21, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Epic, 0, 1 ) );
             Loot.Add( new Items.StaffWeapon( 22, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Legendary, 0, 1 ) );
             Loot.Add( new Items.SwordWeapon( 23, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Junk, 0, 1 ) );
             Loot.Add( new Items.WandWeapon( 24, 0, 100, Sprites.ITEM_GOLD, Items.TypeOfItemRarity.Normal, 0, 1 ) );
 
-            Equipments.Set( ( Items.EquipmentItem ) Loot[ 20 ] );
-            Equipments.Set( ( Items.EquipmentItem ) Loot[ 16 ] );
-            Equipments.Set( ( Items.EquipmentItem ) Loot[ 7 ] );
-            Equipments.Set( ( Items.EquipmentItem ) Loot[ 10 ] );
+            Equipments.Set( Loot[ 20 ] );
+            Equipments.Set( Loot[ 16 ] );
+            Equipments.Set( Loot[ 7 ] );
+            Equipments.Set( Loot[ 10 ] );
 
             //
 
+        }
+
+        protected override void updateCharacteristic() {
+            base.updateCharacteristic();
+            if( Equipments != null )
+                CurrentCharacteristic += Equipments.CurrentCharacteristic / ( 100f - Strength );
         }
 
         protected override void update() {

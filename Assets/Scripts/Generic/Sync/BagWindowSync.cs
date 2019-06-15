@@ -52,24 +52,31 @@ namespace MyRPG.Sync {
                     // to do
                 } );
                 isNotReady = false;
+                RefreshItems();
             }
+
+        }
+
+        public void RefreshItems() {
             int iterator = Player.Current.Loot.Each( ( item, i ) => {
                 buttons[ i ].image.sprite = item.SpriteIcon;
                 counters[ i ].text = item.Count.ToString();
+                if( Player.Current.Equipments.HasItem( item.Id ) ) {
+                    borders[ i ].effectDistance = new Vector2( 3f, 3f );
+                } else {
+                    borders[ i ].effectDistance = new Vector2( 2f, 2f );
+                }
                 borders[ i ].effectColor = Colors.BaseColor( item.Rarity );
                 slots[ i ].Number = i;
                 slots[ i ].Id = item.Id;
             } );
-            for( ; iterator < Bag.SLOT_COUNT; iterator++ )
-                Hide( iterator );
-        }
-
-        public void Hide( int slot ) {
-            buttons[ slot ].image.sprite = null;
-            counters[ slot ].text = string.Empty;
-            borders[ slot ].effectColor = Colors.BaseColor( Colors.Mode.WINDOW_BORDER_COLOR );
-            slots[ slot ].Number = -1;
-            slots[ slot ].Id = -1;
+            for( ; iterator < Bag.SLOT_COUNT; iterator++ ) {
+                buttons[ iterator ].image.sprite = null;
+                counters[ iterator ].text = string.Empty;
+                borders[ iterator ].effectColor = Colors.BaseColor( Colors.Mode.WINDOW_BORDER_COLOR );
+                slots[ iterator ].Number = -1;
+                slots[ iterator ].Id = -1;
+            }
         }
 
     }

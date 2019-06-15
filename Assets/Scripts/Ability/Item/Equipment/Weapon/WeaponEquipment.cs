@@ -3,14 +3,11 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using UnityEngine;
 using MyRPG.Configuration;
 
 namespace MyRPG.Items {
 
     public abstract class WeaponEquipment : EquipmentItem, IDamage {
-
-        private float delayTimer;
 
         protected float minDamage, minRange, maxRange;
 
@@ -21,34 +18,14 @@ namespace MyRPG.Items {
         public TypeOfWeapon Type { get; private set; }
         public string TypeName { get; private set; }
 
-        public float Delay { get; protected set; }
-
         protected WeaponEquipment( int id, int nameId, int level, Sprites sprite, TypeOfItemRarity rarity, int descriptionId, int modelId, TypeOfWeapon type, int count = 1 ) : base( id, nameId, level, sprite, rarity, descriptionId, modelId, MaterialOfEquipment.Other, PartOfEquipment.Weapon, count ) {
             Type = type;
-            Delay = 4f;
-            delayTimer = 0f;
+            Timer = 4f;
             minDamage = 1f;
             minRange = 1f;
             maxRange = 2f;
             price = price + getPriceByTypeOfWeapon( type );
             TypeName = Localization.Current.WeaponEquipmentTypeNames[ ( int ) type ];
-        }
-        
-        public bool ReadyToUse() { return Timer == 0f; }
-
-        public override void Update() {
-            base.Update();
-            if( Delay > delayTimer ) {
-                delayTimer += 1f * Time.deltaTime;
-                if( delayTimer > Delay )
-                    delayTimer = Delay;
-            }
-            Timer = Mathf.Round( Delay - delayTimer );
-        }
-
-        public override void Use( Personage target = null ) {
-            base.Use( target );
-            delayTimer = 0f;
         }
 
     }

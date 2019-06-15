@@ -35,13 +35,10 @@ namespace MyRPG {
                 return 0f;
             return ( 100f * curValue ) / maxValue;
         }
-        public static float GetValueOfPercentage( float maxValue, float percent ) {
-            return ( percent * maxValue ) / 100f;
-        }
+        public static float GetValueOfPercentage( float maxValue, float percent ) { return ( percent * maxValue ) / 100f; }
 
         private int iterator = 0;
         private StringBuilder stringBuilder = new StringBuilder();
-
         private float[] slots = new float[ SLOT_COUNT ];
 
         /* характеристики атаки */
