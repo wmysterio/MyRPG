@@ -60,6 +60,26 @@ namespace MyRPG.Tools {
                 messageBoxText[ i ].color = Colors.BaseColor( Colors.Mode.MESSAGEBOX_TEXT_COLOR );
             for( int i = 0; i < bagText.Length; i++ )
                 bagText[ i ].color = Colors.BaseColor( Colors.Mode.BAG_ITEM_AMOUNT_BACKGROUND_COLOR );
+            var personageWindowTitleButtons = interfaceSync.PersonageWindowObject.transform.GetChild( 0 ).GetComponentsInChildren<Button>();
+            var bagWindowTitleButtons = interfaceSync.BagWindowObject.transform.GetChild( 0 ).GetComponentsInChildren<Button>();
+            for( int i = 0; i < personageWindowTitleButtons.Length; i++ ) {
+                var titleButtonsColor = personageWindowTitleButtons[ i ].colors;
+                titleButtonsColor.normalColor = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
+                titleButtonsColor.highlightedColor = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
+                titleButtonsColor.pressedColor = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
+                titleButtonsColor.selectedColor = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
+                titleButtonsColor.disabledColor = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
+                personageWindowTitleButtons[ i ].colors = titleButtonsColor;
+            }
+            for( int i = 0; i < bagWindowTitleButtons.Length; i++ ) {
+                var titleButtonsColor = bagWindowTitleButtons[ i ].colors;
+                titleButtonsColor.normalColor = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
+                titleButtonsColor.highlightedColor = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
+                titleButtonsColor.pressedColor = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
+                titleButtonsColor.selectedColor = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
+                titleButtonsColor.disabledColor = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
+                bagWindowTitleButtons[ i ].colors = titleButtonsColor;
+            }
             for( int i = 0; i < titleText.Count; i++ ) {
                 titleText[ i ].color = Colors.BaseColor( Colors.Mode.WINDOW_TITLE_TEXT_COLOR );
                 titleText[ i ].alignByGeometry = true;

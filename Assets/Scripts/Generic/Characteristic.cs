@@ -83,11 +83,7 @@ namespace MyRPG {
 
         public Characteristic Clear() { for( int i = 0; i < SLOT_COUNT; i++ ) slots[ i ] = 0f; return this; }
 
-        public string GetSlotName( byte slot ) {
-            if( slot >= SLOT_COUNT )
-                return string.Empty;
-            return Localization.Current.CharacteristicNames[ slot ];
-        }
+        public string GetSlotName( int slot ) { return Localization.Current.CharacteristicNames[ slot ]; }
 
         public string GetNames() {
             stringBuilder.Clear();
@@ -106,14 +102,14 @@ namespace MyRPG {
         public void Each( CharacteristicCallbackHandler callback ) {
             if( callback == null )
                 return;
-            for( int i = 0; i < SLOT_COUNT; i++ )
-                callback.Invoke( i, slots[ i ], Localization.Current.CharacteristicNames[ i ] );
+            for( iterator = 0; iterator < SLOT_COUNT; iterator++ )
+                callback.Invoke( iterator, slots[ iterator ], Localization.Current.CharacteristicNames[ iterator ] );
         }
 
         public Characteristic Compare( Characteristic other ) {
             var c = new Characteristic();
-            for( int i = 0; i < SLOT_COUNT; i++ )
-                c.slots[ i ] = slots[ i ] - other.slots[ i ];
+            for( iterator = 0; iterator < SLOT_COUNT; iterator++ )
+                c.slots[ iterator ] = slots[ iterator ] - other.slots[ iterator ];
             return c;
         }
 
