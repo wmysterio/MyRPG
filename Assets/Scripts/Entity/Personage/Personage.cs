@@ -5,6 +5,7 @@
 */
 using UnityEngine;
 using MyRPG.Configuration;
+using MyRPG.AnimGroups;
 using MyRPG.Patterns.Strategy.PersonageTasks;
 
 namespace MyRPG {
@@ -13,6 +14,8 @@ namespace MyRPG {
 
         public const int MIN_LEVEL = 1;
         public const int MAX_LEVEL = 100;
+
+        public GroupOfAnimation AnimationGroup { get; private set; }
 
         private Characteristic baseCharacteristic;
         private RelationshipOfPersonage relationship = RelationshipOfPersonage.Friendly;
@@ -67,6 +70,9 @@ namespace MyRPG {
                 defaultTask = new WalkToSpawnPointTask();
             }
 
+            Type = type;
+            AnimationGroup = GroupOfAnimation.Greate( this );
+            
             IsDead = false;
             IsStopped = false;
             Immortal = false;
@@ -250,6 +256,9 @@ namespace MyRPG {
         }
 
         public bool IsFriendlyOf( Personage personage ) { return relationship == personage.relationship; }
+
+
+        //
         public void MoveForward() {
             if( !EnableWalking )
                 return;
@@ -283,6 +292,8 @@ namespace MyRPG {
             moveFlag = false;
             velocity.y += 4f;
         }
+        //
+
         public void Restore() {
             if( IsDead )
                 return;
@@ -317,7 +328,7 @@ namespace MyRPG {
             IsDead = true;
             StopCast();
         }
-        public void Reanimate( float percent = 20f ) {
+        public void Reborn( float percent = 20f ) {
             if( !IsDead )
                 return;
             IsDead = false;

@@ -21,7 +21,7 @@ namespace MyRPG.Sync {
         private char[] argumentSeparators = new char[] { ' ' };
 
         private void Awake() {
-            allCommands.Add( "PUT_AT", PUT_AT );
+            allCommands.Add( nameof( PUT_AT ).ToUpper(), PUT_AT );
 
 
 
