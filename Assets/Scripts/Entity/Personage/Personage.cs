@@ -119,12 +119,12 @@ namespace MyRPG {
             updateCharacteristic();
             moveFlag = true;
 
-            if( eventSystemScript.MouseHover ) {
-                if( Player.Exist() && InputManager.IsMouseDown( MouseKeyName.Left ) ) {
-                    if( !Player.Current.NoLongerNeeded && !Player.Current.IsDead )
-                        Player.Current.Target = this;
-                }
-            }
+            //if( eventSystemScript.MouseHover ) {
+            //    if( Player.Exist() && InputManager.IsMouseDown( MouseKeyName.Left ) ) {
+            //        if( !Player.Current.NoLongerNeeded && !Player.Current.IsDead )
+            //            Player.Current.Target = this;
+            //    }
+            //}
             if( Target != null ) {
                 if( !Target.Targetable )
                     Target = null;

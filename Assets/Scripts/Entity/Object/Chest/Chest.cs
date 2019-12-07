@@ -44,7 +44,7 @@ namespace MyRPG {
                 return;
             if( !Player.Current.CanMove || !Player.Current.IsStopped )
                 return;
-            if( !eventSystemScript.MouseHover || !InputManager.IsMouseUp( MouseKeyName.Right ) )
+            if( !MouseHover || !InputManager.IsMouseUp( MouseKeyName.Right ) )
                 return;
             if( !Near( Player.Current, 2f ) )
                 return;

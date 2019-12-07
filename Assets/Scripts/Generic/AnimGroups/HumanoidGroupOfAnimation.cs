@@ -18,9 +18,7 @@ namespace MyRPG.AnimGroups {
 
     public sealed class HumanoidGroupOfAnimation : GroupOfAnimation {
 
-        public HumanoidGroupOfAnimation( Personage personage ) : base( personage ) {
-            animator = personage.GetGameObject().GetComponent<Animator>();
-        }
+        public HumanoidGroupOfAnimation( Personage personage ) : base( personage ) { }
 
         public override bool IsInAir {
             get { return animator.GetBool( nameof( IsInAir ) ); }

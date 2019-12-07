@@ -3,24 +3,17 @@
 	Автор: Василь ( wmysterio )
 	Сайт: http://metal-prog.zzz.com.ua/
 */
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using UnityEngine;
-
 using MyRPG.Items;
 
 namespace MyRPG.AnimGroups {
 
     public abstract class GroupOfAnimation {
 
-        private delegate GroupOfAnimation HadlerGroupOfAnimation( Personage personage );
+        private delegate GroupOfAnimation HandlerGroupOfAnimation( Personage personage );
 
-        private static Dictionary<TypeOfPersonage, HadlerGroupOfAnimation> createGroup = new Dictionary<TypeOfPersonage, HadlerGroupOfAnimation>() {
+        private static Dictionary<TypeOfPersonage, HandlerGroupOfAnimation> createGroup = new Dictionary<TypeOfPersonage, HandlerGroupOfAnimation>() {
             { TypeOfPersonage.Humanoid, p => { return new HumanoidGroupOfAnimation( p ); } }
             // ...
         };
@@ -33,7 +26,7 @@ namespace MyRPG.AnimGroups {
         protected Animator animator;
 
         private GroupOfAnimation() { }
-        protected GroupOfAnimation( Personage personage ) {
+        public GroupOfAnimation( Personage personage ) {
             animator = personage.GetGameObject().GetComponent<Animator>();
         }
 

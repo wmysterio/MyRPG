@@ -9,50 +9,53 @@ using UnityEngine;
 namespace MyRPG {
 
     public partial class Entity {
- 
+
         public sealed class EntityUpdator : MonoBehaviour {
 
-            public static readonly Dictionary<Entity, Entity> AllEntitys = new Dictionary<Entity, Entity>();
+            public static Dictionary<Entity, Entity> ActiveEntities = new Dictionary<Entity, Entity>();
+            public static Dictionary<Entity, Entity> PassiveEntities = new Dictionary<Entity, Entity>();
+
             public static GameObject Container { get; set; }
 
             private Entity targetUpdate = null;
 
-            public bool MouseHover { get; private set; }
-
             public void AddReference( Entity entity ) {
-                if( entity == null )
-                    return;
-                if( AllEntitys.ContainsKey( entity ) )
-                    return;
                 targetUpdate = entity;
-                AllEntitys.Add( entity, entity );
+                ActiveEntities.Add( entity, entity );
+                this.enabled = true;
             }
 
-            private void Awake() { MouseHover = false; }
-            private void Update() {
+            private void Awake() { this.enabled = false; }
+            private void Update() { targetUpdate.update(); }
+            private void FixedUpdate() { targetUpdate.physics(); }
+
+            private void OnEnable() {
                 if( targetUpdate == null )
                     return;
-                if( targetUpdate.NoLongerNeeded ) {
-                    Destroy( targetUpdate.gameObject );
-                    return;
-                }
-                targetUpdate.update();
+                if( PassiveEntities.ContainsKey( targetUpdate ) )
+                    PassiveEntities.Remove( targetUpdate );
+                if( !ActiveEntities.ContainsKey( targetUpdate ) )
+                    ActiveEntities.Add( targetUpdate, targetUpdate );
             }
-            private void FixedUpdate() {
+            private void OnDisable() {
                 if( targetUpdate == null )
                     return;
-                targetUpdate.physics();
+                if( ActiveEntities.ContainsKey( targetUpdate ) )
+                    ActiveEntities.Remove( targetUpdate );
+                if( !PassiveEntities.ContainsKey( targetUpdate ) )
+                    PassiveEntities.Add( targetUpdate, targetUpdate );
             }
             private void OnDestroy() {
-                MouseHover = false;
-                if( !AllEntitys.ContainsKey( targetUpdate ) )
-                    return;
-                AllEntitys.Remove( targetUpdate );
+                if( PassiveEntities.ContainsKey( targetUpdate ) )
+                    PassiveEntities.Remove( targetUpdate );
+                if( ActiveEntities.ContainsKey( targetUpdate ) )
+                    ActiveEntities.Remove( targetUpdate );
                 targetUpdate = null;
             }
-            private void OnMouseEnter() { MouseHover = false; }
-            private void OnMouseOver() { MouseHover = true; }
-            private void OnMouseExit() { MouseHover = false; }
+
+            private void OnMouseEnter() { targetUpdate.onMouseEnter(); }
+            private void OnMouseOver() { targetUpdate.onMouseOver(); }
+            private void OnMouseExit() { targetUpdate.onMouseExit(); }
 
         }
 
