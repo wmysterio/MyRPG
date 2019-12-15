@@ -176,6 +176,18 @@ namespace MyRPG {
         public static bool IsKeyDown( KeyName name ) { return Input.GetKeyDown( keys[ name ] ); }
         public static bool IsKeyUp( KeyName name ) { return Input.GetKeyUp( keys[ name ] ); }
         public static bool AnyKeyDown() { return Input.anyKeyDown; }
+
+
+        public static float GetKeyAxisRaw( KeyName negative, KeyName positive ) {
+            if( keys[ negative ] != KeyCode.None && Input.GetKey( keys[ negative ] ) )
+                return -1f;
+            if( keys[ positive ] != KeyCode.None && Input.GetKey( keys[ positive ] ) )
+                return 1f;
+            return 0f;
+        }
+        public static bool IsKeyBinded( KeyName name ) { return keys[ name ] != KeyCode.None; }
+
+
         public static bool GetMouse( MouseKeyName name ) { return Input.GetMouseButton( ( int ) name ); }
         public static bool IsMouseDown( MouseKeyName name ) { return Input.GetMouseButtonDown( ( int ) name ); }
         public static bool IsMouseUp( MouseKeyName name ) { return Input.GetMouseButtonUp( ( int ) name ); }

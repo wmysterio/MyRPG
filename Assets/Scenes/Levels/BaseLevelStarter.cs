@@ -24,14 +24,14 @@ namespace MyRPG.Levels {
 
             while( Room.Loading ) { yield return null; }
 
-            Model.Request( 0 );
+            Model.Request( 99 );
             Model.Request( GetUsedModels() );
             yield return Model.LoadRequestedAsync();
 
             if( Player.Exist() ) {
                 Player.Current.Position = overridePosition ? overrideStartPoint : transform.position;
             } else {
-                new Player( "Player", Personage.MAX_LEVEL / 2, 0, transform.position );
+                new Player( "Player", Personage.MAX_LEVEL / 2, 99, transform.position );
                 Camera.AttachToPlayer();
             }
             overridePosition = false;

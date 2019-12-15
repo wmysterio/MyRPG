@@ -66,11 +66,13 @@ namespace MyRPG {
 
                     Player.Current.Turn( Input.GetAxis( "Mouse X" ) * Player.TURN_SPEED );
 
-                    if( InputManager.GetKey( KeyName.TURN_LEFT ) ) {
-                        Player.Current.MoveLeft();
-                    } else if( InputManager.GetKey( KeyName.TURN_RIGHT ) ) {
-                        Player.Current.MoveRight();
-                    }
+                    Player.Current.AnimationGroup.TurnLeftRight = InputManager.GetKeyAxisRaw( KeyName.TURN_LEFT, KeyName.TURN_RIGHT );
+
+                    //if( InputManager.GetKey( KeyName.TURN_LEFT ) ) {
+                    //    Player.Current.MoveLeft();
+                    //} else if( InputManager.GetKey( KeyName.TURN_RIGHT ) ) {
+                    //    Player.Current.MoveRight();
+                    //}
 
                     eulerAngles.x = Mathf.Clamp( eulerAngles.x - Player.TURN_SPEED * Input.GetAxis( "Mouse Y" ) * Time.deltaTime, MIN_ANGLE, MAX_ANGLE );
 

@@ -15,432 +15,125 @@ namespace MyRPG {
         public const int MIN_LEVEL = 1;
         public const int MAX_LEVEL = 100;
 
-        public GroupOfAnimation AnimationGroup { get; private set; }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-        private Characteristic baseCharacteristic;
         private RelationshipOfPersonage relationship = RelationshipOfPersonage.Friendly;
-        private Vector3 velocity;
-        private bool moveFlag;
+        private EffectList effects = new EffectList();
+        private SkillBook spellBook = new SkillBook();
         private IPersonageTask currentTask, defaultTask;
-        private Personage castTarget;
-        private float coolDownTimer;
+        private GroupOfAnimation animationGroup;
+        private Characteristic baseCharacteristic;
+        private TypeOfPersonage type;
+        private RankOfPersonage rank;
+        private Bag loot;
+        private int level;
+        private bool isPlayer, isDead;
+        private float currentHealth, currentMana, currentEnergy;
 
-        public bool IsPlayer { get; private set; }
-        public TypeOfPersonage Type { get; private set; }
-        public RankOfPersonage Rank { get; private set; }
-        public bool IsDead { get; private set; }
-        public bool IsStopped { get; private set; }
-        public float CurrentHealth { get; private set; }
-        public float CurrentMana { get; private set; }
-        public float CurrentEnergy { get; private set; }
-        public EffectList Effects { get; private set; }
-        public Bag Loot { get; private set; }
-        public SkillBook SpellBook { get; private set; }
-        public int Level { get; private set; }
-        public float CurrentCastTime { get; private set; }
-        public float MaxCastTime { get; private set; }
-        public Spell CurrentCastSpell { get; private set; }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-        public Characteristic CurrentCharacteristic { get; protected set; }
+        protected Characteristic currentCharacteristic;
 
-        public float GlobalCoolDown { get; set; }
-        public bool Immortal { get; set; }
-        public bool EnableJumping { get; set; }
-        public bool CanMove { get; set; }
-        public bool Targetable { get; set; }
-        public bool EnableWalking { get; set; }
-        public Personage Target { get; set; }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public TypeOfPersonage Type { get { return type; } }
+        public RankOfPersonage Rank { get { return rank; } }
+        public GroupOfAnimation AnimationGroup { get { return animationGroup; } }
+        public Bag Loot { get { return loot; } }
+        public EffectList Effects { get { return effects; } }
+        public SkillBook SpellBook { get { return spellBook; } }
+        public Characteristic CurrentCharacteristic { get { return currentCharacteristic; } }
+        public bool IsPlayer { get { return isPlayer; } }
+        public bool IsDead { get { return isDead; } }
+        public int Level { get { return level; } }
+        public float CurrentHealth { get { return currentHealth; } }
+        public float CurrentMana { get { return currentMana; } }
+        public float CurrentEnergy { get { return currentEnergy; } }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public RelationshipOfPersonage Relationship {
             get { return relationship; }
             set {
-                if( IsPlayer )
+                if( isPlayer )
                     return;
                 relationship = value;
             }
         }
+        public Personage Target { get; set; }
+        public bool Immortal { get; set; }
+        public bool Targetable { get; set; } = true;
+        public bool CanMove { get; set; } = true;
+        public bool EnableWalking { get; set; } = true;
+        public bool EnableJumping { get; set; } = true;
 
-        public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position ) : base( modelId, position ) {
-            nameId = 3;
-            Name = Localization.Current.EntityDescriptions[ nameId ];
-            IsPlayer = this is Player;
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-            if( IsPlayer ) {
+        #region ?
+        private bool moveFlag = true;
+        private Personage castTarget;
+        private float coolDownTimer = 0f;
+
+        public bool IsStopped { get; private set; } = false; // ?
+        public float GlobalCoolDown { get; set; }
+        public float CurrentCastTime { get; private set; }
+        public float MaxCastTime { get; private set; }
+        public Spell CurrentCastSpell { get; private set; }
+        #endregion
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public Personage( int level, RankOfPersonage rank, TypeOfPersonage type, int modelId, Vector3 position, int nameId = 3 ) : base( modelId, position, nameId ) {
+            isPlayer = this is Player;
+            this.type = type;
+            this.rank = rank;
+            this.level = level;
+            animationGroup = GroupOfAnimation.Greate( this );
+            Relationship = RelationshipOfPersonage.Neutral;
+            loot = new Bag( isPlayer );
+            if( isPlayer ) {
                 defaultTask = new PlayerMovementTask();
             } else {
                 defaultTask = new WalkToSpawnPointTask();
             }
-
-            Type = type;
-            AnimationGroup = GroupOfAnimation.Greate( this );
-            
-            IsDead = false;
-            IsStopped = false;
-            Immortal = false;
-            CanMove = true;
-            EnableJumping = true;
-            Targetable = true;
-            EnableWalking = true;
-            moveFlag = true;
-            Level = 0;
-            Rank = rank;
-            coolDownTimer = 0f;
-            Relationship = RelationshipOfPersonage.Neutral;
-            rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            Effects = new EffectList();
-            SpellBook = new SkillBook();
-            Loot = new Bag( IsPlayer );
-            Target = null;
-            ClearTask();
-            velocity = Vector3.zero;
-            StopCast();
-            if( !IsPlayer )
-                generateLoot();
+            currentTask = defaultTask;
 
             // !!! Ініціалізацію об'єктів здійснювати до методу LevelUp
             LevelUp( level );
         }
 
-        private void calculateCharacteristic() {
-            baseCharacteristic = Characteristic.CreateBase( Level, Rank );
-            CurrentCharacteristic = Characteristic.CreateEmpty();
-            updateCharacteristic();
-        }
-        protected virtual void updateCharacteristic() {
-            Loot.UpdateItems();
-            CurrentCharacteristic = ( ( CurrentCharacteristic.Clear() + baseCharacteristic ) + Effects.Update() );
-            SpellBook.Update();
-        }
-
-        protected virtual void generateLoot() { }
-        protected virtual void onCast( CastResult result, TypeOfResources resource = TypeOfResources.Nothing ) { }
-
-        protected override void update() {
-            base.update();
-            updateCharacteristic();
-            moveFlag = true;
-
-            //if( eventSystemScript.MouseHover ) {
-            //    if( Player.Exist() && InputManager.IsMouseDown( MouseKeyName.Left ) ) {
-            //        if( !Player.Current.NoLongerNeeded && !Player.Current.IsDead )
-            //            Player.Current.Target = this;
-            //    }
-            //}
-            if( Target != null ) {
-                if( !Target.Targetable )
-                    Target = null;
-            }
-            if( GlobalCoolDown > 0f ) {
-                coolDownTimer += Time.deltaTime;
-                if( coolDownTimer > GlobalCoolDown ) {
-                    GlobalCoolDown = 0f;
-                    coolDownTimer = 0f;
-                }
-            }
-            if( 0f > CurrentCharacteristic.MoveSpeed )
-                CurrentCharacteristic.MoveSpeed = 0f;
-            if( !IsDead ) {
-                if( CanMove ) {
-                    if( !currentTask.Execute( this ) )
-                        ClearTask();
-                }
-                IsStopped = moveFlag;
-                if( 0f >= CurrentHealth && !Immortal ) {
-                    Die();
-                    return;
-                }
-                CurrentHealth += CurrentCharacteristic.HealthRegeneration;
-                CurrentMana += CurrentCharacteristic.ManaRegeneration;
-                CurrentEnergy += CurrentCharacteristic.EnergyRegeneration;
-                if( CurrentHealth > CurrentCharacteristic.MaxHealth )
-                    CurrentHealth = CurrentCharacteristic.MaxHealth;
-                if( CurrentMana > CurrentCharacteristic.MaxMana )
-                    CurrentMana = CurrentCharacteristic.MaxMana;
-                if( CurrentEnergy > CurrentCharacteristic.MaxEnergy )
-                    CurrentEnergy = CurrentCharacteristic.MaxEnergy;
-                if( CurrentCastSpell != null ) {
-                    if( castTarget != Target ) {
-                        StopCast();
-                        return;
-                    }
-                    CurrentCastTime += CurrentCharacteristic.Speed * Time.deltaTime;
-                    var takeAmount = CurrentCastSpell.TakeResourcesAmount;
-                    if( CurrentCastSpell.Type == TypeOfSpell.Reproduction && CurrentCastSpell.TakeResources != TypeOfResources.Nothing && CurrentCastSpell.TakeResourcesAmount > 0 ) {
-                        switch( CurrentCastSpell.TakeResources ) {
-                            case TypeOfResources.Health:
-                            takeAmount *= Level;
-                            if( takeAmount > CurrentHealth ) {
-                                StopCast();
-                                return;
-                            }
-                            break;
-                            case TypeOfResources.Mana:
-                            takeAmount *= Level;
-                            if( takeAmount > CurrentMana ) {
-                                StopCast();
-                                return;
-                            }
-                            break;
-                            case TypeOfResources.Energy:
-                            if( CurrentCastSpell.TakeResourcesAmount > CurrentEnergy ) {
-                                StopCast();
-                                return;
-                            }
-                            break;
-                        }
-                    }
-                    if( !CurrentCastSpell.EnableCastInRun && !IsStopped ) {
-                        StopCast();
-                        return;
-                    }
-                    if( IsTargetItYourself() ) {
-                        if( NoLongerNeeded || IsDead ) {
-                            StopCast();
-                            return;
-                        }
-                    } else {
-                        if( Target.NoLongerNeeded ) {
-                            StopCast();
-                            return;
-                        }
-                        if( !CurrentCastSpell.EnableCastInDeadTarget && Target.IsDead ) {
-                            StopCast();
-                            return;
-                        }
-                        if( !IsTurnedFaceTo( Target ) ) {
-                            StopCast();
-                            return;
-                        }
-                        if( CurrentCastSpell.CastOnlyInSpine && Target.IsTurnedFaceTo( this ) ) {
-                            StopCast();
-                            return;
-                        }
-                        if( CurrentCastSpell.Type != TypeOfSpell.Streaming ) {
-                            var dist = DistanceTo( Target );
-                            if( CurrentCastSpell.MinRange > dist || dist > CurrentCastSpell.MaxRange ) {
-                                StopCast();
-                                return;
-                            }
-                            if( !IsFreeDistanceTo( Target ) ) {
-                                StopCast();
-                                return;
-                            }
-                        }
-                    }
-                    if( CurrentCastTime > MaxCastTime ) {
-                        if( CurrentCastSpell.Type != TypeOfSpell.Streaming ) {
-                            CurrentCastSpell.Use( this );
-                            AddDamage( CurrentCastSpell.TakeResources, takeAmount );
-                            GlobalCoolDown = 1f;
-                            onCast( CastResult.Done );
-                        }
-                        StopCast();
-                    } else {
-                        if( CurrentCastSpell.Type == TypeOfSpell.Streaming )
-                            CurrentCastSpell.Continue();
-                    }
-                }
-            } else {
-                if( 0f > CurrentHealth )
-                    CurrentHealth = 0f;
-                if( 0f > CurrentMana )
-                    CurrentMana = 0f;
-                if( 0f > CurrentEnergy )
-                    CurrentEnergy = 0f;
-            }
-        }
-
-        protected override void physics() {
-            base.physics();
-            rigidbody.velocity += velocity;
-            velocity = Vector3.zero;
-        }
-
-        public bool IsFriendlyOf( Personage personage ) { return relationship == personage.relationship; }
-
-
-        //
-        public void MoveForward() {
-            if( !EnableWalking )
-                return;
-            gameObject.transform.Translate( Vector3.forward * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            moveFlag = false;
-        }
-        public void MoveBack() {
-            if( !EnableWalking )
-                return;
-            gameObject.transform.Translate( Vector3.back * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            moveFlag = false;
-        }
-        public void MoveLeft() {
-            if( !EnableWalking )
-                return;
-            gameObject.transform.Translate( Vector3.left * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            moveFlag = false;
-        }
-        public void MoveRight() {
-            if( !EnableWalking )
-                return;
-            gameObject.transform.Translate( Vector3.right * CurrentCharacteristic.MoveSpeed * Time.deltaTime );
-            moveFlag = false;
-        }
-        public void Turn( float speed ) {
-            gameObject.transform.Rotate( 0f, speed * Time.deltaTime, 0f );
-        }
-        public void Jump() {
-            if( !EnableJumping || IsInAir() )
-                return;
-            moveFlag = false;
-            velocity.y += 4f;
-        }
-        //
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public void Restore() {
-            if( IsDead )
+            if( isDead )
                 return;
-            CurrentHealth = CurrentCharacteristic.MaxHealth;
-            CurrentMana = CurrentCharacteristic.MaxMana;
-            CurrentEnergy = CurrentCharacteristic.MaxEnergy;
+            currentHealth = currentCharacteristic.MaxHealth;
+            currentMana = currentCharacteristic.MaxMana;
+            currentEnergy = currentCharacteristic.MaxEnergy;
         }
         public void LevelUp( int amount = 1 ) {
-            Level = Mathf.Clamp( Level + amount, MIN_LEVEL, MAX_LEVEL );
+            level = Mathf.Clamp( level + amount, MIN_LEVEL, MAX_LEVEL );
             calculateCharacteristic();
             Restore();
         }
-        public virtual void Die() {
-            if( IsDead || Immortal )
-                return;
-            Effects.ClearAll();
-            ClearTask();
-            Target = null;
-            IsDead = true;
-            StopCast();
-            CurrentHealth = 0f;
-            CurrentMana = 0f;
-            CurrentEnergy = 0f;
-        }
-        public override void Destroy() {
-            base.Destroy();
-            Effects.ClearAll( false );
-            ClearTask();
-            Loot.Clear();
-            SpellBook.Clear();
-            Target = null;
-            IsDead = true;
-            StopCast();
-        }
         public void Reborn( float percent = 20f ) {
-            if( !IsDead )
+            if( !isDead )
                 return;
-            IsDead = false;
+            isDead = false;
             if( percent > 0f && 100f > percent ) {
-                CurrentHealth = Characteristic.GetValueOfPercentage( CurrentCharacteristic.MaxHealth, percent );
-                CurrentMana = Characteristic.GetValueOfPercentage( CurrentCharacteristic.MaxMana, percent );
+                currentHealth = Characteristic.GetValueOfPercentage( currentCharacteristic.MaxHealth, percent );
+                currentMana = Characteristic.GetValueOfPercentage( currentCharacteristic.MaxMana, percent );
                 return;
             }
             Restore();
         }
         public void ClearTask() { currentTask = defaultTask; }
-        public void WalkToPoint( float x, float y, float z, float radius = 1f ) { currentTask = new WalkToPointTask( x, y, z, radius ); }
         public void WalkToPoint( Vector3 position, float radius = 1f ) { currentTask = new WalkToPointTask( position, radius ); }
+        public void WalkToPoint( float x, float y, float z, float radius = 1f ) { currentTask = new WalkToPointTask( x, y, z, radius ); }
         public void WalkToPoint( Path.Node node ) { currentTask = new WalkToPointTask( node ); }
         public void AssignToPath( Path path ) { currentTask = new FollowPathTask( path ); }
-        public bool IsTargetItYourself() {
-            if( Target == null )
-                return true;
-            return Target == this;
-        }
-        public bool IsTurnedFaceTo( Vector3 position ) { return Vector3.Distance( GetPositionWithOffset( Vector3.back ), position ) - Vector3.Distance( GetPositionWithOffset( Vector3.forward ), position ) > 0f; }
-        public bool IsTurnedFaceTo( Entity entity ) {
-            if( entity == this )
-                return false;
-            return Vector3.Distance( GetPositionWithOffset( Vector3.back ), entity.Position ) - Vector3.Distance( GetPositionWithOffset( Vector3.forward ), entity.Position ) > 0f;
-        }
-        public DamageResult AddDamage( TypeOfResources resource, float damage, SchoolOfDamage school = SchoolOfDamage.Other ) {
-            if( damage == 0f || resource == TypeOfResources.Nothing )
-                return DamageResult.NoDamage;
-            switch( resource ) {
-                case TypeOfResources.Energy:
-                CurrentEnergy -= damage;
-                return damage > 0 ? DamageResult.AddEnergy : DamageResult.SubEnergy;
-                case TypeOfResources.Mana:
-                CurrentMana -= damage;
-                return damage > 0 ? DamageResult.AddMana : DamageResult.SubMana;
-                case TypeOfResources.Health:
-                if( damage > 0 ) {
-                    var finalDamage = 0f;
-                    switch( school ) {
-                        case SchoolOfDamage.Air:
-                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfAir;
-                        break;
-                        case SchoolOfDamage.Darkness:
-                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfDarkness;
-                        break;
-                        case SchoolOfDamage.Earth:
-                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfEarth;
-                        break;
-                        case SchoolOfDamage.Fire:
-                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfFire;
-                        break;
-                        case SchoolOfDamage.Light:
-                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfLight;
-                        break;
-                        case SchoolOfDamage.Nature:
-                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfNature;
-                        break;
-                        case SchoolOfDamage.Water:
-                        finalDamage = damage - CurrentCharacteristic.MagicDefenceOfWater;
-                        break;
-                        case SchoolOfDamage.Physic:
-                        if( CurrentCharacteristic.ChanceOfParrying > UnityEngine.Random.Range( 1, 100 ) )
-                            return DamageResult.Parrying;
-                        if( CurrentCharacteristic.ChanceOfBlocking > UnityEngine.Random.Range( 1, 100 ) )
-                            return DamageResult.Blocked;
-                        finalDamage = damage - CurrentCharacteristic.PhysicalDefencePower;
-                        break;
-                        default:
-                        finalDamage = damage;
-                        break;
-                    }
-                    if( finalDamage > 0f ) {
-                        CurrentHealth -= finalDamage;
-                        return DamageResult.SubHealth;
-                    }
-                    return DamageResult.Absorb;
-                } else { CurrentHealth -= damage; }
-                break;
-            }
-            return DamageResult.AddHealth;
-        }
-        public float GetRandomDamage( float minDamage, SchoolOfDamage school = SchoolOfDamage.Other ) {
-            minDamage *= Level;
-            switch( school ) {
-                case SchoolOfDamage.Air:
-                minDamage += CurrentCharacteristic.MagicPowerOfAir;
-                break;
-                case SchoolOfDamage.Darkness:
-                minDamage += CurrentCharacteristic.MagicPowerOfDarkness;
-                break;
-                case SchoolOfDamage.Earth:
-                minDamage += CurrentCharacteristic.MagicPowerOfEarth;
-                break;
-                case SchoolOfDamage.Fire:
-                minDamage += CurrentCharacteristic.MagicPowerOfFire;
-                break;
-                case SchoolOfDamage.Light:
-                minDamage += CurrentCharacteristic.MagicPowerOfLight;
-                break;
-                case SchoolOfDamage.Nature:
-                minDamage += CurrentCharacteristic.MagicPowerOfNature;
-                break;
-                case SchoolOfDamage.Water:
-                minDamage += CurrentCharacteristic.MagicPowerOfWater;
-                break;
-                case SchoolOfDamage.Physic:
-                minDamage += CurrentCharacteristic.PhysicalAttackPower;
-                break;
-            }
-            return minDamage * UnityEngine.Random.Range( 1 + CurrentCharacteristic.CriticalChance, 100 + CurrentCharacteristic.CriticalEffect );
-        }
+
+        #region ?
         public void Cast( Spell spell ) {
             if( GlobalCoolDown != 0f ) {
                 onCast( CastResult.NoReady );
@@ -451,7 +144,7 @@ namespace MyRPG {
                 onCast( CastResult.NoSpell );
                 return;
             }
-            if( !spell.ReadyToUse() || NoLongerNeeded || IsDead ) {
+            if( !spell.ReadyToUse() || NoLongerNeeded || isDead ) {
                 onCast( CastResult.NoReady );
                 return;
             }
@@ -477,21 +170,21 @@ namespace MyRPG {
             if( spell.TakeResources != TypeOfResources.Nothing && spell.TakeResourcesAmount > 0 ) {
                 switch( spell.TakeResources ) {
                     case TypeOfResources.Health:
-                    takeAmount *= Level;
-                    if( takeAmount > CurrentHealth ) {
+                    takeAmount *= level;
+                    if( takeAmount > currentHealth ) {
                         onCast( CastResult.LackOfHealth, TypeOfResources.Health );
                         return;
                     }
                     break;
                     case TypeOfResources.Mana:
-                    takeAmount *= Level;
-                    if( takeAmount > CurrentMana ) {
+                    takeAmount *= level;
+                    if( takeAmount > currentMana ) {
                         onCast( CastResult.LackOfMana, TypeOfResources.Mana );
                         return;
                     }
                     break;
                     case TypeOfResources.Energy:
-                    if( spell.TakeResourcesAmount > CurrentEnergy ) {
+                    if( spell.TakeResourcesAmount > currentEnergy ) {
                         onCast( CastResult.LackOfEnergy, TypeOfResources.Energy );
                         return;
                     }
@@ -512,7 +205,7 @@ namespace MyRPG {
                     onCast( CastResult.CanNotUseNow );
                     return;
                 }
-                if( !spell.EnableCastInDeadTarget && Target.IsDead ) {
+                if( !spell.EnableCastInDeadTarget && Target.isDead ) {
                     onCast( CastResult.CanNotUseNow );
                     return;
                 }
@@ -573,6 +266,304 @@ namespace MyRPG {
             castTarget = null;
             MaxCastTime = 0f;
             CurrentCastTime = 0f;
+        }
+        #endregion
+
+        public void Turn( float speed ) { gameObject.transform.Rotate( 0f, speed * Time.deltaTime, 0f ); }
+
+        public DamageResult AddDamage( TypeOfResources resource, float damage, SchoolOfDamage school = SchoolOfDamage.Other ) {
+            if( damage == 0f || resource == TypeOfResources.Nothing )
+                return DamageResult.NoDamage;
+            switch( resource ) {
+                case TypeOfResources.Energy:
+                currentEnergy -= damage;
+                return damage > 0 ? DamageResult.AddEnergy : DamageResult.SubEnergy;
+                case TypeOfResources.Mana:
+                currentMana -= damage;
+                return damage > 0 ? DamageResult.AddMana : DamageResult.SubMana;
+                case TypeOfResources.Health:
+                if( damage > 0 ) {
+                    var finalDamage = 0f;
+                    switch( school ) {
+                        case SchoolOfDamage.Air:
+                        finalDamage = damage - currentCharacteristic.MagicDefenceOfAir;
+                        break;
+                        case SchoolOfDamage.Darkness:
+                        finalDamage = damage - currentCharacteristic.MagicDefenceOfDarkness;
+                        break;
+                        case SchoolOfDamage.Earth:
+                        finalDamage = damage - currentCharacteristic.MagicDefenceOfEarth;
+                        break;
+                        case SchoolOfDamage.Fire:
+                        finalDamage = damage - currentCharacteristic.MagicDefenceOfFire;
+                        break;
+                        case SchoolOfDamage.Light:
+                        finalDamage = damage - currentCharacteristic.MagicDefenceOfLight;
+                        break;
+                        case SchoolOfDamage.Nature:
+                        finalDamage = damage - currentCharacteristic.MagicDefenceOfNature;
+                        break;
+                        case SchoolOfDamage.Water:
+                        finalDamage = damage - currentCharacteristic.MagicDefenceOfWater;
+                        break;
+                        case SchoolOfDamage.Physic:
+                        if( currentCharacteristic.ChanceOfParrying > UnityEngine.Random.Range( 1, 100 ) )
+                            return DamageResult.Parrying;
+                        if( currentCharacteristic.ChanceOfBlocking > UnityEngine.Random.Range( 1, 100 ) )
+                            return DamageResult.Blocked;
+                        finalDamage = damage - currentCharacteristic.PhysicalDefencePower;
+                        break;
+                        default:
+                        finalDamage = damage;
+                        break;
+                    }
+                    if( finalDamage > 0f ) {
+                        currentHealth -= finalDamage;
+                        return DamageResult.SubHealth;
+                    }
+                    return DamageResult.Absorb;
+                } else { currentHealth -= damage; }
+                break;
+            }
+            return DamageResult.AddHealth;
+        }
+        public float GetRandomDamage( float minDamage, SchoolOfDamage school = SchoolOfDamage.Other ) {
+            minDamage *= level;
+            switch( school ) {
+                case SchoolOfDamage.Air:
+                minDamage += currentCharacteristic.MagicPowerOfAir;
+                break;
+                case SchoolOfDamage.Darkness:
+                minDamage += currentCharacteristic.MagicPowerOfDarkness;
+                break;
+                case SchoolOfDamage.Earth:
+                minDamage += currentCharacteristic.MagicPowerOfEarth;
+                break;
+                case SchoolOfDamage.Fire:
+                minDamage += currentCharacteristic.MagicPowerOfFire;
+                break;
+                case SchoolOfDamage.Light:
+                minDamage += currentCharacteristic.MagicPowerOfLight;
+                break;
+                case SchoolOfDamage.Nature:
+                minDamage += currentCharacteristic.MagicPowerOfNature;
+                break;
+                case SchoolOfDamage.Water:
+                minDamage += currentCharacteristic.MagicPowerOfWater;
+                break;
+                case SchoolOfDamage.Physic:
+                minDamage += currentCharacteristic.PhysicalAttackPower;
+                break;
+            }
+            return minDamage * UnityEngine.Random.Range( 1 + currentCharacteristic.CriticalChance, 100 + currentCharacteristic.CriticalEffect );
+        }
+
+        public bool IsTargetItYourself() {
+            if( Target == null )
+                return true;
+            return Target == this;
+        }
+        public bool IsTurnedFaceTo( Vector3 position ) { return Vector3.Distance( GetPositionWithOffset( Vector3.back ), position ) - Vector3.Distance( GetPositionWithOffset( Vector3.forward ), position ) > 0f; }
+        public bool IsTurnedFaceTo( float x, float y, float z ) { return IsTurnedFaceTo( new Vector3( x, y, z ) ); }
+        public bool IsTurnedFaceTo( Entity entity ) {
+            if( entity == this )
+                return false;
+            return IsTurnedFaceTo( entity.Position );
+        }
+        public bool IsFriendlyOf( Personage personage ) { return relationship == personage.relationship; }
+
+        protected override void onDestroy() {
+            base.onDestroy();
+            GlobalCoolDown = 0f;
+            coolDownTimer = 0f;
+            Target = null;
+            StopCast();
+            ClearTask();
+            effects.ClearAll( false );
+            loot.Clear();
+            spellBook.Clear();
+        }
+
+
+
+        public virtual bool Die() { // + bool
+            if( isDead || Immortal )
+                return false;
+            if( !isPlayer )
+                generateLoot();
+            isDead = true;
+            Target = null;
+            StopCast();
+            ClearTask();
+            effects.ClearAll();
+            currentHealth = 0f;
+            currentMana = 0f;
+            currentEnergy = 0f;
+            GlobalCoolDown = 0f;
+            coolDownTimer = 0f;
+            return true;
+        }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        private void calculateCharacteristic() {
+            baseCharacteristic = Characteristic.CreateBase( level, rank );
+            currentCharacteristic = Characteristic.CreateEmpty();
+            updateCharacteristic();
+        }
+        protected virtual void updateCharacteristic() {
+            loot.UpdateItems();
+            currentCharacteristic = ( ( currentCharacteristic.Clear() + baseCharacteristic ) + effects.Update() );
+            spellBook.Update();
+        }
+
+        protected virtual void generateLoot() { }
+        protected virtual void onCast( CastResult result, TypeOfResources resource = TypeOfResources.Nothing ) { }
+
+        protected override void update() {
+            base.update();
+            moveFlag = true; // ?
+
+            if( MouseHover && Targetable && InputManager.IsMouseDown( MouseKeyName.Left ) ) {
+                if( Player.Exist() && Player.Current.IsActive && !Player.Current.isDead )
+                    Player.Current.Target = this;
+            }
+
+            if( Target != null ) {
+                if( !Target.IsActive || !Target.Targetable )
+                    Target = null;
+            }
+
+            if( isDead ) {
+                // ...
+            } else {
+                updateCharacteristic();
+
+                if( 0f >= currentHealth ) {
+                    if( Immortal ) {
+                        currentHealth = 1f;
+                    } else {
+                        Die();
+                        return;
+                    }
+                }
+
+                animationGroup.MoveSpeed = currentCharacteristic.MoveSpeed;
+                animationGroup.IsInAir = IsInAir();
+                IsStopped = moveFlag; // ?
+
+                if( GlobalCoolDown > 0f ) {
+                    coolDownTimer += Time.deltaTime;
+                    if( coolDownTimer > GlobalCoolDown ) {
+                        GlobalCoolDown = 0f;
+                        coolDownTimer = 0f;
+                    }
+                }
+
+                if( currentCharacteristic.HealthRegeneration > 0f )            // +
+                    currentHealth += currentCharacteristic.HealthRegeneration; // +
+                if( currentCharacteristic.ManaRegeneration > 0f )              // +
+                    currentMana += currentCharacteristic.ManaRegeneration;     // +
+                if( currentCharacteristic.EnergyRegeneration > 0f )            // +
+                    currentEnergy += currentCharacteristic.EnergyRegeneration; // +
+
+                if( currentHealth > currentCharacteristic.MaxHealth )
+                    currentHealth = currentCharacteristic.MaxHealth;
+                if( currentMana > currentCharacteristic.MaxMana )
+                    currentMana = currentCharacteristic.MaxMana;
+                if( currentEnergy > currentCharacteristic.MaxEnergy )
+                    currentEnergy = currentCharacteristic.MaxEnergy;
+
+                if( CanMove ) {
+                    if( !currentTask.Execute( this ) )
+                        ClearTask();
+                }
+
+                if( CurrentCastSpell != null ) {
+                    if( castTarget != Target ) {
+                        StopCast();
+                        return;
+                    }
+                    CurrentCastTime += currentCharacteristic.Speed * Time.deltaTime;
+                    var takeAmount = CurrentCastSpell.TakeResourcesAmount;
+                    if( CurrentCastSpell.Type == TypeOfSpell.Reproduction && CurrentCastSpell.TakeResources != TypeOfResources.Nothing && CurrentCastSpell.TakeResourcesAmount > 0 ) {
+                        switch( CurrentCastSpell.TakeResources ) {
+                            case TypeOfResources.Health:
+                            takeAmount *= level;
+                            if( takeAmount > currentHealth ) {
+                                StopCast();
+                                return;
+                            }
+                            break;
+                            case TypeOfResources.Mana:
+                            takeAmount *= level;
+                            if( takeAmount > currentMana ) {
+                                StopCast();
+                                return;
+                            }
+                            break;
+                            case TypeOfResources.Energy:
+                            if( CurrentCastSpell.TakeResourcesAmount > currentEnergy ) {
+                                StopCast();
+                                return;
+                            }
+                            break;
+                        }
+                    }
+                    if( !CurrentCastSpell.EnableCastInRun && !IsStopped ) {
+                        StopCast();
+                        return;
+                    }
+                    if( IsTargetItYourself() ) {
+                        if( NoLongerNeeded || isDead ) {
+                            StopCast();
+                            return;
+                        }
+                    } else {
+                        if( Target.NoLongerNeeded ) {
+                            StopCast();
+                            return;
+                        }
+                        if( !CurrentCastSpell.EnableCastInDeadTarget && Target.isDead ) {
+                            StopCast();
+                            return;
+                        }
+                        if( !IsTurnedFaceTo( Target ) ) {
+                            StopCast();
+                            return;
+                        }
+                        if( CurrentCastSpell.CastOnlyInSpine && Target.IsTurnedFaceTo( this ) ) {
+                            StopCast();
+                            return;
+                        }
+                        if( CurrentCastSpell.Type != TypeOfSpell.Streaming ) {
+                            var dist = DistanceTo( Target );
+                            if( CurrentCastSpell.MinRange > dist || dist > CurrentCastSpell.MaxRange ) {
+                                StopCast();
+                                return;
+                            }
+                            if( !IsFreeDistanceTo( Target ) ) {
+                                StopCast();
+                                return;
+                            }
+                        }
+                    }
+                    if( CurrentCastTime > MaxCastTime ) {
+                        if( CurrentCastSpell.Type != TypeOfSpell.Streaming ) {
+                            CurrentCastSpell.Use( this );
+                            AddDamage( CurrentCastSpell.TakeResources, takeAmount );
+                            GlobalCoolDown = 1f;
+                            onCast( CastResult.Done );
+                        }
+                        StopCast();
+                    } else {
+                        if( CurrentCastSpell.Type == TypeOfSpell.Streaming )
+                            CurrentCastSpell.Continue();
+                    }
+                }
+
+            }
+
         }
 
     }

@@ -25,7 +25,7 @@ namespace MyRPG {
                 HealthRegeneration = 0.09f * level,
                 ManaRegeneration = 0.09f * level,
                 EnergyRegeneration = 0.1f,
-                MoveSpeed = 1f,
+                MoveSpeed = 100f,
                 Speed = 1f
             };
         }

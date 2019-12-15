@@ -28,22 +28,13 @@ namespace MyRPG.Patterns.Strategy.PersonageTasks {
                 } else if( InputManager.GetKey( KeyName.TURN_RIGHT ) ) {
                     personage.Turn( Player.TURN_SPEED );
                 }
-                if( InputManager.GetKey( KeyName.LEFT ) ) {
-                    personage.MoveLeft();
-                } else if( InputManager.GetKey( KeyName.RIGHT ) ) {
-                    personage.MoveRight();
-                }
+                personage.AnimationGroup.MoveLeftRight = InputManager.GetKeyAxisRaw( KeyName.LEFT, KeyName.RIGHT );
             }
 
-            if( InputManager.GetKey( KeyName.FORWARD ) ) {
-                personage.MoveForward();
-            } else if( InputManager.GetKey( KeyName.BACK ) ) {
-                personage.MoveBack();
-            }
-            if( InputManager.IsKeyDown( KeyName.JUMP ) ) {
-                personage.Jump();
-            }
+            personage.AnimationGroup.MoveForwardBack = InputManager.GetKeyAxisRaw( KeyName.BACK, KeyName.FORWARD );
 
+            if( InputManager.IsKeyDown( KeyName.JUMP ) && personage.EnableJumping ) // + personage.EnableJumping
+                personage.AnimationGroup.Jump();
 
             return true;
         }

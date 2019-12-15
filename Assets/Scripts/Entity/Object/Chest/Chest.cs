@@ -12,36 +12,45 @@ namespace MyRPG {
 
         public static int GetModelByType( TypeOfChest type ) { return ( int ) type; }
 
-        public TypeOfChest Type { get; private set; }
-        public KeysForChest Key { get; private set; }
-        public Bag Loot { get; private set; }
-        public bool IsLocked { get; private set; }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private byte totalItems;
+        private TypeOfChest type;
+        private KeysForChest key;
+        private Bag loot = new Bag();
+        private bool isLocked;
 
-        public Chest( TypeOfChest type, Vector3 position, KeysForChest key = KeysForChest.Universal, byte maxItems = 8 ) : base( GetModelByType( type ), position ) {
-            Freeze( true );
-            nameId = 38;
-            Name = Localization.Current.EntityDescriptions[ nameId ];
-            Type = type;
-            Key = key;
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public TypeOfChest Type { get { return type; } }
+        public KeysForChest Key { get { return key; } }
+        public Bag Loot { get { return loot; } }
+        public bool IsLocked { get { return isLocked; } }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public Chest( TypeOfChest type, Vector3 position, KeysForChest key = KeysForChest.Universal, byte maxItems = 8, int nameId = 38 ) : base( GetModelByType( type ), position, nameId ) {
+            this.type = type;
+            this.key = key;
             totalItems = maxItems;
-            IsLocked = key != KeysForChest.Universal;
-            Loot = new Bag();
-            if( !IsLocked )
+            isLocked = key != KeysForChest.Universal;
+            Freeze( true );
+            if( !isLocked )
                 generateLoot();
         }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         protected override void update() {
             base.update();
-            if( !IsActive )
+            //if( !IsActive )
+            //    return;
+            if( !Player.Exist() || !Player.Current.IsActive ) // + || !Player.Current.IsActive
                 return;
-            if( !Player.Exist() )
-                return;
-            if( Player.Current.NoLongerNeeded )
-                return;
-            if( !Player.Current.IsActive )
-                return;
+            //if( Player.Current.NoLongerNeeded )
+            //    return;
+            //if( !Player.Current.IsActive )
+            //    return;
             if( !Player.Current.CanMove || !Player.Current.IsStopped )
                 return;
             if( !MouseHover || !InputManager.IsMouseUp( MouseKeyName.Right ) )
@@ -52,7 +61,7 @@ namespace MyRPG {
                 return;
             if( Player.Current.IsInAir() )
                 return;
-            if( IsLocked ) {
+            if( isLocked ) {
                 if( !Player.Current.Keys.HasKey( Key ) )
                     return;
                 if( !Unlock() )
@@ -61,15 +70,19 @@ namespace MyRPG {
             }
         }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public bool Unlock() {
-            if( NoLongerNeeded )
-                return false;
-            if( !IsLocked )
+            //if( NoLongerNeeded )
+            //    return false;
+            if( !isLocked )
                 return true;
             generateLoot();
-            IsLocked = false;
+            isLocked = false;
             return true;
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private void generateLoot() {
             //for( byte i = 0; i < totalItems; i++ ) {
@@ -77,9 +90,11 @@ namespace MyRPG {
             //}
         }
 
-        public override void Destroy() {
-            base.Destroy();
-            Loot.Clear();
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        protected override void onDestroy() {
+            base.onDestroy();
+            loot.Clear();
         }
 
     }

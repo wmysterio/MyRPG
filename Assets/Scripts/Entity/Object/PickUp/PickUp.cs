@@ -10,50 +10,63 @@ namespace MyRPG {
 
     public class PickUp : Object {
 
+        //private float restoreTimer;
+        //public bool isVisible = true;
+        //public TypeOfPickUp type;
+        //public bool IsVisible { get { return isVisible; } }
+        //public TypeOfPickUp Type { get { return type; } }
+
+        private const float TURN_SPEED = 100f; // +
+
         protected const float MIN_RANGE = 1f;
         protected const float RESTORE_TIME = 5f;
 
-        public bool EnableRotation { get; set; }
-        public bool IsVisible { get; private set; }
-        public TypeOfPickUp Type { get; private set; }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-        private float restoreTimer;
+        protected bool enableRotation = true;
 
-        public PickUp( TypeOfPickUp type, int modelId, Vector3 position ) : base( modelId, position ) {
-            nameId = 2;
-            Name = Localization.Current.EntityDescriptions[ nameId ];
-            EnableRotation = true;
-            IsVisible = true;
-            Type = type;
-            rigidbody.useGravity = false;
-            EnableCollision( false );
-            restoreTimer = 0f;
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public bool EnableRotation { get { return enableRotation; } }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        // TypeOfPickUp type, 
+        public PickUp( int modelId, Vector3 position, int nameId = 2 ) : base( modelId, position, nameId ) {
+            mainRigidbody.useGravity = false;
+            mainRigidbody.mass = float.MaxValue; // +
+
+            //EnableCollision( false );
+            //this.type = type;
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         protected override void update() {
             base.update();
 
-            if( Type == TypeOfPickUp.Disposable ) {
-                if( !IsVisible ) {
-                    if( !NoLongerNeeded )
-                        Destroy();
-                    return;
-                }
-            } else {
-                if( !IsVisible ) {
-                    restoreTimer += 1f * Time.deltaTime;
-                    if( restoreTimer > RESTORE_TIME ) {
-                        restoreTimer = 0f;
-                        IsVisible = true;
-                        gameObject.SetActive( true );
-                    }
-                    return;
-                }
-           }
+           // if( type == TypeOfPickUp.Disposable ) {
+           //     if( !IsVisible ) {
+           //         if( !NoLongerNeeded )
+           //             Destroy();
+           //         return;
+           //     }
+           // } else {
+           //     if( !isVisible ) {
+           //         restoreTimer += 1f * Time.deltaTime;
+           //         if( restoreTimer > RESTORE_TIME ) {
+           //             restoreTimer = 0f;
+           //             isVisible = true;
+           //             gameObject.SetActive( true );
+           //         }
+           //         return;
+           //     }
+           //}
 
-            if( EnableRotation && IsVisible )
-                gameObject.transform.Rotate( 0f, 100f * Time.deltaTime, 0f );
+            if( enableRotation ) //  && isVisible
+                gameObject.transform.Rotate( 0f, TURN_SPEED * Time.deltaTime, 0f ); // 100f
 
+            #region ?
             if( !Player.Exist() )
                 return;
 
@@ -61,21 +74,26 @@ namespace MyRPG {
                 action();
                 return;
             }
+            #endregion
 
         }
 
-        public bool PickedUp() { return !IsVisible; }
-        
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        //public bool PickedUp() { return !isVisible; }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         protected virtual void action() {
-            IsVisible = false;
+            //isVisible = false;
             gameObject.SetActive( false );
         }
 
     }
 
-    public enum TypeOfPickUp {
-        Disposable, // одноразовий
-        Reusable    // багаторазовий
-    }
+    //public enum TypeOfPickUp {
+    //    Disposable, // одноразовий
+    //    Reusable    // багаторазовий
+    //}
 
 }

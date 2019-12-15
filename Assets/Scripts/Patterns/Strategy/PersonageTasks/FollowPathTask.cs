@@ -30,7 +30,8 @@ namespace MyRPG.Patterns.Strategy.PersonageTasks {
             tempVector.y = 0;
             if( tempVector != Vector3.zero )
                 personage.GetGameObject().transform.rotation = Quaternion.Slerp( personage.GetGameObject().transform.rotation, Quaternion.LookRotation( tempVector ), Time.deltaTime * 10f );
-            personage.MoveForward();
+            //personage.MoveForward();
+            personage.AnimationGroup.MoveForwardBack = 1f;
             return true;
         }
         

@@ -12,37 +12,44 @@ namespace MyRPG {
         public const float TURN_SPEED = 100f;
         public const string TAG = "Player";
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static Player Current { get; private set; }
         public static bool Exist() { return Current != null; }
 
-        private float strength;
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
+        private EquipmentList equipments = new EquipmentList();
+        private RingForKeys keys = new RingForKeys();
+        private float strength = 100f;
+        private int money, currentExperience, totalExperience;
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public EquipmentList Equipments { get { return equipments; } }
+        public RingForKeys Keys { get { return keys; } }
+        public int Money { get { return money; } }
+        public int CurrentExperience { get { return currentExperience; } }
+        public int TotalExperience { get { return totalExperience; } }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public int ExperienceToLevel { get { return totalExperience - currentExperience; } }
         public float Strength {
             get { return strength; }
             set { strength = Mathf.Clamp( value, 0f, 100f ); }
         }
 
-        public EquipmentList Equipments { get; private set; }
-        public int Money { get; private set; }
-        public int CurrentExperience { get; private set; }
-        public int TotalExperience { get; private set; }
-        public int ExperienceToLevel { get { return TotalExperience - CurrentExperience; } }
-        public RingForKeys Keys { get; private set; }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-        public Player( string name, int level, int modelId, Vector3 position ) : base( level, RankOfPersonage.Normal, modelId, position ) {
-            nameId = -1;
+        public Player( string name, int level, int modelId, Vector3 position ) : base( level, RankOfPersonage.Normal, modelId, position, -1 ) {
             Name = name;
             if( Current != null )
                 throw new System.Exception( "Гравець може бути тільки один!" );
             gameObject.tag = TAG;
-            strength = 100f;
+            GameObject.DontDestroyOnLoad( gameObject );
             Current = this;
-            Money = 0;
-            CurrentExperience = 0;
-            TotalExperience = calculateMaxExperience();
-            Keys = new RingForKeys();
-            Equipments = new EquipmentList();
-
+            totalExperience = calculateMaxExperience();
 
             //
             Loot.Add( new Items.TrashItem( 1, 0, Sprites.ITEM_GOLD, 1 ) );
@@ -79,62 +86,64 @@ namespace MyRPG {
 
         }
 
-        protected override void updateCharacteristic() {
-            base.updateCharacteristic();
-            if( Equipments != null )
-                CurrentCharacteristic += Equipments.CurrentCharacteristic / ( 100f - Strength );
-        }
-
-        protected override void update() {
-            base.update();
-        }
-
-        protected override void onCast( CastResult result, TypeOfResources resource = TypeOfResources.Nothing ) {
-            base.onCast( result, resource );
-
-        }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public void AddMoney( int amount ) {
             try {
-                var pMoney = Money;
+                var pMoney = money;
                 checked { pMoney += amount; }
                 if( pMoney > 0 )
-                    Money = pMoney;
+                    money = pMoney;
             } catch {
                 if( amount > 0 )
-                    Money = int.MaxValue;
+                    money = int.MaxValue;
             }
         }
         public void AddExperience( int amount ) {
             if( MAX_LEVEL == Level )
                 return;
-            CurrentExperience += amount;
-            if( CurrentExperience > TotalExperience ) {
+            currentExperience += amount;
+            if( currentExperience > totalExperience ) {
                 var newExp = Mathf.Abs( ExperienceToLevel );
                 LevelUp();
                 if( Level == MAX_LEVEL ) {
-                    CurrentExperience = 0;
-                    TotalExperience = 0;
+                    currentExperience = 0;
+                    totalExperience = 0;
                 } else {
-                    CurrentExperience = newExp;
-                    TotalExperience = calculateMaxExperience();
+                    currentExperience = newExp;
+                    totalExperience = calculateMaxExperience();
                 }
             }
         }
 
-        public override void Die() {
-            base.Die();
-            if( Immortal )
-                return;
-            Camera.Detach();
-            Interface.ToggleWindow( Window.None );
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public override bool Die() {
+            if( base.Die() ) {
+                Camera.Detach();
+                Interface.ToggleWindow( Window.None );
+                return true;
+            }
+            return false;
         }
-        public override void Destroy() {
-            base.Destroy();
+
+        protected override void onDestroy() {
+            base.onDestroy();
             Camera.Detach();
             Interface.ToggleWindow( Window.None );
             Current = null;
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        protected override void updateCharacteristic() {
+            base.updateCharacteristic();
+            currentCharacteristic += equipments.CurrentCharacteristic / ( 100f - strength );
+        }
+
+        protected override void onCast( CastResult result, TypeOfResources resource = TypeOfResources.Nothing ) { base.onCast( result, resource ); }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private int calculateMaxExperience() { return ( int ) ( 795 + 250 * Mathf.Pow( 1.08f, Level ) ); }
 

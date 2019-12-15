@@ -10,15 +10,22 @@ namespace MyRPG {
 
     public abstract class Humanoid : Personage {
 
-        public GenderOfHumanoid Gender { get; private set; }
-        public RaseOfHumanoid Rase { get; private set; }
+        private GenderOfHumanoid gender;
+        private RaseOfHumanoid rase;
 
-        public Humanoid( int level, RankOfPersonage rank, int modelId, Vector3 position ) : base( level, rank, TypeOfPersonage.Humanoid, modelId, position ) {
-            nameId = 4;
-            Name = Localization.Current.EntityDescriptions[ nameId ];
-            Gender = modelId % 2 == 0 ? GenderOfHumanoid.Male : GenderOfHumanoid.Female;
-            Rase = ( RaseOfHumanoid ) ( modelId - ( byte ) Gender );
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public GenderOfHumanoid Gender { get { return gender; } }
+        public RaseOfHumanoid Rase { get { return rase; } }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public Humanoid( int level, RankOfPersonage rank, int modelId, Vector3 position, int nameId = 4 ) : base( level, rank, TypeOfPersonage.Humanoid, modelId, position, nameId ) {
+            gender = modelId % 2 == 0 ? GenderOfHumanoid.Male : GenderOfHumanoid.Female;
+            rase = ( RaseOfHumanoid ) ( modelId - ( byte ) Gender );
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         protected override void generateLoot() {
             base.generateLoot();

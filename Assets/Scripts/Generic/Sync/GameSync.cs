@@ -14,7 +14,7 @@ namespace MyRPG.Sync {
 
         private void Awake() {
             ConnectionReady = DB.Connect();
-            Entity.EntityUpdator.Container = gameObject;
+            //Entity.EntityUpdator.Container = gameObject;
             Coroutines.Init( this );
             Coroutines.Repeat( Calendar.Update, 0f, 1f );
             DontDestroyOnLoad( this );

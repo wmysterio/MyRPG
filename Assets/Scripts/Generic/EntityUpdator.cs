@@ -15,7 +15,7 @@ namespace MyRPG {
             public static Dictionary<Entity, Entity> ActiveEntities = new Dictionary<Entity, Entity>();
             public static Dictionary<Entity, Entity> PassiveEntities = new Dictionary<Entity, Entity>();
 
-            public static GameObject Container { get; set; }
+            //public static GameObject Container { get; set; }
 
             private Entity targetUpdate = null;
 
@@ -32,6 +32,7 @@ namespace MyRPG {
             private void OnEnable() {
                 if( targetUpdate == null )
                     return;
+                targetUpdate.onEnable();
                 if( PassiveEntities.ContainsKey( targetUpdate ) )
                     PassiveEntities.Remove( targetUpdate );
                 if( !ActiveEntities.ContainsKey( targetUpdate ) )
@@ -40,12 +41,16 @@ namespace MyRPG {
             private void OnDisable() {
                 if( targetUpdate == null )
                     return;
+                targetUpdate.onDisable();
                 if( ActiveEntities.ContainsKey( targetUpdate ) )
                     ActiveEntities.Remove( targetUpdate );
                 if( !PassiveEntities.ContainsKey( targetUpdate ) )
                     PassiveEntities.Add( targetUpdate, targetUpdate );
             }
             private void OnDestroy() {
+                if( targetUpdate == null )
+                    return;
+                targetUpdate.onDestroy();
                 if( PassiveEntities.ContainsKey( targetUpdate ) )
                     PassiveEntities.Remove( targetUpdate );
                 if( ActiveEntities.ContainsKey( targetUpdate ) )
@@ -56,6 +61,9 @@ namespace MyRPG {
             private void OnMouseEnter() { targetUpdate.onMouseEnter(); }
             private void OnMouseOver() { targetUpdate.onMouseOver(); }
             private void OnMouseExit() { targetUpdate.onMouseExit(); }
+
+
+
 
         }
 
