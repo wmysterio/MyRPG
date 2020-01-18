@@ -159,6 +159,7 @@ namespace MyRPG {
             keys[ KeyName.CANCEL ] = KeyCode.Backspace;
             keys[ KeyName.MENU ] = KeyCode.Escape;
         }
+        
         public static bool BindKey( KeyName name, KeyCode code ) {
             if( name == KeyName.ACTION || name == KeyName.CONSOLE || name == KeyName.MENU || name == KeyName.CANCEL )
                 return false;
@@ -176,8 +177,8 @@ namespace MyRPG {
         public static bool IsKeyDown( KeyName name ) { return Input.GetKeyDown( keys[ name ] ); }
         public static bool IsKeyUp( KeyName name ) { return Input.GetKeyUp( keys[ name ] ); }
         public static bool AnyKeyDown() { return Input.anyKeyDown; }
-
-
+        public static bool IsKeyBinded( KeyName name ) { return keys[ name ] != KeyCode.None; }
+        
         public static float GetKeyAxisRaw( KeyName negative, KeyName positive ) {
             if( keys[ negative ] != KeyCode.None && Input.GetKey( keys[ negative ] ) )
                 return -1f;
@@ -185,8 +186,6 @@ namespace MyRPG {
                 return 1f;
             return 0f;
         }
-        public static bool IsKeyBinded( KeyName name ) { return keys[ name ] != KeyCode.None; }
-
 
         public static bool GetMouse( MouseKeyName name ) { return Input.GetMouseButton( ( int ) name ); }
         public static bool IsMouseDown( MouseKeyName name ) { return Input.GetMouseButtonDown( ( int ) name ); }

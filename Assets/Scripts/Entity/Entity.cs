@@ -11,8 +11,8 @@ namespace MyRPG {
     public abstract partial class Entity : IDescription {
 
         private RaycastHit hit;
-        private bool mouseHover = false;
-        private int modelID = 0;
+        private bool mouseHover;
+        private int modelID;
 
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
@@ -113,7 +113,10 @@ namespace MyRPG {
             }
             return true;
         }
-        public bool IsInAir() { return DistanceToGround() > 0.02f; }
+        public bool IsInAir() {
+            return false; // треба знайти адекватний спосіб перевірки
+            return DistanceToGround() > 0.02f;
+        }
         public float RayCastDistance( Vector3 position, float maxDistance ) { return Physics.Raycast( Position - gameObject.transform.forward, GetDirection( position ), out hit, maxDistance ) ? Mathf.Abs( hit.distance ) : 9999f; }
 
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */

@@ -133,7 +133,7 @@ namespace MyRPG {
                 break;
                 
                 case InitState.InitEntityListAndRooms:
-                var go = new GameObject( "GameSync" ); //"Entities"
+                var go = new GameObject( "GameSync" );
                 var gs = go.AddComponent<GameSync>();
                 if( !gs.ConnectionReady ) {
                     state = InitState.Stop;

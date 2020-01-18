@@ -35,7 +35,7 @@ namespace MyRPG.AnimGroups {
                 if( lastIsInAir == value )
                     return;
                 lastIsInAir = value;
-                animator.SetBool( nameof( IsInAir ), lastIsInAir );
+                animator.SetBool( nameof( IsInAir ), value );
             }
         }
 

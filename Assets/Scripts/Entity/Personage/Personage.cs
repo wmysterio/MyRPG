@@ -4,7 +4,6 @@
 	Сайт: http://metal-prog.zzz.com.ua/
 */
 using UnityEngine;
-using MyRPG.Configuration;
 using MyRPG.AnimGroups;
 using MyRPG.Patterns.Strategy.PersonageTasks;
 
@@ -384,8 +383,6 @@ namespace MyRPG {
             spellBook.Clear();
         }
 
-
-
         public virtual bool Die() { // + bool
             if( isDead || Immortal )
                 return false;
@@ -424,21 +421,30 @@ namespace MyRPG {
             base.update();
             moveFlag = true; // ?
 
-            if( MouseHover && Targetable && InputManager.IsMouseDown( MouseKeyName.Left ) ) {
-                if( Player.Exist() && Player.Current.IsActive && !Player.Current.isDead )
-                    Player.Current.Target = this;
-            }
-
-            if( Target != null ) {
-                if( !Target.IsActive || !Target.Targetable )
-                    Target = null;
-            }
-
             if( isDead ) {
                 // ...
             } else {
+
+                // далі оновлюємо характеристики
                 updateCharacteristic();
 
+                // регенерація буде здійснюватись, якщо значення більше за 0
+                if( currentCharacteristic.HealthRegeneration > 0f )
+                    currentHealth += currentCharacteristic.HealthRegeneration;
+                if( currentCharacteristic.ManaRegeneration > 0f )
+                    currentMana += currentCharacteristic.ManaRegeneration;
+                if( currentCharacteristic.EnergyRegeneration > 0f )
+                    currentEnergy += currentCharacteristic.EnergyRegeneration;
+
+                // не дозволяємо ресурсам бути більшими за максимальне значення
+                if( currentHealth > currentCharacteristic.MaxHealth )
+                    currentHealth = currentCharacteristic.MaxHealth;
+                if( currentMana > currentCharacteristic.MaxMana )
+                    currentMana = currentCharacteristic.MaxMana;
+                if( currentEnergy > currentCharacteristic.MaxEnergy )
+                    currentEnergy = currentCharacteristic.MaxEnergy;
+
+                // логіка смерті персонажа
                 if( 0f >= currentHealth ) {
                     if( Immortal ) {
                         currentHealth = 1f;
@@ -448,10 +454,31 @@ namespace MyRPG {
                     }
                 }
 
+                // оновлюємо швидкість анімації з характристик
                 animationGroup.MoveSpeed = currentCharacteristic.MoveSpeed;
+
+                // задаємо анімацію падіння, якщо персонаж в повітрі
                 animationGroup.IsInAir = IsInAir();
+
+                // логіка виконання поточного завдання персонажа
+                if( CanMove ) {
+                    if( !currentTask.Execute( this ) )
+                        ClearTask();
+                }
+
+                // логіка зміни цілі гравця
+                if( Targetable && MouseHover && Player.Exist() && Player.Current.IsActive && !Player.Current.isDead && InputManager.IsMouseDown( MouseKeyName.Left ) )
+                    Player.Current.Target = this;
+
+                // логіка відкріплення цілі гравця
+                if( Target != null ) {
+                    if( !Target.IsActive || !Target.Targetable )
+                        Target = null;
+                }
+
                 IsStopped = moveFlag; // ?
 
+                // логіка глобальної затримки (буде змінено)
                 if( GlobalCoolDown > 0f ) {
                     coolDownTimer += Time.deltaTime;
                     if( coolDownTimer > GlobalCoolDown ) {
@@ -460,25 +487,7 @@ namespace MyRPG {
                     }
                 }
 
-                if( currentCharacteristic.HealthRegeneration > 0f )            // +
-                    currentHealth += currentCharacteristic.HealthRegeneration; // +
-                if( currentCharacteristic.ManaRegeneration > 0f )              // +
-                    currentMana += currentCharacteristic.ManaRegeneration;     // +
-                if( currentCharacteristic.EnergyRegeneration > 0f )            // +
-                    currentEnergy += currentCharacteristic.EnergyRegeneration; // +
-
-                if( currentHealth > currentCharacteristic.MaxHealth )
-                    currentHealth = currentCharacteristic.MaxHealth;
-                if( currentMana > currentCharacteristic.MaxMana )
-                    currentMana = currentCharacteristic.MaxMana;
-                if( currentEnergy > currentCharacteristic.MaxEnergy )
-                    currentEnergy = currentCharacteristic.MaxEnergy;
-
-                if( CanMove ) {
-                    if( !currentTask.Execute( this ) )
-                        ClearTask();
-                }
-
+                // логіка відтворення заклинання (буде змінено)
                 if( CurrentCastSpell != null ) {
                     if( castTarget != Target ) {
                         StopCast();

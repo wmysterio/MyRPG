@@ -15,17 +15,15 @@ namespace MyRPG {
             public static Dictionary<Entity, Entity> ActiveEntities = new Dictionary<Entity, Entity>();
             public static Dictionary<Entity, Entity> PassiveEntities = new Dictionary<Entity, Entity>();
 
-            //public static GameObject Container { get; set; }
-
             private Entity targetUpdate = null;
 
             public void AddReference( Entity entity ) {
                 targetUpdate = entity;
                 ActiveEntities.Add( entity, entity );
-                this.enabled = true;
+                enabled = true;
             }
 
-            private void Awake() { this.enabled = false; }
+            private void Awake() { enabled = false; }
             private void Update() { targetUpdate.update(); }
             private void FixedUpdate() { targetUpdate.physics(); }
 
@@ -61,9 +59,6 @@ namespace MyRPG {
             private void OnMouseEnter() { targetUpdate.onMouseEnter(); }
             private void OnMouseOver() { targetUpdate.onMouseOver(); }
             private void OnMouseExit() { targetUpdate.onMouseExit(); }
-
-
-
 
         }
 

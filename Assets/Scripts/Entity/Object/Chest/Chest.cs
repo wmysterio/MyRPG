@@ -4,7 +4,6 @@
 	Сайт: http://metal-prog.zzz.com.ua/
 */
 using UnityEngine;
-using MyRPG.Configuration;
 
 namespace MyRPG {
 
@@ -43,14 +42,14 @@ namespace MyRPG {
 
         protected override void update() {
             base.update();
-            //if( !IsActive )
-            //    return;
-            if( !Player.Exist() || !Player.Current.IsActive ) // + || !Player.Current.IsActive
+            if( !IsActive )
                 return;
-            //if( Player.Current.NoLongerNeeded )
-            //    return;
-            //if( !Player.Current.IsActive )
-            //    return;
+            if( !Player.Exist() )
+                return;
+            if( Player.Current.NoLongerNeeded )
+                return;
+            if( !Player.Current.IsActive )
+                return;
             if( !Player.Current.CanMove || !Player.Current.IsStopped )
                 return;
             if( !MouseHover || !InputManager.IsMouseUp( MouseKeyName.Right ) )
@@ -73,8 +72,8 @@ namespace MyRPG {
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public bool Unlock() {
-            //if( NoLongerNeeded )
-            //    return false;
+            if( NoLongerNeeded )
+                return false;
             if( !isLocked )
                 return true;
             generateLoot();

@@ -32,8 +32,7 @@ namespace MyRPG.Patterns.Strategy.PersonageTasks {
             }
 
             personage.AnimationGroup.MoveForwardBack = InputManager.GetKeyAxisRaw( KeyName.BACK, KeyName.FORWARD );
-
-            if( InputManager.IsKeyDown( KeyName.JUMP ) && personage.EnableJumping ) // + personage.EnableJumping
+            if( InputManager.IsKeyDown( KeyName.JUMP ) )
                 personage.AnimationGroup.Jump();
 
             return true;
