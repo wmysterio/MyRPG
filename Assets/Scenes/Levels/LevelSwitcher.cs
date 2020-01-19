@@ -16,7 +16,7 @@ namespace MyRPG.Levels {
         private void OnCollisionEnter( Collision collision ) {
             if( collision.gameObject.CompareTag( Player.TAG ) ) {
                 Player.Current.Immortal = true;
-                Player.Current.CanMove = false;
+                Player.Current.IsContollable = false;
                 Player.Interface.Fade( FadeMode.In );
                 if( OverridePosition )
                     BaseLevelStarter.OverrideStartPoint( OverrideStartPoint );

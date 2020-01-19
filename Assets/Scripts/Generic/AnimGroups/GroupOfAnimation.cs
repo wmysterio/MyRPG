@@ -21,7 +21,7 @@ namespace MyRPG.AnimGroups {
             // ...
 
         };
-        public static GroupOfAnimation Greate( Personage personage ) { return createGroup[ personage.Type ].Invoke( personage ); }
+        public static GroupOfAnimation Create( Personage personage ) { return createGroup[ personage.Type ].Invoke( personage ); }
 
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 

@@ -70,7 +70,12 @@ namespace MyRPG {
                 if( slots[ slotID ] == -1 ) {
                     slots[ slotID ] = item.Id;
                     Count += 1;
-                    // прикріплюємо модель до гравця
+                    // завантажуємо і прикріплюємо модель до гравця
+                    if( equipmentItem.EquipmentPart == PartOfEquipment.Weapon ) {
+                        var weapon = ( WeaponEquipment ) equipmentItem;
+                        Current.AnimationGroup.WeaponType = weapon.Type;
+                        Current.AnimationGroup.HasWeapon = true;
+                    }
                     if( playSound ) {
                         // відтворюємо звук прикріплення
                     }
@@ -79,14 +84,19 @@ namespace MyRPG {
                 if( equipmentItem.Id == slots[ slotID ] ) {
                     slots[ slotID ] = -1;
                     Count -= 1;
-                    // відкріплюємо модель від гравця
+                    Current.AnimationGroup.HasWeapon = false;
+                    // відкріплюємо модель від гравця та видаляємо її
                     if( playSound ) {
                         // відтворюємо звук відкріплення
                     }
                     return;
                 }
                 slots[ slotID ] = item.Id;
-                // змінюємо модель предмету
+                // змінюємо модель предмету, якщо потрібно
+                if( equipmentItem.EquipmentPart == PartOfEquipment.Weapon ) {
+                    var weapon = ( WeaponEquipment ) equipmentItem;
+                    Current.AnimationGroup.WeaponType = weapon.Type;
+                }
                 if( playSound ) {
                     // відтворюємо звук прикріплення
                 }

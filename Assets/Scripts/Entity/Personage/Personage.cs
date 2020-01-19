@@ -62,7 +62,7 @@ namespace MyRPG {
         public Personage Target { get; set; }
         public bool Immortal { get; set; }
         public bool Targetable { get; set; } = true;
-        public bool CanMove { get; set; } = true;
+        public bool IsContollable { get; set; } = true;
         public bool EnableWalking { get; set; } = true;
         public bool EnableJumping { get; set; } = true;
 
@@ -87,7 +87,7 @@ namespace MyRPG {
             this.type = type;
             this.rank = rank;
             this.level = level;
-            animationGroup = GroupOfAnimation.Greate( this );
+            animationGroup = GroupOfAnimation.Create( this );
             Relationship = RelationshipOfPersonage.Neutral;
             loot = new Bag( isPlayer );
             if( isPlayer ) {
@@ -409,7 +409,8 @@ namespace MyRPG {
             updateCharacteristic();
         }
         protected virtual void updateCharacteristic() {
-            loot.UpdateItems();
+            if( isPlayer )
+                loot.UpdateItems();
             currentCharacteristic = ( ( currentCharacteristic.Clear() + baseCharacteristic ) + effects.Update() );
             spellBook.Update();
         }
@@ -461,7 +462,7 @@ namespace MyRPG {
                 animationGroup.IsInAir = IsInAir();
 
                 // логіка виконання поточного завдання персонажа
-                if( CanMove ) {
+                if( IsContollable ) {
                     if( !currentTask.Execute( this ) )
                         ClearTask();
                 }

@@ -41,7 +41,7 @@ namespace MyRPG.Levels {
             Audio.PlayBackground( Background, BackgroundLoop );
             Player.Interface.Fade( FadeMode.Out );
 
-            Player.Current.CanMove = true;
+            Player.Current.IsContollable = true;
             Player.Current.Immortal = false;
         }
 

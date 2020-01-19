@@ -86,6 +86,19 @@ namespace MyRPG {
 
         }
 
+        // **
+        //protected override void update() {
+        //    base.update();
+        //    if( Input.GetKey( KeyCode.F ) ) {
+        //        AnimationGroup.IsMagicAttack = false;
+        //        AnimationGroup.StartAttack();
+        //    }
+        //}
+        // **
+
+
+
+
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public void AddMoney( int amount ) {

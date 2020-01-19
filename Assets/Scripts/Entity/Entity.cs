@@ -32,8 +32,8 @@ namespace MyRPG {
             protected set { gameObject.name = value; }
         }
         public Vector3 Position {
-            get { return gameObject.transform.localPosition; }
-            set { gameObject.transform.localPosition = value; }
+            get { return gameObject.transform.position; }
+            set { gameObject.transform.position = value; }
         }
         public bool IsActive {
             get { return gameObject.activeSelf; }
@@ -58,7 +58,7 @@ namespace MyRPG {
 		private Entity() {}
         public Entity( int modelID, Vector3 position, int nameId = 0 ) {
             this.modelID = modelID;
-            gameObject = GameObject.Instantiate<GameObject>( Model.Find( modelID ).Prefab, position, Quaternion.identity ); // , EntityUpdator.Container.transform
+            gameObject = GameObject.Instantiate<GameObject>( Model.Find( modelID ).Prefab, position, Quaternion.identity );
             if( nameId > -1 )
                 Name = Localization.Current.EntityDescriptions[ nameId ];
             mainCollider = gameObject.GetComponent<Collider>();
@@ -104,7 +104,7 @@ namespace MyRPG {
         public Vector3 GetPositionWithOffset( Vector3 offset ) { return gameObject.transform.TransformPoint( offset ); }
         public Vector3 GetPositionWithOffset( float offsetX, float offsetY, float offsetZ ) { return GetPositionWithOffset( new Vector3( offsetX, offsetY, offsetZ ) ); }
 
-        public float DistanceToGround() { return Physics.Raycast( Position, Vector3.down, out hit, 100f ) ? hit.distance - ( gameObject.transform.localScale.y / 2.01f ) : 9999f; }
+        public float DistanceToGround() { return Physics.Raycast( Position, Vector3.down, out hit, 100f ) ? hit.distance - ( gameObject.transform.lossyScale.y / 2.01f ) : 9999f; }
         public bool IsFreeDistanceTo( Entity entity ) {
             if( entity == this )
                 return false;

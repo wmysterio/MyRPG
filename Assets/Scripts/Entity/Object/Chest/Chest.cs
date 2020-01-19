@@ -50,7 +50,7 @@ namespace MyRPG {
                 return;
             if( !Player.Current.IsActive )
                 return;
-            if( !Player.Current.CanMove || !Player.Current.IsStopped )
+            if( !Player.Current.IsContollable || !Player.Current.IsStopped )
                 return;
             if( !MouseHover || !InputManager.IsMouseUp( MouseKeyName.Right ) )
                 return;
