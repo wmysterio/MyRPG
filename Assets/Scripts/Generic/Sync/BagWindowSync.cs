@@ -13,7 +13,11 @@ namespace MyRPG.Sync {
 
         public static BagWindowSync Current { get; private set; }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public GameObject TitleTextObject, QuestionButtonObject, CloseButtonObject, ButtonsObject;
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private Button[] buttons;
         private Text[] counters;
@@ -21,8 +25,9 @@ namespace MyRPG.Sync {
         private BagSlotSync[] slots;
         private bool isNotReady = true;
 
-        private void Awake() { Current = this; }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
+        private void Awake() { Current = this; }
         private void Update() {
             if( isNotReady )
                 return;
@@ -39,7 +44,6 @@ namespace MyRPG.Sync {
                 return;
             }
         }
-
         private void OnEnable() {
             if( isNotReady ) {
                 buttons = ButtonsObject.GetComponentsInChildren<Button>();
@@ -56,6 +60,8 @@ namespace MyRPG.Sync {
             }
 
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public void RefreshItems() {
             int iterator = Player.Current.Loot.Each( ( item, i ) => {

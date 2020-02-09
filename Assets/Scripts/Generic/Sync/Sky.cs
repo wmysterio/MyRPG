@@ -23,6 +23,8 @@ namespace MyRPG.Sync {
         private static bool isEnable = true;
         private static UnityEngine.Camera cameraScript;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static bool IsInit { get; private set; }
         public static bool Enable {
             get { return isEnable; }
@@ -61,6 +63,8 @@ namespace MyRPG.Sync {
             }
         }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static void Init( UnityEngine.Camera cameraScript ) {
             if( IsInit || cameraScript == null )
                 return;
@@ -92,7 +96,6 @@ namespace MyRPG.Sync {
             Mode = SkyMode.Night;
             IsInit = true;
         }
-
         public static void Update() {
             if( !IsInit || !isEnable )
                 return;

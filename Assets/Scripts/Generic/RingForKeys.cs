@@ -13,10 +13,14 @@ namespace MyRPG {
 
         private Dictionary<KeysForChest, byte> keys;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public byte this[ KeysForChest key ] {
             get { return keys[ key ]; }
             set { keys[ key ] = value; }
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public RingForKeys() {
             keys = new Dictionary<KeysForChest, byte>();
@@ -24,6 +28,8 @@ namespace MyRPG {
             for( int i = 0; i < enumKeys.Length; i++ )
                 keys.Add( enumKeys[ i ], 0 );
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public string GetKeyName( KeysForChest key ) { return Localization.Current.KeyNames[ ( int ) key ]; }
         public void Add( KeysForChest key ) {

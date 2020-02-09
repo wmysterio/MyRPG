@@ -21,18 +21,19 @@ namespace MyRPG {
 
         private Dictionary<int, Item> items = new Dictionary<int, Item>();
         private int iterator = 0;
+        private bool isOnPlayer;
 
-        public Item this[ int id ] {
+        public Item this[ int itemID ] {
             get {
-                if( !items.ContainsKey( id ) )
+                if( !items.ContainsKey( itemID ) )
                     return null;
-                return items[ id ];
+                return items[ itemID ];
             }
         }
         public int Count { get { return items.Count; } }
-        public bool IsOnPlayer { get; private set; }
+        public bool IsOnPlayer { get { return isOnPlayer; } }
 
-        public Bag( bool isOnPlayer = false ) { IsOnPlayer = isOnPlayer; }
+        public Bag( bool isOnPlayer = false ) { this.isOnPlayer = isOnPlayer; }
 
         public void Clear() { items.Clear(); }
         public bool Add( Item item, bool playSound = false ) {
@@ -40,7 +41,7 @@ namespace MyRPG {
                 return false;
             if( 1 > item.Count )
                 return false;
-            if( item.Id == 0 && IsOnPlayer ) {
+            if( item.Id == 0 && isOnPlayer ) {
                 item.Use();
                 // play sound
                 return true;
@@ -57,7 +58,7 @@ namespace MyRPG {
             return true;
         }
         public bool Add( Bag bag, bool playSound = false ) {
-            if( bag == this )
+            if( bag == null || bag == this )
                 return false;
             foreach( var item in bag.items.Values )
                 Add( item );
@@ -88,23 +89,23 @@ namespace MyRPG {
             // play sound
             return true;
         }
-        public bool Remove( int id, bool playSound = false ) {
-            if( !items.ContainsKey( id ) )
+        public bool Remove( int itemID, bool playSound = false ) {
+            if( !items.ContainsKey( itemID ) )
                 return false;
-            items.Remove( id );
+            items.Remove( itemID );
             // play sound
             return true;
         }
-        public bool Remove( int id, int count, bool playSound = false ) {
+        public bool Remove( int itemID, int count, bool playSound = false ) {
             if( 1 > count )
                 return false;
-            if( !items.ContainsKey( id ) )
+            if( !items.ContainsKey( itemID ) )
                 return false;
-            if( count > items[ id ].Count )
-                count = items[ id ].Count;
-            items[ id ].Count -= count;
-            if( items[ id ].Count == 0 )
-                items.Remove( id );
+            if( count > items[ itemID ].Count )
+                count = items[ itemID ].Count;
+            items[ itemID ].Count -= count;
+            if( items[ itemID ].Count == 0 )
+                items.Remove( itemID );
             // play sound
             return true;
         }
@@ -113,7 +114,7 @@ namespace MyRPG {
                 return false;
             return items.ContainsKey( item.Id );
         }
-        public bool HasItem( int id ) { return items.ContainsKey( id ); }
+        public bool HasItem( int itemID ) { return items.ContainsKey( itemID ); }
         public int Each( BagCallbackHandler callback ) {
             if( callback == null )
                 return 0;

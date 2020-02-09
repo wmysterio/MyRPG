@@ -13,11 +13,16 @@ namespace MyRPG {
 
         private static int currentIndex = -1;
         private static Coroutine coroutine;
+        private static bool loading;
 
-        public static bool Loading { get; private set; }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public static bool Loading { get { return loading; } }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public static void Switch( int sceneID ) {
-            if( currentIndex == sceneID || Loading )
+            if( currentIndex == sceneID || loading )
                 return;
             currentIndex = sceneID;
             coroutine = Coroutines.Start( load_level( currentIndex ) );
@@ -25,19 +30,25 @@ namespace MyRPG {
         public static void Switch( Special sceneID ) { Switch( ( int ) sceneID ); }
         public static void Switch( Levels sceneID ) { Switch( ( int ) sceneID ); }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         private static IEnumerator load_level( int currentID ) {
-            Loading = true;
+            loading = true;
             if( currentID != -1 )
                 yield return SceneManager.LoadSceneAsync( currentID );
             Coroutines.Stop( coroutine );
-            Loading = false;
+            loading = false;
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public enum Special : int {
             SelectProfile = 1,
             CreateProfile = 2,
             MainMenu = 3
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public enum Levels : int {
             TrainingLevel = 4,

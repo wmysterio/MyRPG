@@ -16,6 +16,8 @@ namespace MyRPG {
         private const float MIN_ANGLE = 8f;
         private const float MAX_ANGLE = 30f;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         private static GameObject cameraObject = null, cameraScrollObject = null;
         private static UnityEngine.Camera cameraComponent = null;
         private static AudioListener listener = null;
@@ -26,11 +28,15 @@ namespace MyRPG {
         private static AudioSource audioBackgroundSource = null;
         private static AudioSource audioTuneSource = null;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static bool IsInit { get; private set; }
         public static bool IsAttached { get; private set; }
         public static float DistanceToPoint { get; private set; }
 
         public static Vector3 Position { get { return IsAttached ? cameraScrollObject.transform.TransformPoint( cameraScrollObject.transform.localPosition ) : cameraObject.transform.position; } }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public static void Init() {
             if( IsInit )
@@ -134,6 +140,8 @@ namespace MyRPG {
             cameraObject.transform.LookAt( from );
             transversePointCoroutine = Coroutines.Start( transversePointAsync( from, to, Time.time, speed, Vector3.Distance( from, to ) ) );
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private static void endTransversePosition() {
             if( isMovingPosition )

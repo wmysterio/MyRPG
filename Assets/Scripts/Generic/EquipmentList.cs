@@ -15,11 +15,16 @@ namespace MyRPG {
 
             private delegate void EquipmentListCallbackHandler( EquipmentItem item );
 
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
             private Dictionary<int, int> slots;
             private int iterator, partLength, weaponSlot;
             private Characteristic characteristic;
+            private int count;
 
-            public int Count { get; private set; }
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+            public int Count { get { return count; } }
             public EquipmentItem this[ PartOfEquipment part ] {
                 get {
                     var id = slots[ ( int ) part ];
@@ -43,6 +48,8 @@ namespace MyRPG {
                 }
             }
 
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
             public EquipmentList() {
                 characteristic = Characteristic.CreateEmpty();
                 partLength = Enum.GetValues( typeof( PartOfEquipment ) ).Length;
@@ -51,6 +58,8 @@ namespace MyRPG {
                 for( iterator = 0; iterator < partLength; iterator++ )
                     slots[ iterator ] = -1;
             }
+
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
             public bool HasWeapon() { return slots[ weaponSlot ] != -1; }
             public bool IsSlotFree( PartOfEquipment part ) { return slots[ ( int ) part ] == -1; }
@@ -69,7 +78,7 @@ namespace MyRPG {
                 var slotID = ( int ) equipmentItem.EquipmentPart;
                 if( slots[ slotID ] == -1 ) {
                     slots[ slotID ] = item.Id;
-                    Count += 1;
+                    count += 1;
                     // завантажуємо і прикріплюємо модель до гравця
                     if( equipmentItem.EquipmentPart == PartOfEquipment.Weapon ) {
                         var weapon = ( WeaponEquipment ) equipmentItem;
@@ -83,7 +92,7 @@ namespace MyRPG {
                 }
                 if( equipmentItem.Id == slots[ slotID ] ) {
                     slots[ slotID ] = -1;
-                    Count -= 1;
+                    count -= 1;
                     Current.AnimationGroup.HasWeapon = false;
                     // відкріплюємо модель від гравця та видаляємо її
                     if( playSound ) {
@@ -93,14 +102,14 @@ namespace MyRPG {
                 }
                 slots[ slotID ] = item.Id;
                 // змінюємо модель предмету, якщо потрібно
-                if( equipmentItem.EquipmentPart == PartOfEquipment.Weapon ) {
-                    var weapon = ( WeaponEquipment ) equipmentItem;
-                    Current.AnimationGroup.WeaponType = weapon.Type;
-                }
+                if( equipmentItem.EquipmentPart == PartOfEquipment.Weapon )
+                    Current.AnimationGroup.WeaponType = ( ( WeaponEquipment ) equipmentItem ).Type;
                 if( playSound ) {
                     // відтворюємо звук прикріплення
                 }
             }
+
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
             private void each( EquipmentListCallbackHandler callback ) {
                 if( callback == null || Count == 0 )

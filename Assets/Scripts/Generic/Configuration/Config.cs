@@ -10,7 +10,14 @@ namespace MyRPG.Configuration {
 
     public sealed class Config {
 
+        public const string DEFAULT_FILE_NAME = "config";
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static Config Intance { get; set; }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static Config Default() {
             return new Config() {
                 LastSelectedLanguage = Localization.DEFAULT_LANGUAGE,
@@ -20,8 +27,9 @@ namespace MyRPG.Configuration {
                 BindingKeys = InputManager.GetDataBinding()
             };
         }
+        public static bool HasFile() { return File.Exists( $"{Application.dataPath}/{DEFAULT_FILE_NAME}.xml" ); }
 
-        public static bool HasFile() { return File.Exists( string.Format( "{0}/{1}.xml", Application.dataPath, "config" ) ); }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public string LastSelectedLanguage { get; set; }
         public int ScreenWidth { get; set; }

@@ -1,4 +1,4 @@
-MY RPG
+«MY RPG»
 
 
 
@@ -29,4 +29,5 @@ ANIMATIONS
 
 THANKS
 
-Cr0c, Peter Laliberte
+Cr0c                Peter Laliberte     Vladimir Mozhenkov
+Sashok Fam          SpasatileX - Вова

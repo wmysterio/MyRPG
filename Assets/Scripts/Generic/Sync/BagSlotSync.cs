@@ -14,6 +14,8 @@ namespace MyRPG.Sync {
         [HideInInspector] public int Number = -1;
         [HideInInspector] public int Id = -1;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public void OnPointerClick( PointerEventData eventData ) {
             if( Number == -1 || Id == -1 )
                 return;
@@ -49,14 +51,12 @@ namespace MyRPG.Sync {
 
             }
         }
-
         public void OnPointerEnter( PointerEventData eventData ) {
             if( Number == -1 || Id == -1 )
                 return;
             var item = Player.Current.Loot[ Id ];
             Player.Interface.ShowTooltip( item.GetTooltipText() );
         }
-
         public void OnPointerExit( PointerEventData eventData ) {
             if( Number == -1 || Id == -1 )
                 return;

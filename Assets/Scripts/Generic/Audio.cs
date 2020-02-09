@@ -21,10 +21,14 @@ namespace MyRPG {
         private static float backgroundVolume = 1f;
         private static float tuneVolume = 1f;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static bool IsInit { get; private set; } = false;
 
         public static BackgroundID CurrentBackground { get; private set; } = BackgroundID.OFF;
         public static TuneID CurrentTune { get; private set; } = TuneID.OFF;
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public static void SetBackgroundVolume( float val ) {
             backgroundVolume = Mathf.Clamp( val, 0f, 1f );
@@ -112,6 +116,7 @@ namespace MyRPG {
             tuneSourse.maxDistance = 0.01f;
         }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public enum BackgroundID : int {
             OFF = 0,
@@ -130,6 +135,8 @@ namespace MyRPG {
             THE_TALK = 13,
             THE_VOYAGE = 14
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public enum TuneID {
             OFF = 0,

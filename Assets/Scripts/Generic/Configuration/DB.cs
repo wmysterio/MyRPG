@@ -11,9 +11,13 @@ namespace MyRPG.Configuration {
 
     public static class DB {
 
+        private static SQLiteConnection connection = null;
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static string ConnectionString = $"Data Source={Application.dataPath}/data.db;Version=3;";
 
-        private static SQLiteConnection connection = null;
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public static bool Connect() {
             if( connection != null )
@@ -24,7 +28,6 @@ namespace MyRPG.Configuration {
             connection.Open();
             return true;
         }
-
         public static void Close() {
             if( connection != null ) {
                 connection.Close();

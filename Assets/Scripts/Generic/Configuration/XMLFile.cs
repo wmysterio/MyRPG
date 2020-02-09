@@ -13,13 +13,19 @@ namespace MyRPG.Configuration {
 
         public static XMLFile<T> Create( string path ) { return new XMLFile<T>( path ); }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         private string path;
         private XmlSerializer serializer;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         private XMLFile( string path ) {
-            this.path = string.Format( "{0}/{1}.xml", Application.dataPath, path );
+            this.path = $"{Application.dataPath}/{path}.xml";
             serializer = new XmlSerializer( typeof( T ) );
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public bool Load( out T instance ) {
             instance = null;

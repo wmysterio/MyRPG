@@ -15,6 +15,8 @@ namespace MyRPG {
         private static List<int> loadModels = new List<int>();
         private static ResourceRequest request;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static bool Exist( int id ) { return allModels.ContainsKey( id ); }
         public static Model Find( int id ) { return Exist( id ) ? allModels[ id ] : null; }
         public static void Request( int id ) {
@@ -29,7 +31,7 @@ namespace MyRPG {
             if( loadModels.Count == 0 )
                 return;
             for( int i = 0; i < loadModels.Count; i++ ) {
-                var prefab = Resources.Load<GameObject>( string.Format( "Models/{0}", loadModels[ i ] ) );
+                var prefab = Resources.Load<GameObject>( $"Models/{loadModels[ i ]}" );
                 allModels.Add( loadModels[ i ], new Model( loadModels[ i ], prefab ) );
             }
             loadModels.Clear();
@@ -38,7 +40,7 @@ namespace MyRPG {
             if( loadModels.Count == 0 )
                 yield return null;
             for( int i = 0; i < loadModels.Count; i++ ) {
-                request = Resources.LoadAsync<GameObject>( string.Format( "Models/{0}", loadModels[ i ] ) );
+                request = Resources.LoadAsync<GameObject>( $"Models/{loadModels[ i ]}" );
                 yield return request;
                 allModels.Add( loadModels[ i ], new Model( loadModels[ i ], ( GameObject ) request.asset ) );
             }
@@ -47,13 +49,14 @@ namespace MyRPG {
         public static void Unload() { allModels.Clear(); }
         public static void Unload( int id ) { if( Exist( id ) ) allModels.Remove( id ); }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public int ID { get; private set; }
         public GameObject Prefab { get; private set; }
 
-        private Model( int id, GameObject prefab ) {
-            ID = id;
-            Prefab = prefab;
-        }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        private Model( int id, GameObject prefab ) { ID = id; Prefab = prefab; }
 
 	}
 

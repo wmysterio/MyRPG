@@ -14,6 +14,8 @@ namespace MyRPG.Configuration {
 
         public static readonly SaveFile Profile = new SaveFile();
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public sealed class SaveFile {
 
             private const int SIZE = 65536; // ( 1024 * 64 ) bytes
@@ -22,13 +24,21 @@ namespace MyRPG.Configuration {
             private const byte VERSION = 1;
             private const string PATTERN = "^[a-z]{1,}$";
 
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
             private byte[] lastData = new byte[ SIZE ];
             private byte[] currentData = new byte[ SIZE ];
+
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
             public string Name { get; private set; }
             public bool IsEmpty { get; private set; }
 
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
             public SaveFile() { Clear(); }
+
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
             public void Clear() {
                 Array.Clear( lastData, 0, SIZE );
@@ -83,6 +93,7 @@ namespace MyRPG.Configuration {
                 return data;
             }
 
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
             private bool checkDirectory() {
                 var check = false;

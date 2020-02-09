@@ -13,14 +13,19 @@ namespace MyRPG.Sync {
 
         public static PersonageWindowSync Current { get; private set; }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public GameObject CharacteristicKeysObject, CharacteristicValuesObject, WindowTitleObject, StatsObject, CloseButtonObject;
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private Text characteristicValuesText, statPlayerName, statPlayerMoney, statCalendarDate;
         private Slider expSlider, levelSlider;
         private bool isNotReady = true;
 
-        private void Awake() { Current = this; }
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
+        private void Awake() { Current = this; }
         private void Update() {
             if( isNotReady )
                 return;
@@ -54,7 +59,6 @@ namespace MyRPG.Sync {
                 expSlider.value = Player.Current.CurrentExperience;
             }
         }
-
         private void OnEnable() {
             if( isNotReady ) {
                 characteristicValuesText = CharacteristicValuesObject.GetComponent<Text>();

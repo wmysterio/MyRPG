@@ -79,7 +79,7 @@ namespace MyRPG {
         public float ChanceOfParrying { get { return slots[ 26 ]; } set { slots[ 26 ] = value; } }
         public float ChanceOfBlocking { get { return slots[ 27 ]; } set { slots[ 27 ] = value; } }
 
-        private Characteristic() { Clear(); }
+        private Characteristic() { }
 
         public Characteristic Clear() { for( int i = 0; i < SLOT_COUNT; i++ ) slots[ i ] = 0f; return this; }
 

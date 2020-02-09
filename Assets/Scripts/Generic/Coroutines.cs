@@ -12,25 +12,20 @@ namespace MyRPG {
     public static class Coroutines {
 
         private static MonoBehaviour behaviour = null;
-
-        public static bool IsInit { get; private set; }
+        private static bool isInit;
 
         public static void Init( MonoBehaviour behaviour ) {
-            if( IsInit )
+            if( isInit )
                 return;
             Coroutines.behaviour = behaviour;
-            IsInit = true;
+            isInit = true;
         }
 
         public static Coroutine Start( IEnumerator routine ) { return behaviour.StartCoroutine( routine ); }
         public static void Stop( IEnumerator routine ) { behaviour.StopCoroutine( routine ); }
         public static void Stop( Coroutine routine ) { behaviour.StopCoroutine( routine ); }
         public static void StopAll() { behaviour.StopAllCoroutines(); }
-
-
-        public static Coroutine Repeat( Action func, float time, float repeatRate ) {
-            return behaviour.StartCoroutine( repeatCoroutine( func, time, repeatRate ) );
-        }
+        public static Coroutine Repeat( Action func, float time, float repeatRate ) { return behaviour.StartCoroutine( repeatCoroutine( func, time, repeatRate ) ); }
 
         private static IEnumerator repeatCoroutine( Action func, float time, float repeatRate ) {
             float timer = 0f;
@@ -45,7 +40,7 @@ namespace MyRPG {
                     timer += Time.unscaledDeltaTime;
                 }
                 timer = 0f;
-                func();
+                func.Invoke();
             }
         }
 

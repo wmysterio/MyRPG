@@ -15,10 +15,14 @@ namespace MyRPG.Sync {
 
         private delegate void Command( string[] args );
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         private Dictionary<string, Command> allCommands = new Dictionary<string, Command>();
         private InputField commandInput = null;
         private char[] commandSeparators = new char[] { ':' };
         private char[] argumentSeparators = new char[] { ' ' };
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private void Awake() {
             allCommands.Add( nameof( PUT_AT ).ToUpper(), PUT_AT );
@@ -46,19 +50,18 @@ namespace MyRPG.Sync {
                 allCommands[ split[ 0 ] ].Invoke( split[ 1 ].Split( argumentSeparators, StringSplitOptions.RemoveEmptyEntries ) );
             } );
         }
-		
 		private void Update() {
             if( !Player.Exist() || InputManager.IsKeyDown( KeyName.CONSOLE ) )
                 gameObject.SetActive( false );
 		}
-
         private void OnEnable() { clear(); playOpenTune(); }
-
         private void clear() { commandInput.text = string.Empty; commandInput.ActivateInputField(); }
 
         private void playOpenTune() { Audio.PlayTune( Audio.TuneID.CONSOLE_OPEN ); }
         private void playErrorTune() { Audio.PlayTune( Audio.TuneID.CONSOLE_ERROR ); }
         private void playSuccessTune() { Audio.PlayTune( Audio.TuneID.CONSOLE_SUCCESS ); }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         #region СПИСОК КОМАНД
         private void PUT_AT( string[] args ) {

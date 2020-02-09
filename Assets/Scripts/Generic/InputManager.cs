@@ -16,6 +16,8 @@ namespace MyRPG {
         private static Dictionary<KeyCode, string> keyNames;
         private static int iterator;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static KeyCode GetKeyCode( KeyName name ) { return keys[ name ]; }
 
         public static void Init() {
@@ -127,7 +129,7 @@ namespace MyRPG {
                     var k = keys.Keys.ElementAt( iterator );
                     BindKey( k, query[ iterator ] );
                 }
-            } catch { return; }
+            } catch { }
         }
 
         public static void ToDefault() {
@@ -199,11 +201,15 @@ namespace MyRPG {
 
     }
 
+    /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
     public enum MouseKeyName : int {
         Left = 0,
         Right = 1,
         Middle = 2
     }
+
+    /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
     public enum KeyName : byte {
 

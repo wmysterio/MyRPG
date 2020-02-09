@@ -12,17 +12,24 @@ namespace MyRPG.Levels {
 
         private static bool overridePosition = false;
         private static Vector3 overrideStartPoint = Vector3.zero;
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public static void OverrideStartPoint( Vector3 newStartPoint ) {
             overridePosition = true;
             overrideStartPoint = newStartPoint;
         }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public Audio.BackgroundID Background = Audio.BackgroundID.OFF;
         public bool BackgroundLoop = false;
 
-        IEnumerator Start() {
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-            while( Room.Loading ) { yield return null; }
+        private IEnumerator Start() {
+
+            while( Room.Loading ) { yield return null; } // ?
 
             Model.Request( 99 );
             Model.Request( GetUsedModels() );
@@ -44,6 +51,8 @@ namespace MyRPG.Levels {
             Player.Current.IsContollable = true;
             Player.Current.Immortal = false;
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         protected abstract int[] GetUsedModels();
         protected abstract void SpawnEntities();

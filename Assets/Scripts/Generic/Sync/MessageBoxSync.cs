@@ -16,12 +16,16 @@ namespace MyRPG.Sync {
         private string content = string.Empty;
         private int duration = -1;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public void Setup( string content, int duration ) {
             this.content = content;
             if( 1 > duration )
                 duration = 1;
             this.duration = duration;
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private void OnEnable() {
             if( text == null )
@@ -30,13 +34,14 @@ namespace MyRPG.Sync {
             Audio.PlayTune( Audio.TuneID.MESSAGE_BOX );
             coroutine = StartCoroutine( wait() );
         }
-
         private void OnDisable() {
             if( coroutine != null ) {
                 StopCoroutine( coroutine );
                 coroutine = null;
             }
         }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private IEnumerator wait() {
             while( duration > 0 ) {

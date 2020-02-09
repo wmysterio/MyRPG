@@ -10,10 +10,12 @@ namespace MyRPG {
 
     public static class Calendar {
 
-        private static byte day = 0;
-        private static byte minute = 0;
-        private static byte hour = 0;
-        private static uint totalDays = 0;
+        private static byte day;
+        private static byte minute;
+        private static byte hour;
+        private static uint totalDays;
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public static uint TotalDays {
             get { return totalDays; }
@@ -31,6 +33,9 @@ namespace MyRPG {
             get { return ( Weekday ) day; }
             set { day = ( byte ) value; }
         }
+        
+        
+        
         public static bool Stop { get; set; }
 
         public static void Update() {
@@ -46,6 +51,7 @@ namespace MyRPG {
                 NextDay();
             }
         }
+        
 
         public static void NextDay() {
             day += 1;
@@ -53,12 +59,13 @@ namespace MyRPG {
                 day = 0;
             totalDays += 1;
         }
-
         public static string GetDayName() { return Localization.Current.DayNames[ day ]; }
         public static string GetDayName( Weekday weekday ) { return Localization.Current.DayNames[ ( int ) weekday ]; }
-        public static string GetCalendarInfo() { return string.Format( "{0}, {1}{2}:{3}{4}", GetDayName(), hour > 9 ? string.Empty : "0", hour, minute > 9 ? string.Empty : "0", minute ); }
+        public static string GetCalendarInfo() { return $"{GetDayName()}, {( hour > 9 ? string.Empty : "0" )}{hour}:{( minute > 9 ? string.Empty : "0" )}{minute}"; }
 
     }
+
+    /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
     public enum Weekday : byte {
         Monday = 0,     // Понеділок
