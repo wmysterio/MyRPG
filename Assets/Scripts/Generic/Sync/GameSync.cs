@@ -10,12 +10,16 @@ namespace MyRPG.Sync {
 
     public sealed class GameSync : MonoBehaviour {
 
-        public bool ConnectionReady { get; private set; }
+        private bool connectionReady;
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public bool ConnectionReady { get { return connectionReady; } }
 
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private void Awake() {
-            ConnectionReady = DB.Connect();
+            connectionReady = DB.Connect();
             Coroutines.Init( this );
             Coroutines.Repeat( Calendar.Update, 0f, 1f );
             DontDestroyOnLoad( this );

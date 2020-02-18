@@ -51,12 +51,17 @@ namespace MyRPG {
 
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-        public int ID { get; private set; }
-        public GameObject Prefab { get; private set; }
+        private int id;
+        private GameObject prefab;
 
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-        private Model( int id, GameObject prefab ) { ID = id; Prefab = prefab; }
+        public int ID { get { return id; } }
+        public GameObject Prefab { get { return prefab; } }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        private Model( int id, GameObject prefab ) { this.id = id; this.prefab = prefab; }
 
 	}
 

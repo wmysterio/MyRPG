@@ -16,19 +16,18 @@ namespace MyRPG {
 
             /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-            public Vector3 Point { get; private set; }
-            public float Radius { get; private set; }
+            private Vector3 point;
+            private float radius;
 
             /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-            private Node( float x, float y, float z, float radius = 1f ) {
-                Point = new Vector3( x, y, z );
-                Radius = radius;
-            }
-            private Node( Vector3 point, float radius = 1f ) {
-                Point = point;
-                Radius = radius;
-            }
+            public Vector3 Point { get { return point; } }
+            public float Radius { get { return radius; } }
+
+            /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+            private Node( Vector3 point, float radius = 1f ) { this.point = point; this.radius = radius; }
+            private Node( float x, float y, float z, float radius = 1f ) : this( new Vector3( x, y, z ), radius ) { }
 
         }
 

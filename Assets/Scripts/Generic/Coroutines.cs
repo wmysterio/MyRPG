@@ -25,6 +25,12 @@ namespace MyRPG {
         public static void Stop( IEnumerator routine ) { behaviour.StopCoroutine( routine ); }
         public static void Stop( Coroutine routine ) { behaviour.StopCoroutine( routine ); }
         public static void StopAll() { behaviour.StopAllCoroutines(); }
+
+
+
+
+
+
         public static Coroutine Repeat( Action func, float time, float repeatRate ) { return behaviour.StartCoroutine( repeatCoroutine( func, time, repeatRate ) ); }
 
         private static IEnumerator repeatCoroutine( Action func, float time, float repeatRate ) {

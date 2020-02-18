@@ -16,18 +16,19 @@ namespace MyRPG {
 
         private List<Node> nodes;
         private int nodeIndex;
+        private bool isEnd, isLoop;
 
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-        public bool IsEnd { get; private set; }
-        public bool IsLoop { get; private set; }
+        public bool IsEnd { get { return isEnd; } }
+        public bool IsLoop { get { return isLoop; } }
         public int Count { get { return nodes.Count; } }
 
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private Path( bool isLoop ) {
             nodes = new List<Node>();
-            IsLoop = isLoop;
+            this.isLoop = isLoop;
             ToDefault();
         }
 
@@ -46,7 +47,7 @@ namespace MyRPG {
             nodeIndex++;
 
             if( nodeIndex == nodes.Count ) {
-                if( !IsLoop || nodes.Count == 1 ) {
+                if( !isLoop || nodes.Count == 1 ) {
                     node = null;
                     ToDefault();
                     return false;
@@ -54,7 +55,7 @@ namespace MyRPG {
                 nodeIndex = 0;
             }
 
-            IsEnd = false;
+            isEnd = false;
             node = nodes[ nodeIndex ];
             return true;
         }
@@ -62,7 +63,7 @@ namespace MyRPG {
         /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private void ToDefault() {
-            IsEnd = true;
+            isEnd = true;
             nodeIndex = -1;
         }
 
