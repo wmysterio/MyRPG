@@ -5,11 +5,32 @@
 */
 using UnityEngine;
 using MyRPG.Configuration;
+using System.Timers;
 
 namespace MyRPG {
 
     public static class Calendar {
 
+        static Calendar() {
+            timer = new Timer( 1000 );
+            timer.Elapsed += update;
+        }
+
+        private static void update( object sender, ElapsedEventArgs e ) {
+            minute += 1;
+            if( minute > 59 ) {
+                minute = 0;
+                hour += 1;
+            }
+            if( hour > 23 ) {
+                hour = 0;
+                NextDay();
+            }
+        }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        private static Timer timer;
         private static byte day;
         private static byte minute;
         private static byte hour;
@@ -33,25 +54,12 @@ namespace MyRPG {
             get { return ( Weekday ) day; }
             set { day = ( byte ) value; }
         }
-        
-        
-        
-        public static bool Stop { get; set; }
-
-        public static void Update() {
-            if( Stop )
-                return;
-            minute += 1;
-            if( minute > 59 ) {
-                minute = 0;
-                hour += 1;
-            }
-            if( hour > 23 ) {
-                hour = 0;
-                NextDay();
-            }
+        public static bool Enable {
+            get { return timer.Enabled; }
+            set { timer.Enabled = value; }
         }
-        
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public static void NextDay() {
             day += 1;

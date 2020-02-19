@@ -62,7 +62,7 @@ namespace MyRPG {
         public Personage Target { get; set; }
         public bool Immortal { get; set; }
         public bool Targetable { get; set; } = true;
-        public bool IsContollable { get; set; } = true;
+        public bool IsControllable { get; set; } = true;
         public bool EnableWalking { get; set; } = true;
         public bool EnableJumping { get; set; } = true;
 
@@ -383,7 +383,7 @@ namespace MyRPG {
             spellBook.Clear();
         }
 
-        public virtual bool Die() { // + bool
+        public virtual bool Die() {
             if( isDead || Immortal )
                 return false;
             if( !isPlayer )
@@ -429,6 +429,16 @@ namespace MyRPG {
                 // далі оновлюємо характеристики
                 updateCharacteristic();
 
+                // логіка смерті персонажа
+                if( 0f >= currentHealth ) {
+                    if( Immortal ) {
+                        currentHealth = 1f;
+                    } else {
+                        Die();
+                        return;
+                    }
+                }
+
                 // регенерація буде здійснюватись, якщо значення більше за 0
                 if( currentCharacteristic.HealthRegeneration > 0f )
                     currentHealth += currentCharacteristic.HealthRegeneration;
@@ -445,16 +455,6 @@ namespace MyRPG {
                 if( currentEnergy > currentCharacteristic.MaxEnergy )
                     currentEnergy = currentCharacteristic.MaxEnergy;
 
-                // логіка смерті персонажа
-                if( 0f >= currentHealth ) {
-                    if( Immortal ) {
-                        currentHealth = 1f;
-                    } else {
-                        Die();
-                        return;
-                    }
-                }
-
                 // оновлюємо швидкість анімації з характристик
                 animationGroup.MoveSpeed = currentCharacteristic.MoveSpeed;
 
@@ -462,7 +462,7 @@ namespace MyRPG {
                 animationGroup.IsInAir = IsInAir();
 
                 // логіка виконання поточного завдання персонажа
-                if( IsContollable ) {
+                if( IsControllable ) {
                     if( !currentTask.Execute( this ) )
                         ClearTask();
                 }

@@ -21,21 +21,9 @@ namespace MyRPG.Sync {
         private void Awake() {
             connectionReady = DB.Connect();
             Coroutines.Init( this );
-            Coroutines.Repeat( Calendar.Update, 0f, 1f );
             DontDestroyOnLoad( this );
         }
-        private void Start() { }
-        private void Update() {
-            if( Player.Interface.IsInit )
-                Player.Interface.Update();
-            Camera.Update();
-        }
-        private void FixedUpdate() { }
-        private void OnGUI() {
-            if( Player.Interface.IsInit ) {
-                //Player.Interface.Draw();
-            }
-        }
+        private void Update() { Camera.Update(); }
         private void OnApplicationQuit() { DB.Close(); }
 
     }

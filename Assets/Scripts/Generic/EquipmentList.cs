@@ -93,7 +93,8 @@ namespace MyRPG {
                 if( equipmentItem.Id == slots[ slotID ] ) {
                     slots[ slotID ] = -1;
                     count -= 1;
-                    Current.AnimationGroup.HasWeapon = false; // <-----
+                    if( equipmentItem.EquipmentPart == PartOfEquipment.Weapon ) //
+                        Current.AnimationGroup.HasWeapon = false; // <-----
                     // відкріплюємо модель від гравця та видаляємо її
                     if( playSound ) {
                         // відтворюємо звук відкріплення

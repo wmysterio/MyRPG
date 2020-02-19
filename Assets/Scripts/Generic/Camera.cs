@@ -65,7 +65,7 @@ namespace MyRPG {
                 return;
             DistanceToPoint = scrollPosition.z;
             if( Player.Exist() && IsAttached ) {
-                if( Player.Current.NoLongerNeeded || Player.Current.IsDead || !Player.Current.IsContollable )
+                if( Player.Current.NoLongerNeeded || Player.Current.IsDead || !Player.Current.IsControllable )
                     return;
 
                 if( InputManager.GetMouse( MouseKeyName.Right ) ) {

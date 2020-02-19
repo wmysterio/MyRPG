@@ -22,7 +22,11 @@ namespace MyRPG {
         private int currentLanguagesIndex = -1, totalLanguagesIndex = -1, currentLightCircleIndex = 0;
         private Coroutine tempCoroutine = null;
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public GameObject selectLanguagePanel, languageTextObject, lightsPanel;
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private void Awake() {
             languageTextComponent = languageTextObject.GetComponent<UnityEngine.UI.Text>();
@@ -40,7 +44,7 @@ namespace MyRPG {
                 yield return null;
             }
             Player.Interface.Enable = true;
-            state = InitState.InitStyles;
+            state = InitState.InitInputManager;
         }
 
         private void Update() {
@@ -131,7 +135,7 @@ namespace MyRPG {
                 }
                 state = InitState.InitEntityListAndRooms;
                 break;
-                
+
                 case InitState.InitEntityListAndRooms:
                 var go = new GameObject( "GameSync" );
                 var gs = go.AddComponent<GameSync>();
@@ -148,18 +152,6 @@ namespace MyRPG {
 
             }
 
-        }
-
-        private void OnGUI() {
-            if( state != InitState.InitStyles )
-                return;
-
-            Player.Interface.InitStyles();
-
-            GUI.skin.settings.cursorColor = new Color( 0.44f, 0.48f, 0.58f, 1f );
-            GUI.skin.settings.selectionColor = new Color( 0.44f, 0.48f, 0.58f, 1f );
-            GUI.skin.settings.cursorFlashSpeed = 1f;
-            state = InitState.InitInputManager;
         }
 
         public void PrevLanguage() {
@@ -184,8 +176,9 @@ namespace MyRPG {
                 lights[ i ].color = i == currentLightCircleIndex ? activeCircleColor : passiveCircleColor;
         }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         private enum InitState {
-            InitStyles,
             InitInputManager,
             InitConfig,
             InitLocalization,
@@ -196,5 +189,5 @@ namespace MyRPG {
         }
 
     }
-    
+
 }

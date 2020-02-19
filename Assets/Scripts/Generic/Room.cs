@@ -24,6 +24,7 @@ namespace MyRPG {
         public static void Switch( int sceneID ) {
             if( currentIndex == sceneID || loading )
                 return;
+            Calendar.Enable = false;
             currentIndex = sceneID;
             coroutine = Coroutines.Start( load_level( currentIndex ) );
         }

@@ -12,16 +12,29 @@ namespace MyRPG {
 
     public sealed class Bag {
 
-        public delegate void BagCallbackHandler( Item item, int index );
+        [System.Obsolete( "DELETE" )]
+        public static readonly int ItemsInRow = ( int ) Mathf.Sqrt( SLOT_COUNT );
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+
+
+
+
 
         public const int SLOT_COUNT = 100;
 
-        [System.Obsolete( "DELETE" )]
-        public static readonly int ItemsInRow = ( int ) Mathf.Sqrt( SLOT_COUNT );
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
+        public delegate void BagCallbackHandler( Item item, int index );
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         private Dictionary<int, Item> items = new Dictionary<int, Item>();
         private int iterator = 0;
         private bool isOnPlayer;
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public Item this[ int itemID ] {
             get {
@@ -33,7 +46,11 @@ namespace MyRPG {
         public int Count { get { return items.Count; } }
         public bool IsOnPlayer { get { return isOnPlayer; } }
 
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+
         public Bag( bool isOnPlayer = false ) { this.isOnPlayer = isOnPlayer; }
+
+        /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
         public void Clear() { items.Clear(); }
         public bool Add( Item item, bool playSound = false ) {
@@ -135,7 +152,6 @@ namespace MyRPG {
                 item.Update();
             }
         }
-
         public Item Get( int slot ) {
             if( 0 > slot || slot >= items.Count )
                 return null;

@@ -123,7 +123,6 @@
     <Compile Include="Assets\Scripts\Generic\Configuration\Localization.cs" />
     <Compile Include="Assets\Scripts\Generic\Configuration\SaveFile.cs" />
     <Compile Include="Assets\Scripts\Generic\Configuration\XMLFile.cs" />
-    <Compile Include="Assets\Scripts\Generic\Console.cs" />
     <Compile Include="Assets\Scripts\Generic\Coroutines.cs" />
     <Compile Include="Assets\Scripts\Generic\EffectList.cs" />
     <Compile Include="Assets\Scripts\Generic\EntityUpdator.cs" />
