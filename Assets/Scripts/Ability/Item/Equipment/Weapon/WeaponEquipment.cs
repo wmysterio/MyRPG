@@ -1,7 +1,7 @@
 ﻿/*
 	Ліцензія: CC-BY
-	Автор: Василь ( wmysterio )
-	Сайт: http://metal-prog.zzz.com.ua/
+	Автор: Василь (wmysterio)
+	https://github.com/wmysterio/MyRPG
 */
 using MyRPG.Configuration;
 

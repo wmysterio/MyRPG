@@ -5,7 +5,7 @@
 PROGRAMMING
 
 Vasyl (wmysterio) Bezdityi
-http://metal-prog.zzz.com.ua
+https://github.com/wmysterio/MyRPG
 
 
 SOUND
@@ -23,9 +23,12 @@ IMAGES
 
 MODELS
 
+https://www.mixamo.com/
+
 
 ANIMATIONS
 
+https://www.mixamo.com/
 
 THANKS
 

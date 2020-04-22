@@ -1,7 +1,7 @@
 ﻿/*
 	Ліцензія: CC-BY
-	Автор: Василь ( wmysterio )
-	Сайт: http://metal-prog.zzz.com.ua/
+	Автор: Василь (wmysterio)
+	https://github.com/wmysterio/MyRPG
 */
 using System;
 using System.Collections;
@@ -179,7 +179,6 @@ namespace MyRPG {
         Quests = 5
     }
 
-    [System.Obsolete( "Буде видалено або змінено" )]
     public enum FadeMode { In, Out }
 
     public enum Sprites {
